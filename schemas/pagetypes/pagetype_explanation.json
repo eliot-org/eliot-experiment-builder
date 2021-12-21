@@ -1,0 +1,29 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Pagetype explanation content",
+    "description": "Description of the content of the Pagetype 'explanation'",
+    "type": "object",
+    "properties": {
+        "text":{
+            "description": "The text shown on the Page",
+            "type": "string"
+        },
+        "eeg":{
+            "description":"Will send a trigger to the eeg if set to 'trigger'",
+            "type": "string",
+            "enum": ["trigger"]
+        },
+        "light":{
+            "description":"Switches the light on",
+            "type": "string",
+            "enum": ["on"]
+        },
+        "continueDelay":{
+            "description": "The amount of seconds after which the Continue Button is shown",
+            "type": "number"
+        }
+    },
+    "required": [
+        "text"
+    ]
+}

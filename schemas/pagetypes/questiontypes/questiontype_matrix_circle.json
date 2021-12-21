@@ -1,0 +1,49 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Questiontype matrix_circle options",
+    "description": "Description of the options of the Questiontype 'matrix_circle'",
+    "type": "array",
+    "items": {
+        "description":"The options of this questiontype are in the first and only Array element",
+        "type":"object",
+        "minimum": 1,
+        "maximum": 1,
+        "properties":{
+            "left":{
+                "description": "Text left",
+                "type": "string"
+            },
+            "right":{
+                "description": "Text right",
+                "type": "string"
+            },
+            "oben":{
+                "description": "Text above",
+                "type": "string"
+            },
+            "unten":{
+                "description": "Text below",
+                "type": "string"
+            },
+            "ausrichtung":{
+                "description": "Choose one from ['horizontal', 'vertikal', 'diagonal']. Sets the alignment of matrix. 'diagonal' is default if empty or missing",
+                "type": "string",
+                "enum": ["horizontal", "vertikal", "diagonal"]
+            },
+            "dritteDimension":{
+                "description": "The name of the third dimension thats shown on the top of the page and is influenced by the circle",
+                "type": "string"
+            },
+            "kreisgröße":{
+                "description": "The maximum size/radius of the circle. If empty or missing, the program defaults to 40px",
+                "type": "number"
+            }
+        },
+        "required":[
+            "left",
+            "right",
+            "oben",
+            "unten"
+        ]
+    }
+}

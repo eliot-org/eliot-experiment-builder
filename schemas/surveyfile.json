@@ -1,0 +1,99 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Surveyfile",
+    "description": "Description of the Surveyfile",
+    "type": "object",
+    "properties": {
+        "name": {
+            "description": "The name of the File. Shown in Selection",
+            "type": "string"
+        },
+        "modules": {
+            "description": "Like Chapters/Sections of the Survey",
+            "type": "array",
+            "items": {
+                "description": "Each a Chapter/Section",
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "description": "The UNIQUE Identifier of the Chapter",
+                        "type": "string"
+                    },
+                    "label": {
+                        "description": "Should be the same as id",
+                        "type": "string"
+                    },
+                    "children": {
+                        "description": "Like Subsections of this Chapter",
+                        "type": "array",
+                        "items": {
+                            "description": "Each a Subsection of this Chapter",
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "description": "The globally UNIQUE Identifier of the Subsection, meaning no Chapter or subsection should have the same identifier",
+                                    "type": "string"
+                                },
+                                "label": {
+                                    "description": "Should be the same as id",
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "id",
+                                "label"
+                            ]
+                        },
+                        "uniqueItems": true
+                    }
+                },
+                "required": [
+                    "id",
+                    "label"
+                ]
+            },
+            "uniqueItems": true
+        },
+        "survey": {
+            "description": "",
+            "type": "array",
+            "items": {
+                "description": "Each a single Page shown in the running Survey.",
+                "type": "object",
+                "items":{
+                    "type": "object",
+                    "properties":{
+                        "module": {
+                            "description": "The chapter/section this Page belongs to",
+                            "type": "string"
+                        },
+                        "part":{
+                            "description": "The subsection of the chapter/section this Page belongs to",
+                            "type": "string"
+                        },
+                        "type":{
+                            "description": "What type of page it is",
+                            "type": "string",
+                            "enum":["question", "timer", "explanationPic", "explanation", "manual"]
+                        },
+                        "content":{
+                            "description": "The content depends on the type you chose for this Page. For more details look at the corresponding schema",
+                            "type": "object"
+                        }
+                    },
+                    "required":[
+                        "module",
+                        "part",
+                        "type",
+                        "content"
+                    ]
+                }
+            }
+        }
+    },
+    "required": [
+        "name",
+        "modules",
+        "survey"
+    ]
+}

@@ -1,0 +1,59 @@
+.navbar{
+	
+    width: 100%;
+    border:0;
+    border-bottom: 1px solid #000000;
+    height:63px;
+}
+
+.navbar-width-locker{
+    max-width: 1200px;
+    width: 100%;
+    margin:0 auto;
+}
+
+.nav-link-wrapper{
+    float:right;
+    padding:13px;
+}
+
+.nav-element{
+	color: rgba(0,0,0,1);
+	padding: .4rem 1rem;
+	padding-right: 1rem;
+	padding-left: 1rem;
+	padding-bottom: .4rem;
+	text-decoration: none;
+	float: left;
+	cursor:pointer;
+    transition: all .4s;
+}
+
+.nav-element:hover{
+    background-color: #000000 !important;
+    color: #ffffff;
+}
+
+
+.nav-logout{
+	color: rgba(0,0,0,.3) !important;
+}
+
+.wrapper-admin{
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+
+.logo-wrapper{
+    margin: 0 auto;
+    float: left;
+    margin-left:10px;
+}
+
+.logo{
+    height:auto;
+    width:65px;
+}

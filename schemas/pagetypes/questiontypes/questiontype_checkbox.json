@@ -1,0 +1,11 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Questiontype checkbox options",
+    "description": "Description of the options of the Questiontype 'checkbox'",
+    "type": "array",
+    "items": {
+        "description":"Each is the text of an Option that the user can choose from",
+        "type":"string",
+        "minimum": 1
+    }
+}

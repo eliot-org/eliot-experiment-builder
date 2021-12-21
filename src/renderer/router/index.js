@@ -1,0 +1,152 @@
+import Vue from 'vue'
+import Router from 'vue-router'
+import store from "../store";
+
+Vue.use(Router)
+
+const router =  new Router({
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  },  
+  mode: 'hash',
+  routes: [
+    {
+      path: '/loading', name: 'loading', component: require("@/components/loading").default, 
+      meta: {
+        public: true,  // Allow access to even if not logged in
+        onlyWhenLoggedOut: true
+      },
+    },
+    {
+      path: '/login', name: 'AdminLogin', component: require("@/components/adminLogin").default, 
+      meta: {
+        public: true,  // Allow access to even if not logged in
+        onlyWhenLoggedOut: true
+      }
+    },
+    {
+      path: '/adminPage', name: 'AdminPage', component: require("@/components/AdminPage").default,
+      meta: { 
+        requiresAuth: true
+      },
+      children:[
+        {
+          path: '/survey', name: 'AdminSurvey', component: require("@/components/AdminPage/AdminSurvey").default
+        },
+        {
+          path: '/measurements', name: 'measurements', component: require("@/components/AdminPage/measurements").default
+        },
+        {
+          path: '/materialsEdit', name: 'materialsEdit', component: require("@/components/AdminPage/materialsEdit").default
+        },
+        {
+          path: '/expirementeesEdit', name: 'expirementeesEdit', component: require("@/components/AdminPage/expirementeesEdit").default
+        },
+        {
+          path: '/hardware', name: 'hardware', component: require("@/components/AdminPage/hardware").default
+        },
+        {
+          path: '/user', name: 'adminUser', component: require("@/components/AdminPage/user").default
+        },
+      ]
+    },
+    {
+      path: "/SurveyPage/:index", name: "SurveyPage", component: require("@/components/SurveyPage").default,
+      children:[
+        {
+          path:"/question", name:"question", component: require("@/components/SurveyPage/question").default,
+          children:[
+            {
+              path:"/yes-no", name:"yes-no", component: require("@/components/SurveyPage/question/yes-no").default
+            },
+            {
+              path:"/checkbox", name:"checkbox", component: require("@/components/SurveyPage/question/checkbox").default
+            },
+            {
+              path:"/radio", name:"radio", component: require("@/components/SurveyPage/question/radio").default
+            },
+            {
+              path:"/slider", name:"slider", component: require("@/components/SurveyPage/question/slider").default
+            },
+            {
+              path:"/matrix", name:"matrix", component: require("@/components/SurveyPage/question/matrix").default
+            },
+            {
+              path:"/matrixCircle", name:"matrix_circle", component: require("@/components/SurveyPage/question/matrix_circle").default
+            },
+            {
+              path:"/polygonGraph", name:"polygonGraph", component: require("@/components/SurveyPage/question/polygonGraph").default
+            },
+            {
+              path:"/input", name:"input", component: require("@/components/SurveyPage/question/input").default
+            },
+            {
+              path:"/select", name:"select", component: require("@/components/SurveyPage/question/select").default
+            }
+          ]
+        },
+        {
+          path:"/explanation", name:"explanation", component: require("@/components/SurveyPage/explanation").default
+        },
+        {
+          path:"/explanationPic", name:"explanationPic", component: require("@/components/SurveyPage/explanationPic").default
+        },
+        {
+          path:"/timer", name:"timer", component: require("@/components/SurveyPage/timer").default
+        },
+        {
+          path:"/manual", name:"manual", component: require("@/components/SurveyPage/manual").default
+        },
+        {
+          path: "/SurveyWelcome", name: "SurveyWelcome", component: require("@/components/SurveyPage/SurveyWelcome").default
+        },
+        {
+          path: "/SurveyEnd", name: "SurveyEnd", component: require("@/components/SurveyPage/SurveyEnd").default
+        },
+      ]
+    },
+    {
+      path: '*',
+      redirect: '/loading'
+    }
+  ]
+})
+
+router.beforeEach((to, from, next) => {
+  if(to.matched.some(record => record.meta.requiresAuth)) {
+    if (store.getters.isLoggedIn && checkTokenExpiration()) {
+      next()
+      return
+    }
+    next('/login') 
+  } else {
+    next() 
+  }
+})
+
+
+function checkTokenExpiration(){
+  /*var currentTime = Date.now()
+  var fortnightAgo = currentTime - 12096e5
+  var hourAgo = 60 * 15 * 1000
+  console.log(currentTime)
+  console.log(fortnightAgo)
+  console.log(hourAgo)
+  if(store.getters.tokenReceived > fortnightAgo){ //Wenn das Token NICHT vor mehr als 14 Tagen erstellt wurde
+    console.log((currentTime - store.getters.tokenReceived))
+      if((currentTime - store.getters.tokenReceived) > hourAgo){ //Wenn das Token vor MEHR als einer Stunde erstellt wurde     
+        console.log("yes") 
+        store.dispatch('refresh').then(() => {
+          console.log("done") 
+          return true
+        })
+      }
+      return true
+  }else{
+      console.log("no") 
+      return false
+  }*/
+  return true
+}
+
+export default router;

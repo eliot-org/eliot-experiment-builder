@@ -1,0 +1,45 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Pagetype timer content",
+    "description": "Description of the content of the Pagetype 'timer'",
+    "type": "object",
+    "properties": {
+        "text":{
+            "description": "The text shown on the Page",
+            "type": "string"
+        },
+        "eeg":{
+            "description":"Will send a trigger to the eeg if set to 'trigger'",
+            "type": "string",
+            "enum": ["trigger"]
+        },
+        "light":{
+            "description":"Switches the light on",
+            "type": "string",
+            "enum": ["on"]
+        },
+        "name":{
+            "description": "The unique name of this question. This is be the identifier in the saved Data",
+            "type": "string"
+        },
+        "type":{
+            "description": "The specific question type",
+            "type": "string",
+            "enum": ["yes-no", "polygonGraph", "slider", "matrix", "matrix_circle", "radio", "checkbox", "select", "input"]
+        },
+        "options":{
+            "description": "Depends on the questiontype. See in the respective file",
+            "type": "array"
+        },
+        "img":{
+            "description": "Filename of the image thats shown on the left side of the page. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "type": "string"
+        }
+    },
+    "required": [
+        "text",
+        "name",
+        "type",
+        "options"
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Questiontype matrix options",
+    "description": "Description of the options of the Questiontype 'matrix'",
+    "type": "array",
+    "items": {
+        "description":"Item 0: Textleft, Item 1: Textright, Item 2: Textabove, Item 3: Textbelow, Item 4(Optional): Choose from[horizontal, vertikal, diagonal]. Sets the alignment of matrix. Default if empty or missing is 'diagonal'",
+        "type":"string",
+        "minimum": 4,
+        "maximum": 5
+    }
+}

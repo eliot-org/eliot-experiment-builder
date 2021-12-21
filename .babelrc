@@ -1,0 +1,41 @@
+{
+  "comments": false,
+  "env": {
+    "main": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "targets": {
+              "node": 8
+            }
+          }
+        ]
+      ]
+    },
+    "renderer": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    },
+    "web": {
+      "presets": [
+        [
+          "@babel/preset-env",
+          {
+            "modules": false
+          }
+        ]
+      ]
+    }
+  },
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "@babel/plugin-proposal-function-bind"
+  ]
+}

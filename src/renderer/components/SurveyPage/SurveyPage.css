@@ -1,0 +1,138 @@
+  	.wrapper{
+		position: absolute;
+		top:20px;
+		bottom:0px;
+  		width: 100vw;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: row;
+	}
+
+	.left-side{
+        width:35%;
+        height: 100%;
+		background-color: #e6e6e6;
+	}
+
+	.right-side{
+		width:65%;
+        height: 100%;
+		background-color: #f9f9f9;
+	}
+
+	.countup{
+		color:black;
+		width: min-content;
+		height: 20px;
+		position: absolute;
+		bottom: 3px;
+		display: flex;
+	}
+
+	.ok-btn{
+		height:10%;
+		float:right;
+		margin-right: 50px;
+	}
+
+	.btn-black{ 
+  	   	padding: 0.5rem 1rem;
+	    font-size: 1.25rem;
+	    line-height: 1.5;
+  		background-color: black ;
+  		width:275px;
+  		height:60px;
+  		border-radius:0.5rem;
+	    font-weight: 400;
+	    text-align: center;
+	    vertical-align: middle;
+		text-transform: none;
+		transition: 0.3s;
+        outline:none !important;
+        cursor: pointer;
+		border: none;
+		margin-bottom: 20px;
+		z-index: 100;
+  	}
+
+	.btn-black:hover{
+		color: white;
+  		background-color: #353535;
+	}
+
+	.btn-text{
+		color: white;
+	}
+
+	.fade-enter-active, .fade-leave-active {
+		transition: opacity .5s;
+	}
+	.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+		opacity: 0;
+	}
+
+    .right-side-parent{
+        height: 100%;
+	}
+	
+    .explanationWrapper{
+        width: 100vw;
+		position: absolute;
+		top:20px;
+		bottom:0px;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+        flex-direction: column;
+        vertical-align: middle;
+		background-color: #e6e6e6;
+		overflow-y: scroll;
+		overflow-x: hidden;
+    }
+
+    .explanationText{
+        color: #484848;
+  		font-weight: 500;
+		font-size:2rem;
+		margin-bottom:7.5%;
+        width:95%;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+		cursor: default;
+		user-select: none;
+	}
+	
+	.blocker{
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background-color: black;
+		opacity: 0.7;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.blocker-text{
+		color: white;
+		font-size: 6rem;
+	}
+	
+	.progress-text{
+		width: 100%;
+		text-align: center;
+		font-weight: 500;
+		color: white;
+		font-size: 14px;
+		height: 20px;
+	}
+
+	.progress-slider{
+		float: left;
+		background-color: black;
+		height:20px;
+	}

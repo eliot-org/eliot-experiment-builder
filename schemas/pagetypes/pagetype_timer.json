@@ -1,0 +1,46 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Pagetype timer content",
+    "description": "Description of the content of the Pagetype 'timer '",
+    "type": "object",
+    "properties": {
+        "textBefore":{
+            "description": "The text shown on the Page while the timer is still running",
+            "type": "string"
+        },
+        "textAfter":{
+            "description": "The text shown on the Page after the timer has expired",
+            "type": "string"
+        },
+        "timer":{
+            "description": "The Amount of seconds the Timer will run",
+            "type": "number"
+        },
+        "eeg":{
+            "description":"Will send a trigger to the eeg if set to 'trigger'",
+            "type": "string",
+            "enum": ["trigger"]
+        },
+        "imgBefore":{
+            "description":"Filename of the image thats shown while the timer is running. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "type": "string"
+        },
+        "imgAfter":{
+            "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "type": "string"
+        },
+        "light":{
+            "description":"Switches the light on",
+            "type": "string",
+            "enum": ["on"]
+        }
+    },
+    "required": [
+        "text",
+        "timer",
+        "textBefore",
+        "textAfter",
+        "imgBefore",
+        "imgAfter"
+    ]
+}

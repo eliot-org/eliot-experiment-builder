@@ -1,0 +1,62 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Questiontype polygonGraph options",
+    "description": "Description of the options of the Questiontype 'polygonGraph'",
+    "type": "array",
+    "items": {
+        "description":"Each object creates a slider with the set options",
+        "type":"object",
+        "properties":{
+            "name":{
+                "description": "The globally unique identifier of this slider. Each slider will be saved as a seperate Answer",
+                "type": "string"
+            },
+            "marks":{
+                "description": "Irrelevant if data property is set! The properties of this object can be freely chosen from the range 0-100(percentage). For each property there will be a mark on the slider exactly where the property name is. For example you have the properties 0, 50 and 100. Then there will be marks at 0%, 50% and 100%",
+                "type":"object",
+                "properties":{
+                    "your number here":{
+                        "description": "The text thats shown at the mark. Its recommended to make this only a short text or a single word.",
+                        "type": "string"
+                    } 
+                }
+            },
+            "tooltip":{
+                "description":"If set it has to be 'false'. Then it will hode the tooltip that shows the current selected value on the slider.",
+                "type": "string"
+            },
+            "sliderStyle":{
+                "description":"Choose one from these options 'neutral1', 'neutral2' 'quantity', 'quality'. Neutral1 sets the coloring to default. Neutral2 is plain white. Quantity coloring is from light grey(left) to dark grey(right). Quality coloring is a color Gradient from red(left) to green(right)",
+                "type": "string",
+                "enum": ["neutral1", "neutral2", "quantity", "quality"]
+            },
+            "sliderText":{
+                "description": "The Text thats shown above this slider",
+                "type": "string"
+            },
+            "img":{
+                "description": "Irrelevant if data property is set. Each mark can have an accompanying picture. Each element in this array has to be a string with the full filename. The first array element will be shown at the left most marker, the second at the second mark from the left and so on. If you dont want an image at a particular mark then set the string to 'leer.png'",
+                "type": "array"
+            },
+            "min":{
+                "description": "Irrelevant if data property is set. What the left end of the slider means. So min will set the minimum possible value of the slider. Default if missing is 0",
+                "type": "array"
+            },
+            "max":{
+                "description": "Irrelevant if data property is set. What the right end of the slider means. So max will set the maximum possible value of the slider. Default if missing is 100",
+                "type": "number"
+            },
+            "data":{
+                "description": "Overrides the marks and cant have images. Each array element has to be a string. If set it will enable an alternative slider form where you dont have a range to choose from. The only options that you can set the slider to are the elements of this array. They will all have the same distance from each other, starting at the left end and ending at the right end of the slider.",
+                "type": "array"
+            },
+            "defaultValue":{
+                "description": "Sets the starting/default value of this slider. Normally a number, it can be a string if you have the data property set.",
+                "type": "number"
+            }
+        },
+        "required":[
+            "name"
+        ]
+    }
+}
