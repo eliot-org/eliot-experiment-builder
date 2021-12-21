@@ -11,7 +11,6 @@
                     <router-link :to="{ name: 'materialsEdit'}" class="nav-element">Materialien</router-link>
                     <router-link :to="{ name: 'measurements'}" class="nav-element">Messungen</router-link>
                     <router-link :to="{ name: 'hardware'}" class="nav-element">Hardware</router-link>
-                    <router-link :to="{ name: 'adminUser'}" class="nav-element">User</router-link>
                     <div @click="logout()"  class="nav-element">Ausloggen</div>
                 </div>
             </div>

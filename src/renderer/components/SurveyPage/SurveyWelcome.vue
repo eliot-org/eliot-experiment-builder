@@ -22,7 +22,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         data: function(){
             return{
@@ -40,16 +39,9 @@
                 if(this.probandCode == ""){
                     this.$emit('startSurvey', "")
                 }else{
-                    axios({url: 'https://'+axios.defaults.baseURL+'/api/proband/checkCode',data: {"code": this.probandCode}, method: 'POST' }).then(resp => {
-                        console.log(resp)       
-                        if(resp.data.message == "Proband does not exist"){
-                            this.error = "Code nicht gefunden"
-                        }else if(resp.data.message == "Proband exists"){
+                    
                             this.$emit('startSurvey', this.probandCode)
-                        }
-                    }).catch(err => {
-                        console.log(err)
-                    })
+                        
                 }
             }
         }

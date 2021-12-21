@@ -70,7 +70,6 @@
 </template>
 
 <script>
-	import axios from 'axios'
     import vid from './explanationPic/vid'
     export default {
         components: { vid },
@@ -102,7 +101,7 @@
                 try{
                     return require('../../assets/'+this.content.img)
                 }catch(e){
-					return 'https://'+axios.defaults.baseURL+'/storage/'+this.content.img
+					console.log(e)
                 }
             } ,
             //get the type of the image

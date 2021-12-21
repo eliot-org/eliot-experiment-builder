@@ -18,7 +18,7 @@ export default {
                 }
             }else if(arg == "goToLogin"){
                 if (this.$router.currentRoute.name != "SurveyWelcome") {
-                    this.$router.push({ name: "AdminLogin"})
+                    this.$router.push({ name: "AdminPage"})
                 }
             }
         })

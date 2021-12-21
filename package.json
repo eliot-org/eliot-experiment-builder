@@ -1,6 +1,6 @@
 {
   "name": "eliot",
-  "version": "1.1.0",
+  "version": "0.1",
   "author": {
     "name": "imat-uve gmbh",
     "email": "info@imat-uve.de",
@@ -33,7 +33,6 @@
   },
   "build": {
     "productName": "Eliot",
-    "appId": "com.imat-uve.eliot",
     "directories": {
       "output": "build"
     },

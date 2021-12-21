@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 const countrynames = require("countrynames")
 export default {
     data: function(){
@@ -659,11 +658,7 @@ export default {
         sendProbandData: function(){
             if(this.sentProbandData == false){
                 this.sentProbandData = true
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/proband/store', data: this.probandData, method: 'POST' }).then(resp => {
-                        this.receivedCode = resp.data.proband.code
-                        console.log(resp)
-                        this.sendAnswers()
-                }).catch(err => console.log(err))
+                ///Removed Axios
             }
         },
     },
@@ -745,7 +740,6 @@ export default {
                 //this.initializeArduino()
                 this.$electron.ipcRenderer.send("connectArduino", this.port)  
                 this.gotSurvey = true
-                axios.defaults.baseURL = arg.baseURL
             }else if(arg == "Beenden"){
                 console.log("Will end soon. Sending Answers now")
                 this.answers.proband = this.receivedCode

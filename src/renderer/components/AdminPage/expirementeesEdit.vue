@@ -148,7 +148,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     const countrynames = require("countrynames")
     export default {
         data: function( ){
@@ -374,27 +373,11 @@
             },
             //loads all subjects
             loadData: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/proband/getAll')
-                .then(response => {
-                    var tmp=[]
-                    for(var i=0; i<response.data.probanden.length; i++){
-                        /*tmp.push({"id": response.data.probands[i]._id, "age":response.data.probands[i].age, "gender":response.data.probands[i].gender,
-                        "education":response.data.probands[i].education, "profession":response.data.probands[i].profession, "income":response.data.probands[i].income,
-                        "origin":response.data.probands[i].origin, "residence":response.data.probands[i].residence, "environment1":response.data.probands[i].environment1,
-                        "environment2":response.data.probands[i].environment2, "handedness":response.data.probands[i].handedness, "head":response.data.probands[i].head,
-                        "code":response.data.probands[i].code})*/
-                        tmp.push(response.data.probanden[i])
-                    }
-                    this.probanden = tmp
-                    
-                })
-                .catch(error => console.log(error))
+                
             },
             //deletes a subject
             deleteProband: function(data){
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/proband/delete', data: {"_id": data.toString()}, method: 'POST' }).then(() => {
-                    this.loadData()
-                }).catch(err => console.log(err))
+                
             },
             //creates a new subject
             addProband: function(data){
@@ -411,18 +394,12 @@
                     this.newProbandCode = e
                 }
                 if(data != ""){
-                    axios({url: 'https://'+axios.defaults.baseURL+'/api/proband/store', data: data, method: 'POST' }).then(resp => {
-                        this.loadData()
-                        //this.newProband = {}
-                        this.newProbandCode = resp.data.proband.code
-                    }).catch(err => this.newProbandCode = err)
+                    
                 }
             },
             //updates the data of a subject
             updateProband: function(data){
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/proband/update', data: data, method: 'POST' }).then(() => {
-                    this.loadData()
-                }).catch(err => console.log(err))
+                
             }
         },
         mounted: function(){

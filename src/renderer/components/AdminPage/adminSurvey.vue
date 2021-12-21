@@ -136,7 +136,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     import materialModal from './AdminSurvey/materialModal'
     import presetModal from './AdminSurvey/presetModal'
     const countrynames = require("countrynames")
@@ -582,65 +581,31 @@
                 this.manualChannel = null
             },
             loadSurveys: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/survey/getAll')
-                .then(response => {
-                    var tmp=[]
-                    for(let i=0; i<response.data.surveys.length; i++){
-                        tmp.push({"id":i, "name": response.data.surveys[i].name, "modules": response.data.surveys[i].modules, "survey": response.data.surveys[i].survey})
-                    }
-                    
-                    try{
-                        let rawData = fs.readFileSync("src/renderer/assets/survey.json")
-                        let jsonData = JSON.parse(rawData)
-                        tmp.push({"id":tmp.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
-                    }catch(e){
-                        console.log(e)
-                    }
+                try{
+                    let rawData = fs.readFileSync("src/renderer/assets/survey.json")
+                    let jsonData = JSON.parse(rawData)
+                    tmp.push({"id":tmp.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
+                }catch(e){
+                    console.log(e)
+                }
 
-                    this.surveyPresets = tmp
+                this.surveyPresets = tmp
 
-                    for(let i=0; i<this.surveyPresets.length; i++){
-                        this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})
-                    } 
-                    
-
-                })
-                .catch(error => console.log(error))
+                for(let i=0; i<this.surveyPresets.length; i++){
+                    this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})
+                } 
             },
             loadMaterials: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/material/getAllOrdered')
-                .then(response => {
-                    var tmp=[]
-                    for(var i=0; i<response.data.materials.length; i++){
-                        tmp.push({"id": response.data.materials[i]._id,"name":response.data.materials[i].name, "information": response.data.materials[i].information,
-                        "image":response.data.materials[i].image, "showExtraImg": response.data.materials[i].showExtraImg, "extraImg": response.data.materials[i].extraImg,
-                        "bomId":response.data.materials[i].bomId, "roboPos": response.data.materials[i].roboPos})
-                    }
-                    this.materials = tmp
-                    
-                })
-                .catch(error => console.log(error))
+               
             },
             loadPresets: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/preset/getAll').then(response => {
-                    this.presets = response.data.presets
-                    console.log(response)
-                })
-                .catch(error => console.log(error))
+                
             },
             addPreset: function(name, modules){
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/preset/store', data: {name: name , modules: modules}, method: 'POST' }).then(response => {
-                    console.log(response)
-                    this.loadPresets()
-                })
-                .catch(error => console.log(error))
+                
             },
             deletePreset: function(toDelete){
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/preset/delete', data: toDelete, method: 'POST' }).then(response => {
-                    console.log(response)
-                    this.loadPresets()
-                })
-                .catch(error => console.log(error))
+                
             },
             saveAnswers: function(){
                 if(this.answersSent == false){
@@ -653,16 +618,8 @@
                         this.answers.proband = "Generic"
                     }
                     this.answers.online = false
-                    axios({url: 'https://'+axios.defaults.baseURL+'/api/answer/store', data: this.answers, method: 'POST' }).then(resp => {
-                        console.log(resp)
-                        this.answerSaveStatus = resp.statusText
-                    // this.answers = {}
-                    // this.showingAnswers = false
-                    // this.manualChannel = null
-                    }).catch(err => console.log(err))
-                    //this.answers = {}
-                    //this.showingAnswers = false
-                    //this.manualChannel = null
+                   
+                   //removed axios
                 }
             },
             shuffle(array){//Fisher-Yates Shuffle
@@ -706,7 +663,7 @@
                     this.answersSent = false
                 }else if(arg == "getSurveyData"){//Wenn die Umfrage angefragt wird. Dann wirds an Umfragefenster geschickt
                     console.log("Sending SurveyData now")
-                    this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendSurveyData", "survey": this.computedSurvey, "port": this.port, "baseURL": axios.defaults.baseURL})
+                    this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendSurveyData", "survey": this.computedSurvey, "port": this.port})
                 }else if(arg == "readyToEnd"){//User hat Umfrageende erreicht. Umfrage kann jetzt beendet werden. Zeige Button dafür
                     console.log("Ready to End")
                     this.manualChannel = "Beenden"

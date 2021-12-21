@@ -40,7 +40,6 @@
 </template>
 
 <script>
-	import axios from 'axios'
     export default {
         props:{
             //The options for this question
@@ -104,28 +103,7 @@
                     }
                     return require('../../../assets/leer.png') 
                 }catch(e){
-                    if(Object.prototype.hasOwnProperty.call(this.options[i],"img")){
-                        if(Object.prototype.hasOwnProperty.call(this.options[i],"marks")){
-                            /*if(pos == 0 && Object.prototype.hasOwnProperty.call(this.options[i],"min")){//Wenn es ein min < 0 gibt und dieses in den Marks ist und die pos gerade 0 ist(Minimale position)
-                                if(Object.keys(this.options[i].marks).includes(this.options[i].min.toString())){
-                                    return 'https://'+axios.defaults.baseURL+'/storage/'+this.options[i].img[0]
-                                }
-                            }else if(pos == 100 && Object.prototype.hasOwnProperty.call(this.options[i],"max")){
-                                if(Object.keys(this.options[i].marks).includes(this.options[i].max.toString())){
-                                    return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[i].img[1]
-                                }
-                            }else*/ if(Object.keys(this.options[i].marks).includes(pos.toString())){
-                                return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[i].img[Object.keys(this.options[i].marks).findIndex((e) => e === pos.toString())]
-                            }
-                        }else{
-                            if(pos == 0){
-                                return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[i].img[0]
-                            }else if(pos == 100){
-                                return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[i].img[1]
-                            }
-                        }
-                    }
-                    return 'https://'+axios.defaults.baseURL+'/storage/leer.png'
+                    console.log(e)
                 }
             },
             //Does the surveyfile even have image paths?

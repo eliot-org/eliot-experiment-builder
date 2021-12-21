@@ -94,7 +94,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         data: function( ){
             return{
@@ -159,15 +158,7 @@
             },
             //Loads all materials, ordered
             loadData: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/material/getAllOrdered')
-                .then(response => {
-                    let tmp=[]
-                    for(let i=0; i<response.data.materials.length; i++){
-                        tmp.push(response.data.materials[i])
-                    }
-                    this.materials = tmp
-                })
-                .catch(error => console.log(error))
+                
             },
             //deletes a material and changes order accordingly
             deleteMaterial: function(data){
@@ -181,14 +172,9 @@
                 }
                 for(let i = 0; i < this.materials.length; i++){
                     if(this.materials[i]._id != data._id){
-                        axios({url: 'https://'+axios.defaults.baseURL+'/api/material/update', data: this.getDataVar(this.materials[i]), method: 'POST' }).then(resp => {
-                            console.log(resp)
-                        }).catch(err => console.log(err))
+                        
                     }
                 }
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/material/delete', data: {"id": data}, method: 'POST' }).then(() => {
-                    this.loadData()
-                }).catch(err => console.log(err))
             },
             //Create a new material
             addMaterial: function(data){
@@ -203,28 +189,19 @@
                 if(data.bomId == ""){delete data.bomId}
                 data.position = (this.materials.length+=1)
                 console.log(data)
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/material/store', data: data, method: 'POST' }).then(() => {
-                    this.loadData()
-                    this.newMaterial = {}
-                }).catch(err => console.log(err))
+               
             },
             //Update a materials data
             updateMaterial: function(data){
                 if(this.hasOrderChanged == true){
                     for(let i = 0; i < this.materials.length; i++){
                         if(this.materials[i]._id != data._id){
-                            axios({url: 'https://'+axios.defaults.baseURL+'/api/material/update', data: this.getDataVar(this.materials[i]), method: 'POST' }).then(resp => {
-                                console.log(resp)
-                            }).catch(err => console.log(err))
+                            
                         }
                     }
                     this.hasOrderChanged = false
                 }
                 console.log(data)
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/material/update', data: this.getDataVar(data), method: 'POST' }).then(resp => {
-                    console.log(resp)
-                    this.loadData()
-                }).catch(err => console.log(err))
             },
             //get information of specific material
             getDataVar(data){

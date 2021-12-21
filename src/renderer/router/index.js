@@ -12,23 +12,9 @@ const router =  new Router({
   routes: [
     {
       path: '/loading', name: 'loading', component: require("@/components/loading").default, 
-      meta: {
-        public: true,  // Allow access to even if not logged in
-        onlyWhenLoggedOut: true
-      },
-    },
-    {
-      path: '/login', name: 'AdminLogin', component: require("@/components/adminLogin").default, 
-      meta: {
-        public: true,  // Allow access to even if not logged in
-        onlyWhenLoggedOut: true
-      }
     },
     {
       path: '/adminPage', name: 'AdminPage', component: require("@/components/AdminPage").default,
-      meta: { 
-        requiresAuth: true
-      },
       children:[
         {
           path: '/survey', name: 'AdminSurvey', component: require("@/components/AdminPage/AdminSurvey").default
@@ -44,9 +30,6 @@ const router =  new Router({
         },
         {
           path: '/hardware', name: 'hardware', component: require("@/components/AdminPage/hardware").default
-        },
-        {
-          path: '/user', name: 'adminUser', component: require("@/components/AdminPage/user").default
         },
       ]
     },
@@ -111,42 +94,5 @@ const router =  new Router({
     }
   ]
 })
-
-router.beforeEach((to, from, next) => {
-  if(to.matched.some(record => record.meta.requiresAuth)) {
-    if (store.getters.isLoggedIn && checkTokenExpiration()) {
-      next()
-      return
-    }
-    next('/login') 
-  } else {
-    next() 
-  }
-})
-
-
-function checkTokenExpiration(){
-  /*var currentTime = Date.now()
-  var fortnightAgo = currentTime - 12096e5
-  var hourAgo = 60 * 15 * 1000
-  console.log(currentTime)
-  console.log(fortnightAgo)
-  console.log(hourAgo)
-  if(store.getters.tokenReceived > fortnightAgo){ //Wenn das Token NICHT vor mehr als 14 Tagen erstellt wurde
-    console.log((currentTime - store.getters.tokenReceived))
-      if((currentTime - store.getters.tokenReceived) > hourAgo){ //Wenn das Token vor MEHR als einer Stunde erstellt wurde     
-        console.log("yes") 
-        store.dispatch('refresh').then(() => {
-          console.log("done") 
-          return true
-        })
-      }
-      return true
-  }else{
-      console.log("no") 
-      return false
-  }*/
-  return true
-}
 
 export default router;

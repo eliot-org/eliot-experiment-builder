@@ -27,7 +27,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     export default {
         props:{
             //Content of the Current Question
@@ -112,14 +111,6 @@
             },
             //Loads local or online image
             getImg(which){ 
-                if(Object.prototype.hasOwnProperty.call(this.material,"bomId")){
-                    axios.post('https://db.brainofmaterials.com/api/materialimages/'+this.material.bomId, {} ,{headers: {"common": "","Authorization": "Bearer RGFzIGlzdCBlaW4gQmVhcmVyLVRva2Vu"}}).then(response => {
-                        if(response.data.length > 0){
-                            this.imgAfter =  response.data[0]
-                            this.imgBefore =  response.data[0]
-                        }
-                    }).catch(error => console.log(error)) 
-                }
                 try{
                     if(which == 0){
                         return require('../../assets/'+this.content.imgBefore)
@@ -127,13 +118,7 @@
                         return require('../../assets/'+this.content.imgAfter)
                     }
                 }catch(e){
-                    if(which == 0){
-                        return 'https://'+axios.defaults.baseURL+'/storage/'+this.content.imgBefore
-                    }else if(which == 1){
-                        return 'https://'+axios.defaults.baseURL+'/storage/'+this.content.imgAfter
-                    }else{
-                        console.log(e)
-                    }
+                    console.log(e)
                 }
             },
             //Gets image datatype

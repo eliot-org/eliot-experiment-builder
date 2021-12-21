@@ -82,7 +82,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     data: function(){
         return{
@@ -129,29 +128,10 @@ export default {
         },
         //Get ip of robot
         getOwnIps: function(){
-            this.$http.get('https://'+axios.defaults.baseURL+'/api/setting/getAll')
-                .then(response => {
-                    var tmp=[]
-                    for(var i=0; i<response.data.settings.length; i++){
-                        if(Object.prototype.hasOwnProperty.call(response.data.settings[i],"roboIp")){
-                            tmp.push({"id": response.data.settings[i]._id,"username":response.data.settings[i].username, "roboIp": response.data.settings[i].roboIp,
-                            "roboPort":response.data.settings[i].roboPort})
-                        }
-                    }
-                    this.loadedSettings = tmp
-                    console.log(this.loadedSettings)
-                    
-                    if(Object.prototype.hasOwnProperty.call(tmp[0],"roboIp")){
-                        this.roboIp = tmp[0].roboIp
-                        this.roboPort = tmp[0].roboPort        
-                    }            
-                })
-                .catch(error => console.log(error))
+           
         },
         addIp: function(){
-            this.$http({url: 'https://'+axios.defaults.baseURL+'/api/setting/store', data: {roboIp: this.roboIp , roboPort: this.roboPort}, method: 'POST' }).then(response => {
-                console.log(response)
-            }).catch(error => console.log(error))
+            
         },
         connectWaage(){
             this.$electron.ipcRenderer.send("connectWaage", this.waagePort)  

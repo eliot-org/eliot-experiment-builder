@@ -337,7 +337,7 @@ ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the su
     adminWindow.object.webContents.send("surveyOps", "getSurveyData")
 
   }else if(arg.arg == "sendSurveyData"){
-    surveyWindow.object.webContents.send("surveyOps", {"arg": "sendSurveyData","survey": arg.survey, "port":arg.port, "baseURL": arg.baseURL})
+    surveyWindow.object.webContents.send("surveyOps", {"arg": "sendSurveyData","survey": arg.survey, "port":arg.port})
   }else if(arg.arg == "sendAnswers"){
     adminWindow.object.webContents.send("surveyOps", {"arg": "sendAnswers","answers": arg.answers})
   }else if(arg == "readyToEnd"){
