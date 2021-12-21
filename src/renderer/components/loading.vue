@@ -39,7 +39,7 @@ export default {
             }else if(arg == "goToLogin"){
                 if (this.$router.currentRoute.name != "SurveyWelcome") {
                     setTimeout(() => {
-                        this.$router.push({ name: "AdminPage"})
+                        this.$router.push({ name: "AdminSurvey"})
                     }, 1000)
                 }
             }
