@@ -7,10 +7,11 @@ Compatible with a variety of external Hardware.
 
 Features
 ---
-- Modern UI - an easy to learn, beautiful and powerful graphical interface
-- Hardware/Devices - use EEG Equipment, scales, lights and robots
+- Modern UI - an easy to learn, simple but powerful graphical interface
+- Hardware/Devices - use EEG Equipment, scales, lights, arduinos and robots with our scripts or use the full power of Javascript in your own scripts
 - OpenSource - Released under [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/legalcode.de)
-- JSON - build surveys using json files
+- JSON - build surveys using json files or the Survey Builder - to be implemented
+- Conditions/Loops -  
 - HTML - dont like the default theme? Change pages to your liking - to be implemented
 - Stimuli - use a variety of stimuli. Including ...
 
