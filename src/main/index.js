@@ -281,14 +281,13 @@ ipcMain.on("setPin", (event,arg) => {
 
 
 //logic for which page a window should load
-ipcMain.on("loader", (event,arg) => {
-  console.log("received message")
+ipcMain.on("WindowManagement", (event,arg) => {
   if(arg == "ready"){
     if(event.sender.id == 1){
-      event.sender.send("surveyOps", "goToLogin")
+      event.sender.send("WindowManagement", "AdminPage")
     }
     if(event.sender.id != 1){
-      event.sender.send("surveyOps", "goToSurvey")
+      event.sender.send("WindowManagement", "SurveyPage")
     }
   }
 })

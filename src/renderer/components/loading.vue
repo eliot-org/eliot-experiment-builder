@@ -30,13 +30,13 @@ export default {
         /**
          * Called when the Main process sends on the surveyOps channel. arg includes the data to which page this instance should go to. So if it is a admin or surveypage
          */
-        this.$electron.ipcRenderer.on("surveyOps", (event,arg) => {
+        this.$electron.ipcRenderer.on("WindowManagement", (event,arg) => {
             console.log(arg)
-            if(arg == "goToSurvey"){
+            if(arg == "SurveyPage"){
                 if (this.$router.currentRoute.name != "SurveyWelcome") {
                     this.$router.push({ name: "SurveyWelcome"})
                 }
-            }else if(arg == "goToLogin"){
+            }else if(arg == "AdminPage"){
                 if (this.$router.currentRoute.name != "SurveyWelcome") {
                     setTimeout(() => {
                         this.$router.push({ name: "AdminSurvey"})
@@ -44,7 +44,7 @@ export default {
                 }
             }
         })
-        this.$electron.ipcRenderer.send("loader", "ready")
+        this.$electron.ipcRenderer.send("WindowManagement", "ready")
     },
 }
 </script>

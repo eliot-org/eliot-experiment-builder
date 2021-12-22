@@ -31,6 +31,9 @@ const router =  new Router({
         {
           path: '/hardware', name: 'hardware', component: require("@/components/AdminPage/hardware").default
         },
+        {
+          path: '/config', name: 'AdminConfig', component: require("@/components/AdminPage/adminConfig").default
+        }
       ]
     },
     {
