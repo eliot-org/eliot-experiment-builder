@@ -11,22 +11,19 @@
                     <router-link :to="{ name: 'materialsEdit'}" class="nav-element">Materialien</router-link>
                     <router-link :to="{ name: 'measurements'}" class="nav-element">Messungen</router-link>
                     <router-link :to="{ name: 'hardware'}" class="nav-element">Hardware</router-link>
+                    <router-link :to="{ name: 'AdminConfig'}" class="nav-element">Einstellungen</router-link>
                 </div>
             </div>
         </div>
         
         <router-view></router-view>      
-        
     </div>
 </template>
 
 <script>
-    export default {
-        methods: {}
-    }
+    export default {}
 </script>
 
 <style src="./AdminPage/adminPage.css"></style>
 <style scoped>
-
 </style>

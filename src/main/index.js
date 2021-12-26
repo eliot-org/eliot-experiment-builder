@@ -1,284 +1,49 @@
 import { app, ipcMain, globalShortcut} from 'electron'
 const electron = require("electron")
 const windowManager = require("electron-window-manager")
-//const serialPort = require('serialport');
-//global.SerialPort = serialPort;
 var electronScreen
 var displays
 var externalDisplay 
 var paused = false
-var five = require("johnny-five")
-var board
-var connected = false
-var waage
-var waageConnected = false
-var trigger
-var triggerConnected = false
-//var serialport = require('serialport');
-//var SerialPort = serialport.SerialPort;
-const SerialPort = require('serialport');
-const Readline = SerialPort.parsers.Readline;
 
-var net = require("net")
-var client
-var robotConnected = false
+const trigger = require("./scripts/eegTrigger")
+
+let parentGlue = {
+  connector: function(arg){
+    console.log(arg)//Works
+    setTimeout(() => {
+      adminWindow.object.webContents.send("surveyChannel", arg)//Works
+    }, 5000)
+  }
+}
+
+export {parentGlue}
+
 //-------------------------------------------------------------
 
-//Logic for robot
 ipcMain.on("robotCommands", (event,arg) => {
-  try{
-    if(Object.prototype.hasOwnProperty.call(arg,"command") && Object.prototype.hasOwnProperty.call(arg,"data")){
-      if(arg.command == "connect"){
-        if(Object.prototype.hasOwnProperty.call(arg.data,"port") && Object.prototype.hasOwnProperty.call(arg.data,"ip")){
-          client = new net.Socket()
-          client.connect(arg.data.port, arg.data.ip, () => {
-            console.log("Connected Robot")
-            robotConnected = true
-            if(surveyWindow.object != null){
-              surveyWindow.object.webContents.send("robotConnected", robotConnected)
-            }
-            adminWindow.object.webContents.send("robotConnected", robotConnected)
-          })
 
-          client.on("data", (data) => {//Sende die Nachrichten des Roboters an alle Fenster die registriert sind
-            if(surveyWindow.object != null){
-              surveyWindow.object.webContents.send("robotConsole", data.toString())
-            }
-            adminWindow.object.webContents.send("robotConsole", data.toString())
-            console.log(data.toString())
-          })
-
-          client.on("end", () => {
-            client.write("quit"  + "\n")
-            robotConnected = false
-            console.log("Disconnected Robot")
-            if(surveyWindow.object != null){
-              surveyWindow.object.webContents.send("robotConnected", robotConnected)
-            }
-            adminWindow.object.webContents.send("robotConnected", robotConnected)
-          })
-        }
-      }else if(arg.command == "load"){
-        if(robotConnected){
-          client.write("load "+ arg.data + "\n")
-        }
-      }else if(arg.command == "running" || arg.command == "play" || arg.command == "stop" || arg.command == "pause"|| arg.command == "programState"){
-        if(robotConnected){
-          client.write(arg.command + "\n")
-        }
-      }else if(arg.command == "quit"){
-        if(robotConnected){
-          client.write(arg.command + "\n")
-          client.end()
-        }
-      }else if(arg.command == "status"){//Geht nur an den fragenden zurück da Survey und Adminsurvey hier asynchron sein können
-        if(surveyWindow.object != null){
-          surveyWindow.object.webContents.send("robotConnected", robotConnected)
-        }
-        adminWindow.object.webContents.send("robotConnected", robotConnected)
-      }else if(arg.command == "adress"){//Gibt adresse und Port zurück
-        if(surveyWindow.object != null){
-          surveyWindow.object.webContents.send("robotAddress", client.address())
-        }
-        adminWindow.object.webContents.send("robotAddress", client.address())
-      }
-    }
-  }catch(e){
-    if(surveyWindow.object != null){
-      surveyWindow.object.webContents.send("robotConsole", e.toString())
-    }
-    adminWindow.object.webContents.send("robotConsole", e.toString())
-    console.log(e)
-  }
 })
 
-//logic for trigger
 ipcMain.on("connectTrigger", (event,arg) => {
-  console.log(triggerConnected)
-  if(triggerConnected == false){
-    try{
-      trigger = new SerialPort(arg, {
-        baudRate: 9600,
-        dataBits: 8,
-        stopBits: 1,
-        parity: "none",
-      });
 
-      trigger.on("open", function () {
-        triggerConnected = true
-        console.log('open trigger');
-        adminWindow.object.webContents.send("triggerConsole", "Connected")
-        //Initialer Status
-        let buffer = Buffer.from([0]);
-        console.log(buffer)
-        trigger.write(buffer, e => console.log(e))
-      });    
-
-      trigger.on('error', function(err) {
-        triggerConnected = false
-        console.log('Error: ', err.message)
-        adminWindow.object.webContents.send("triggerConsole", "Error")
-      })
-    }catch(e){
-      triggerConnected = false
-      console.log(e)
-    }
-  }
 })
 
-//trigger the trigger, arg has to be number
 ipcMain.on("trigger", (event, arg) => {
-  console.log("received message trigger")
-  if(triggerConnected == true){      
-    try{
-      let buffer = Buffer.from([arg])
-      console.log(buffer)
 
-      event.sender.send("triggerConsole", "Triggering")
-      console.log("Triggering")
-
-      trigger.write(buffer, e => console.log(e))
-
-      buffer = Buffer.from([0])
-      setTimeout(function(){trigger.write(buffer, e => console.log(e))}.bind(this), 10); 
-    }catch(e){
-      console.log(e)
-    }
-  }else{
-    adminWindow.object.webContents.send("triggerConsole", "Not Connected")
-  }
 })
 
-//logic for waage
-ipcMain.on("connectWaage", (event,arg) => {
-  console.log(waageConnected)
-  if(waageConnected == false){
-    try{
-      const parser = new Readline();
-      waage = new SerialPort(arg, {
-        baudRate: 9600,
-      });
-      waage.pipe(parser)
+ipcMain.on("connectScale", (event,arg) => {
 
-      waage.on("open", function () {
-        waageConnected = true
-        adminWindow.object.webContents.send("waageConsole", "Connected")
-        console.log('open Waage');
-      });    
-      
-      parser.on('data', function (data) {
-        adminWindow.object.webContents.send("waageConsole", data)
-        if(surveyWindow.object != null){
-          surveyWindow.object.webContents.send("waageConsole", data)
-        }
-      });
-
-      waage.on('error', function(err) {
-        waageConnected = false
-        console.log('Error: ', err.message)
-        adminWindow.object.webContents.send("waageConsole", "Error")
-      })
-    }catch(e){
-      waageConnected = false
-      console.log(e)
-    }
-  }
 })
 
-//logic for arduino/lights
 ipcMain.on("connectArduino", (event,arg) => {
-  if(connected == false){
-    try{
-      /*var Readable = require("stream").Readable;  
-      var util = require("util");  
-      util.inherits(MyStream, Readable);  
-      function MyStream(opt) {  
-        Readable.call(this, opt);
-      }
-      MyStream.prototype._read = function() {};  
-      // hook in our stream
-      process.__defineGetter__("stdin", function() {  
-        if (process.__stdin) return process.__stdin;
-        process.__stdin = new MyStream();
-        return process.__stdin;
-      });*/
-      board = new five.Board({ port: arg, repl:false })
-  
-      board.on("ready", () => {
-        connected = true
-        console.log("Board ready")
-        try{
-          event.sender.send("arduinoConsole", "Board ready")
-        }catch(e){
-          console.log(e)
-        }
-        try{
-          board.pinMode(2, board.MODES.OUTPUT);
-          board.pinMode(3, board.MODES.OUTPUT);
-        }catch(e){
-          console.log(e)
-        }
-        try{
-          setTimeout(function(){ board.digitalWrite(2, 1) }, 1000); 
-          setTimeout(function(){ board.digitalWrite(2, 0) }, 2000); 
-          setTimeout(function(){ board.digitalWrite(3, 1) }, 1000); 
-          setTimeout(function(){ board.digitalWrite(3, 0) }, 2000); 
-        }catch(e){
-          console.log(e)
-        }
-      });
-      
-      board.on("error", function(err) {
-        connected = false         
-        console.log(err)            
-        try{
-          event.sender.send("arduinoConsole", err)
-        }catch(e){
-          console.log(e)
-        }
-      });
-      
-      board.on("close", function(err) {
-        connected = false         
-        console.log(err)            
-        try{
-          event.sender.send("arduinoConsole", err)
-        }catch(e){
-          console.log(e)
-        }
-      });
-      
-      board.on("exit", function(err) {
-        connected = false         
-        console.log(err)            
-        try{
-          event.sender.send("arduinoConsole", err)
-        }catch(e){
-          console.log(e)
-        }
-      });
-    }catch(e){
-        console.log(e)
-    }
-  }
+
 })
 
-//set a pin on arduino
 ipcMain.on("setPin", (event,arg) => {
-  console.log("received message")
-  if(connected == true){      
-    try{
-      event.sender.send("arduinoConsole", "Writing Pin")
-      console.log("Writing Pin")
-      board.digitalWrite(arg.pin, arg.state)
-    }catch(e){
-      console.log(e)
-    }
-  }else{
-    adminWindow.object.webContents.send("arduinoConsole", "Not Connected")
-  }
-})
 
+})
 
 //logic for which page a window should load
 ipcMain.on("WindowManagement", (event,arg) => {
@@ -303,7 +68,6 @@ ipcMain.on("surveyChannel", (event,arg) => {
   }
 })
 
-//
 ipcMain.on("displays", (event,arg) => {
   console.log("received displays message")
   if(arg.arg == "getDisplays"){
@@ -446,11 +210,6 @@ function createWindow () {
 }
 
 app.on('ready', () =>{
-  /*THIS IS INSECURE: PLEASE REMOVE WHEN WEBSITE HAS REAL SSL CERTIFICATE!!!!!!*/
-  //app.commandLine.appendSwitch('ignore-certificate-errors');
-
-  /*************************************************** */
-
   //Gets all Screens and gets the first non main screen as the external display
   electronScreen = electron.screen
   displays = electronScreen.getAllDisplays()
@@ -462,7 +221,7 @@ app.on('ready', () =>{
     }
   }
   if(externalDisplay == null){
-       externalDisplay = displays[0]
+    externalDisplay = displays[0]
   }
   createWindow()
 })

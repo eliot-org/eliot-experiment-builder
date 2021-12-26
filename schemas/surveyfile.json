@@ -79,6 +79,51 @@
                         "content":{
                             "description": "The content depends on the type you chose for this Page. For more details look at the corresponding schema",
                             "type": "object"
+                        },
+                        "hardware":{//z.b. .Sollte eigentlich in die pagetypes/content rein für mehr optionen wie onTimerEnd
+                            //Unserem Programm ist egal was für eine Hardware dort sitzt. Es führt einfach nur den Befehl aus. Heißt z.b. beim laden der seite wird
+                            //an das gerät mit dem namen arduino_1 das kommando lightOn geschickt. Die Hardware kann aber auch Daten zurückschicken. 
+                            //Mögliche Events sind: continueToNextPage wenn z.b. Material abgelegt wurde, Daten die in den Antworten gespeichert werden,
+                            //Womöglich noch weitere Seitenabhängige Events. 
+                            //Was ist mit nextPage? Also wenn roboter das objekt gebracht hat
+                            "onPageLoad": [
+                                {
+                                    "device":"lamp",
+                                    "command": {
+                                        "name": "on",
+                                        "light": "1"
+                                    }
+                                },
+                                {
+                                    "device":"robot",
+                                    "command": {
+                                        "name": "get"
+                                    }
+                                }
+                            ],
+                            "afterXSeconds":[
+                                {
+                                    "seconds": "6",
+                                    "device": "lamp",
+                                    "command": {
+                                        "name": "off"
+                                    }
+                                }
+                            ],
+                            "onTimerEnd": [],
+                            "input":[
+                                {
+                                    "device": "scale",
+                                    "on": "trigger",
+                                    "do": {
+                                        "device": "eeg",
+                                        "command": {
+                                            "name": "bit",
+                                            "bit": 1
+                                        }
+                                    }
+                                }
+                            ]
                         }
                     },
                     "required":[

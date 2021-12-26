@@ -293,6 +293,11 @@
                 }
             },
             computeSurvey: function(){
+                /*
+                    BRauchen auch aktuelles und nächstes material in jedem arrobject für roboter
+
+
+                */
                 console.log(this.materialsChosen)
                 //Für die Roboterfahrten um zu wissen wie lang die Survey sein wird und wie viele Fragen nicht einzigartig sind (wie z.b. Poi, Outro,usw)
                 //let surveyChoiceLengthWithChosenModules = 0
