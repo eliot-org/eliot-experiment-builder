@@ -1,5 +1,5 @@
 /*------------------- Do not change -------------------*/
-module.exports = {
+export default {//Why not module.exports????? Doenst work here for some reason but everywhere else...
 	addDevice,
 	removeDevice,
 	getDevices,
@@ -24,8 +24,8 @@ let devices = []
 let currentPage
 
 /*------------------- Do not change the above -------------------*/
-const SerialPort = require('serialport');
-const five = require("johnny-five")
+import SerialPort from 'serialport';
+import { Board } from "johnny-five";
 
 const lightPin = 3 //In our setup pin 3 is for turning the light on or off
 
@@ -109,7 +109,7 @@ function getDevices() {
 		let devicePosition = devices.push({
 			"name": name,
 			"parameters": parameters,
-			"device": new five.Board({ port: parameters.port }),
+			"device": new Board({ port: parameters.port }),
 			"lightStatus": 0
 		})
 

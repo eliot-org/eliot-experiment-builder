@@ -24,8 +24,8 @@ let devices = []
 let currentPage
 
 /*------------------- Do not change the above -------------------*/
-const Readline = SerialPort.parsers.Readline
 const SerialPort = require('serialport')
+const Readline = SerialPort.parsers.Readline
 
 const definitions = {
 	"scriptName": "Custom Arduino Scale Controller",//The Name of this script as shown in the config page

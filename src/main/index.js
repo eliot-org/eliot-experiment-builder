@@ -7,6 +7,9 @@ var externalDisplay
 var paused = false
 
 const trigger = require("./scripts/eegTrigger")
+const arduinoLights = require("./scripts/arduinoLights").default
+const ur3 = require("./scripts/ur3")
+const customScale = require("./scripts/customScale")
 
 let parentGlue = {
   connector: function(arg){

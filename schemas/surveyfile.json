@@ -81,11 +81,10 @@
                             "type": "object"
                         },
                         "hardware":{//z.b. .Sollte eigentlich in die pagetypes/content rein für mehr optionen wie onTimerEnd
-                            //Unserem Programm ist egal was für eine Hardware dort sitzt. Es führt einfach nur den Befehl aus. Heißt z.b. beim laden der seite wird
-                            //an das gerät mit dem namen arduino_1 das kommando lightOn geschickt. Die Hardware kann aber auch Daten zurückschicken. 
                             //Mögliche Events sind: continueToNextPage wenn z.b. Material abgelegt wurde, Daten die in den Antworten gespeichert werden,
                             //Womöglich noch weitere Seitenabhängige Events. 
-                            //Was ist mit nextPage? Also wenn roboter das objekt gebracht hat
+                            //Was ist mit nextPage? Also wenn roboter das objekt gebracht hat. idee: standard event nextPage ruft nächste seite auf
+                            //Was ist mit daten eines geräts mit in den answers speichern? idee: ein standard event ist savedata bei dem die übergebenen daten dann mit gespeichert werden
                             "onPageLoad": [
                                 {
                                     "device":"lamp",
@@ -119,7 +118,8 @@
                                         "device": "eeg",
                                         "command": {
                                             "name": "bit",
-                                            "bit": 1
+                                            "bit": 1//Könnten auch mit speziellem tag daten vom caller auf called übertragen also hier z.b. gewichtsdaten an roboter übergeben.
+                                            //Oder das wird automatisch gemacht
                                         }
                                     }
                                 }
