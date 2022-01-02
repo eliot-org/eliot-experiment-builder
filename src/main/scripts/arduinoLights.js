@@ -23,6 +23,7 @@ const lightPin = 3 //In our setup pin 3 is for turning the light on or off
 
 const definitions = {
 	"scriptName": "Custom Arduino Light Controller",//The Name of this script as shown in the config page
+    "description": "",//Description of this script, what it does, what it can do, what it needs. Shown in Hardware Page
 	"deviceParameters":[//Every Device, by default, already has the name property. Here you add every other property you need. See Example Device above
 		{"name": "port", "type": "string"}
 //Maybe at a later date add another property called "needed", boolean. If true than that property has to be set/present when creating a device, otherwise not.
@@ -109,26 +110,22 @@ function getDevices() {
 		let devicePosition = devices.push({
 			"name": name,
 			"parameters": parameters,
-			"device": new Board({ port: parameters.port }),
+			"device": new Board({ port: parameters.port, repl: false }),
 			"lightStatus": 0
 		})
 
 		devices[devicePosition-1].device.on("ready", function () {
-			output("console", {"text": "Connection to "+ name +" at "+ parameters + " was established", "sender": definitions.scriptName})
-			output("config", {"type": "addDevice", "name": name, "sender": definitions.scriptName}) 
+			output("console", {"text": "Connection to "+ devices[devicePosition-1].name +" at "+ JSON.stringify(devices[devicePosition-1].parameters) + " was established", "sender": definitions.scriptName})
+			output("config", {"type": "addDevice", "name": devices[devicePosition-1].name, "sender": definitions.scriptName}) 
             devices[devicePosition-1].device.pinMode(2, devices[devicePosition-1].device.MODES.OUTPUT);
             devices[devicePosition-1].device.pinMode(3, devices[devicePosition-1].device.MODES.OUTPUT);
-            setTimeout(function(){ devices[devicePosition-1].device.digitalWrite(2, 1) }, 1000); 
-            setTimeout(function(){ devices[devicePosition-1].device.digitalWrite(2, 0) }, 2000); 
-            setTimeout(function(){ devices[devicePosition-1].device.digitalWrite(3, 1) }, 1000); 
-            setTimeout(function(){ devices[devicePosition-1].device.digitalWrite(3, 0) }, 2000); 
+            setTimeout(() => devices[devicePosition-1].device.digitalWrite(2, 1), 1000); 
+            setTimeout(() => devices[devicePosition-1].device.digitalWrite(2, 0), 2000); 
+            setTimeout(() => devices[devicePosition-1].device.digitalWrite(3, 1), 1000); 
+            setTimeout(() => devices[devicePosition-1].device.digitalWrite(3, 0), 2000); 
 		})
 
 		devices[devicePosition-1].device.on('error', function (err) {
-			throw err
-		})
-        devices[devicePosition-1].device.on('close', function (err) {
-            removeDevice(devices[devicePosition-1].name)
 			throw err
 		})
         devices[devicePosition-1].device.on('exit', function (err) {

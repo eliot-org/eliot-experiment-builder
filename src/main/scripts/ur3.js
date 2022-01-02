@@ -31,6 +31,7 @@ const net = require("net")
 
 const definitions = {
 	"scriptName": "UR3",//The Name of this script as shown in the config page
+    "description": "",//Description of this script, what it does, what it can do, what it needs. Shown in Hardware Page
 	"deviceParameters":[//Every Device, by default, already has the name property. Here you add every other property you need. See Example Device above
 		{"name": "ip", "type": "string"},
 		{"name": "port", "type": "number"}

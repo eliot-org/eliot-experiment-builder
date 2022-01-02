@@ -5,6 +5,7 @@
                 <div class="hardware-header" >
                     <div class="hardware-header-text">  
                         Console
+                        <button class="deleteButton" @click="reloadDevices()">Reload Devices</button>
                     </div>
                 </div>
                 <div class="hardware-collapse">
@@ -19,6 +20,13 @@
                     </div>
                 </div>
                 <div class="hardware-collapse">
+                    <div><h4>Description</h4></div>
+                    <div style="margin-left:20px">
+                        {{script.description}}
+                    </div>
+
+                    <hr>
+                    
                     <div><h4>Commands</h4></div>
                     <ul class="material-table">
                         <li class="table-element" v-for="(command, b) in script.commands" v-bind:key="b">
@@ -39,14 +47,19 @@
 
                     <div>
                         <div><h4>Devices</h4></div>
-                        {{script.devices}}<!--Missing Delete button-->
+                        <div style="margin-left:20px" v-for="(device, f) in devices" v-bind:key="f">
+                            <div v-if="device.script == script.scriptName">
+                                {{device.name}}
+                                <button class="button" @click="removeDevice(device.script, device.name)">Remove</button>
+                            </div>
+                        </div>
                     </div>
 
                     <hr>
 
                     <div>
                         <div><h4>New Device</h4></div>
-                        <div style="margin-left:20px" v-for="(parameter, d) in script.deviceParameters" v-bind:key="d">
+                        <div style="margin-left:20px" v-for="(parameter, e) in script.deviceParameters" v-bind:key="e">
                             {{parameter.name.toUpperCase()}}: <input :type="parameter.type" v-model="parameter.input">
                         </div>
                         <button class="button" @click="createDevice(script)">Create</button>
@@ -63,7 +76,8 @@ export default {
     data: function(){
         return{
             scripts: [],
-            console: ""
+            console: "",
+            devices: []
         }
     },
     methods:{
@@ -80,12 +94,15 @@ export default {
             this.$electron.ipcRenderer.send("hardware", {"type": "createDevice", "scriptName": script.scriptName, "deviceName": deviceName, "parameters": parameters}) 
         },
         removeDevice: function(script, deviceName){
-            this.$electron.ipcRenderer.send("hardware", {"type": "removeDevice", "scriptName": script.scriptName, "deviceName": deviceName}) 
+            this.$electron.ipcRenderer.send("hardware", {"type": "removeDevice", "scriptName": script, "deviceName": deviceName}) 
+        },
+        reloadDevices: function(){ 
+            this.$electron.ipcRenderer.send("hardware", {"type": "getDevices"}) 
         }
     },
     mounted(){
         this.$electron.ipcRenderer.send("hardware", {"type": "getScripts"}) 
-        this.$electron.ipcRenderer.send("hardware", {"type": "getDevices"}) 
+        this.reloadDevices()
         this.$electron.ipcRenderer.on("hardware", (event,arg) => {
             switch (arg.type){
                 case "returnScripts": 
@@ -95,17 +112,10 @@ export default {
                     }
                     break
                 case "console":
-                    console.log(arg.arg)
                     this.console = this.console + "" + arg.arg.sender + ": " + arg.arg.text + "<br>"
                     break
                 case "returnDevices": 
-                    for(let i = 0; i < arg.devices.length; i++){
-                        for(let j = 0; j < this.scripts.length; j++){ //Add deviceName as parameter
-                            if(this.scripts[j].scriptName == arg.devices[i].script){
-                                this.scripts[j].devices.push(arg.devices[i])
-                            }
-                        }
-                    }
+                    this.devices = arg.devices
                     break
             }
         })
@@ -165,5 +175,22 @@ export default {
 
     .table-element{
         margin-left:40px;
+    }
+
+     .deleteButton{
+        float:right;
+        margin-right:10px;
+        padding: 0.2rem 1rem;
+        line-height: 1.5;
+        background-color: white ;
+        border-radius:0.5rem;
+        font-weight: 400;
+        text-align: center;
+        vertical-align: middle;
+		text-transform: none;
+		transition: 0.3s;
+        outline:none !important;
+        cursor: pointer;
+        border: none;
     }
 </style>

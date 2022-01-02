@@ -17,6 +17,7 @@ const SerialPort = require('serialport')
 
 const definitions = {
 	"scriptName": "Brainproducts Triggerbox",//The Name of this script as shown in the config page
+    "description": "",//Description of this script, what it does, what it can do, what it needs. Shown in Hardware Page
 	"deviceParameters":[//Every Device, by default, already has the name property. Here you add every other property you need. See Example Device above
 		{"name": "port", "type": "string"}
 //Maybe at a later date add another property called "needed", boolean. If true than that property has to be set/present when creating a device, otherwise not.
@@ -65,6 +66,7 @@ function removeDevice(name) {
 		}
 		for(let i = 0; i < devices.length; i++) {
 			if(devices[i].name == name){
+                devices[i].device.close()
 				devices.splice(i, 1)
                 output("console", {"text": "Removed Device successfully", "sender": definitions.scriptName})
 				output("config", {"type": "removeDevice", "name": name, "sender": definitions.scriptName})
@@ -121,7 +123,6 @@ function addDevice(name, parameters) {
 			throw err
 		})
         devices[devicePosition-1].device.on('exit', function (err) {
-            removeDevice(devices[devicePosition-1].name)
 			throw err
 		})
 	} catch (error) {
