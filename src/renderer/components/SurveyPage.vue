@@ -13,7 +13,7 @@
         </div>
         
         <transition name="fade" mode="out-in" v-if="gotSurvey">
-            <router-view :material="(i>=survey.length) ? '': survey[i].material" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers" v-on:eegTrigger="triggerEEG()" v-on:toggleLight="toggleLight()" v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()"></router-view>
+            <router-view :material="(i>=survey.length) ? '': survey[i].material" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers" v-on:eegTrigger="triggerEEG()" v-on:toggleLight="toggleLight()" v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
         </transition>
 
         <div class="countup">
@@ -116,7 +116,9 @@ export default {
          */
         nextPage: function() {
             if(!this.paused){ //Kann nur passieren wenn nicht pausiert
+                this.hardwareCommand("onPageEnd")
                 this.i++
+                this.sendSurveyDataToHW()
                 this.progress = parseInt((this.i/(this.survey.length-1))*100)
                 if(this.i==(this.survey.length-1)){ //Fürs beenden
                     clearInterval (this.timer)
@@ -135,16 +137,37 @@ export default {
                         this.sendAnswers()
                     }                    
                 }else{
-                    if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
-                        this.nextPage()
-                    }
+                    //if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
+                        //this.nextPage()
+                    //}
                     if (this.$router.currentRoute.name != this.getNextPage()) {
                         this.$router.push({ name: this.getNextPage(), params: { index: this.i}}) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
                     }
                     window.scrollTo(0,0);
+                    this.hardwareCommand("onPageLoad")
                 }
             }
-        },        
+        },
+        /**
+         * 
+         */    
+        sendSurveyDataToHW: function(){
+            this.$electron.ipcRenderer.send("hardware", {"type": "sendSurveyData", "arg": this.survey[this.i]})           
+        },
+        /**
+         * 
+         */    
+        hardwareCommand: function(type){
+            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, type)){
+                for(let i = 0; i < this.survey[i].hardware[type].length; i++){
+                    if(type == "afterXSeconds"){
+                        setTimeout(this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds)  
+                    }else{
+                        this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command})       
+                    }
+                }
+            } 
+        },  
         /**
          * Gets the type of the next page
          */
@@ -380,6 +403,21 @@ export default {
     },
     created(){ 
         /**
+         * 
+         */
+        this.$electron.ipcRenderer.on("hardware", (event,arg) => {
+            if(arg.type == "event"){
+                if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, "input")){
+                    for(let i = 0; i < this.survey[this.i].hardware.input.length; i++){
+                        if(this.survey[this.i].hardware.input[i].device == arg.arg.device && this.survey[this.i].hardware.input[i].on == arg.arg.event){
+                            this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
+                        }
+                    }
+                }   
+            }
+        })
+
+        /**
          * get survey Data from adminpage
          */
         this.$electron.ipcRenderer.send("surveyOps", "getSurveyData")       
@@ -399,9 +437,6 @@ export default {
                 console.log("Got SurveyData")
                 console.log(arg.survey)
                 this.survey = arg.survey
-                this.port = arg.port
-                //this.initializeArduino()
-                this.$electron.ipcRenderer.send("connectArduino", this.port)  
                 this.gotSurvey = true
             }else if(arg == "Beenden"){
                 console.log("Will end soon. Sending Answers now")

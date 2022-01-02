@@ -1,52 +1,112 @@
 import { app, ipcMain, globalShortcut} from 'electron'
 const electron = require("electron")
 const windowManager = require("electron-window-manager")
-var electronScreen
-var displays
-var externalDisplay 
-var paused = false
+let electronScreen
+let displays
+let externalDisplay 
+let paused = false
 
-const trigger = require("./scripts/eegTrigger")
-const arduinoLights = require("./scripts/arduinoLights").default
-const ur3 = require("./scripts/ur3")
-const customScale = require("./scripts/customScale")
+
+/*------------------ Import all HW Scripts ------------------*/
+//Still missing: Read Directory from config
+let devices = []
+const hwScripts = {}
+var hwScriptsDefinitions = []
 
 let parentGlue = {
-  connector: function(arg){
-    console.log(arg)//Works
-    setTimeout(() => {
-      adminWindow.object.webContents.send("surveyChannel", arg)//Works
-    }, 5000)
-  }
+    /**
+     * 
+     * @param {*} type 
+     * @param {*} arg 
+     */
+    connector: function (type, arg) {
+        if (type == "console") {
+            adminWindow.object.webContents.send("hardware", { "type": "console", "arg": arg })
+        } else if (type == "config") {
+            if (arg.type == "addDevice") {
+                devices.push({ "name": arg.name, "script": arg.sender })
+                adminWindow.object.webContents.send("hardware", { "type": "returnDevices", "devices": devices })
+            } else if (arg.type == "removeDevice") {
+                for (let i = 0; i < devices.length; i++) {
+                    if (devices[i].name == arg.name) {
+                        devices.splice(i, 1)
+                    }
+                }
+                adminWindow.object.webContents.send("hardware", { "type": "returnDevices", "devices": devices })
+            } else if (arg.type == "allDevices") {
+                let tmp = []
+                for (let i = 0; i < devices.length; i++) {//Delete every device thats from the calling script
+                    if (devices[i].script != arg.sender) {
+                        tmp.push(devices[i])
+                    }
+                }
+                tmp.concat(arg.devices)//Then add the new list
+                devices = tmp
+            }
+        } else if (type == "event") {
+            surveyWindow.object.webContents.send("hardware", { "type": "event", "arg": arg})
+        }
+    }
 }
 
-export {parentGlue}
+/**
+ * 
+ * @param {*} r 
+ */
+function importAll(r) {
+    r.keys().forEach((key) => (hwScripts[key] = r(key)));
+    for (var key of Object.keys(hwScripts)) {
+        hwScripts[key].constr(parentGlue)
+    }
+} 
 
-//-------------------------------------------------------------
+importAll(require.context('./scripts/', true, /\.js$/))
 
-ipcMain.on("robotCommands", (event,arg) => {
+for (var key of Object.keys(hwScripts)) {
+    hwScriptsDefinitions.push(hwScripts[key].definitions)
+}
 
+/**
+ * 
+ */
+ipcMain.on("hardware", (event,arg) => {
+    switch (arg.type) {
+        case "getScripts"://To: Adminpage, From: Adminpage
+            adminWindow.object.webContents.send("hardware", {"type": "returnScripts", "scripts": hwScriptsDefinitions})
+            break
+        case "createDevice": //To: HW Scripts, From: Adminpage
+            for (let key of Object.keys(hwScripts)) {
+                if(hwScripts[key].definitions.scriptName == arg.scriptName){
+                    hwScripts[key].addDevice(arg.deviceName, arg.parameters)
+                    break
+                }
+            }
+            break
+        case "getDevices": //To: AdminPage, From: Adminpage
+            adminWindow.object.webContents.send("hardware", {"type": "returnDevices", "devices": devices})
+            break
+        case "removeDevice": //To: HW Scripts, From: Adminpage
+            for (let key of Object.keys(hwScripts)) {
+                if(hwScripts[key].definitions.scriptName == arg.scriptName){
+                    hwScripts[key].removeDevice(arg.deviceName)
+                    break
+                }
+            }
+            break
+        case "sendSurveyData": //To: HW Scripts, From: Surveypage
+            for (let key of Object.keys(hwScripts)) {
+                hwScripts[key].surveyData(arg.arg)
+            }
+            break
+        case "command"://To: HW Scripts, From: Surveypage
+            for (let key of Object.keys(hwScripts)) {
+                hwScripts[key].command(arg.device, arg.command)
+            }
+            break
+    }
 })
 
-ipcMain.on("connectTrigger", (event,arg) => {
-
-})
-
-ipcMain.on("trigger", (event, arg) => {
-
-})
-
-ipcMain.on("connectScale", (event,arg) => {
-
-})
-
-ipcMain.on("connectArduino", (event,arg) => {
-
-})
-
-ipcMain.on("setPin", (event,arg) => {
-
-})
+/*-----------------------------------------------------------*/
 
 //logic for which page a window should load
 ipcMain.on("WindowManagement", (event,arg) => {
@@ -204,10 +264,6 @@ function createWindow () {
 
   adminWindow.object.on('closed', () => {
     adminWindow = null
-    if(typeof client === "Socket" && robotConnected){
-      client.write("quit\n")
-      client.end()
-    }
     app.quit()
   })
 }
@@ -231,10 +287,6 @@ app.on('ready', () =>{
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
-    if(typeof client == "Socket" && robotConnected){
-      client.write("quit\n")
-      client.end()
-    }
     app.quit()
   }
 })

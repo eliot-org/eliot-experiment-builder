@@ -85,6 +85,7 @@
                             //Womöglich noch weitere Seitenabhängige Events. 
                             //Was ist mit nextPage? Also wenn roboter das objekt gebracht hat. idee: standard event nextPage ruft nächste seite auf
                             //Was ist mit daten eines geräts mit in den answers speichern? idee: ein standard event ist savedata bei dem die übergebenen daten dann mit gespeichert werden
+                            //Könnten auch mit speziellem tag daten vom caller auf called übertragen also hier z.b. gewichtsdaten an roboter übergeben.
                             "onPageLoad": [
                                 {
                                     "device":"lamp",
@@ -109,7 +110,8 @@
                                     }
                                 }
                             ],
-                            "onTimerEnd": [],
+                            "onTimerEnd": [],//Custom bei page
+                            "onPageEnd":[],
                             "input":[
                                 {
                                     "device": "scale",
@@ -118,8 +120,7 @@
                                         "device": "eeg",
                                         "command": {
                                             "name": "bit",
-                                            "bit": 1//Könnten auch mit speziellem tag daten vom caller auf called übertragen also hier z.b. gewichtsdaten an roboter übergeben.
-                                            //Oder das wird automatisch gemacht
+                                            "bit": 1
                                         }
                                     }
                                 }

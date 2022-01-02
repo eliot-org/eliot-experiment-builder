@@ -1,15 +1,5 @@
 /*------------------- Do not change -------------------*/
-module.exports = {
-	addDevice,
-	removeDevice,
-	getDevices,
-	surveyData,
-	commands,
-	definitions
-}
-
-const parent = require.main.exports.parentGlue //For adressing the parent Scripts Functions
-
+let parentfunc
 let devices = []
 /*
 	Example Device: 
@@ -61,12 +51,19 @@ const definitions = {
 	]
 }
 
+/**
+ * Called when loaded. Saves the "address" of the main Process so that we can call its functions for output, events...
+ * @param {*} func The Connector Function defined by the main Process
+ */
+ function constr(func){
+    parentfunc = func
+}
 
 /**
  * Gets all registered devices and returns them to the main program
  */
 function getDevices() {
-	output("config", devices)
+    output("config", {"type": "allDevices", "devices": devices, "sender": definitions.scriptName})
 }
 
 /**
@@ -84,15 +81,15 @@ function removeDevice(name) {
 		for(let i = 0; i < devices.length; i++) {
 			if(devices[i].name == name){
 				devices[i].device.write("quit\n")
-				devices.splice(i)
-				output("console", "Removed Device successfully")
-				getDevices()
+				devices.splice(i, 1)
+                output("console", {"text": "Removed Device successfully", "sender": definitions.scriptName})
+				output("config", {"type": "removeDevice", "name": name, "sender": definitions.scriptName})
 				return //Ends the function because were finished. Its only possible to remove one device at a time
 			}
 		}
 		throw "Device not found"
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -140,11 +137,11 @@ function addDevice(name, parameters) {
 
         devices[devicePosition-1].device.connect(parameters.port, parameters.ip, () => {
 			output("console", "Connection to "+ name +" at "+ parameters + " was established")
-			output("config", {}) //TBD
+			output("config", {"type": "addDevice", "name": name, "sender": definitions.scriptName}) 
         })
 
         devices[devicePosition-1].device.on("data", (data) => {
-           	robotConsole(devices[devicePosition-1] ,data.toString())
+            robotConsole(devices[devicePosition-1] ,data.toString())
             output("console", data.toString())
         })
 
@@ -152,7 +149,7 @@ function addDevice(name, parameters) {
 			throw err
 		})
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -161,7 +158,7 @@ function addDevice(name, parameters) {
  * @param {*} arg 
  */
 function surveyData(arg){
- 	currentPage = arg
+    currentPage = arg
 }
 
 /**
@@ -170,7 +167,7 @@ function surveyData(arg){
  * @param {*} arg 
  */
 function output(type, arg) {
-	parent.connector(type, arg)
+	parentfunc.connector(type, arg) //Parent Files Function 
 }
 
 
@@ -208,16 +205,16 @@ function commands(deviceName, command){
 		}
 		throw "Device not found"
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
 //------ Above: Standard Functions, Necessary by Program Definition. Below: Custom Functions needed for Script funcionality
 
 /**
- * 
- * @param {*} device 
- * @param {*} data 
+ * Reads the Output of a Robot. Calls the next Transport Stage after the right output
+ * @param {*} device Which device is outputting
+ * @param {*} data The data output
  */
 function robotConsole(device, data){
 	if(device.waitingForLoad && data.includes("Loading program: /programs/")){
@@ -247,8 +244,8 @@ function robotConsole(device, data){
 }
 
 /**
- * 
- * @param {*} device 
+ * Recursively instructs a robot to send its status. Necessery because a robot doesnt say anything when finished playing a program, we have to check.
+ * @param {*} device The Robot to check
  */
 function robotProgramStateCommandRecursion(device){
 	device.device.write("programState\n")
@@ -258,35 +255,38 @@ function robotProgramStateCommandRecursion(device){
 }
 
 /**
- * 
- * @param {*} device 
+ * Instructs a robot to play a loaded program. Also starts the recursion.
+ * @param {*} device The robot to instruct
  */
 function robotPlayCommand(device){
 	clearTimeout(device.playingTimeout)
 	device.waitingForPlay = true
 	device.device.write("play\n")
-	setTimeout(robotProgramStateCommandRecursion(devicePosition), 1000)
+	setTimeout(robotProgramStateCommandRecursion(device), 1000)
 	device.playingTimeout = setTimeout(function(){
 		if(device.waitingForPlay == true){
 			device.waitingForPlay = false
-			output("console", "Some Robot Communication failed. Please check the Robot.")
+            output("console", {"text": "Some Robot Communication failed. Please check the Robot.", "sender": definitions.scriptName})
 		}
 	},35000)
 }
 
 /**
- * 
- * @param {*} device 
+ * All the main logic for getting an object, and maybe removing a previous one
+ * @param {*} device The robot to instruct
  */
 function getObject(device){
 	try {
+        if(!Object.prototype.hasOwnProperty.call(currentPage, "nextObject")){
+			throw "No Objectdata present!"
+		}
 		//Check if we have to first remove an object before bringing a new one
 		if(device.objectTransportStage == 1){
 			device.objectTransportStage = 2
 			device.device.write("load /programs/" + device.currentObjectData.roboPos + "_back.urp\n")
 		}else if(device.objectTransportStage == 0 || device.objectTransportStage == 3){
 			device.objectTransportStage = 4
-			device.device.write("load /programs/" + currentPage.nextMaterial.roboPos + "present.urp\n")
+			device.device.write("load /programs/" + currentPage.nextObject.roboPos + "present.urp\n")
 		}else{
 			device.objectTransportStage = 0
 			throw "Internal Logic Error. This should never happen! Indicates a bug in your Hardware Script."
@@ -299,15 +299,15 @@ function getObject(device){
 			}
 		},35000)
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 		device.currentCommand = ""
 		output("event",  {"device": device.name,"event":"finished"})
 	}	
 }
 
 /**
- * 
- * @param {*} device 
+ * All the logic for removing an Object
+ * @param {*} device The robot to instruct
  */
 function removeObject(device){
 	try {
@@ -325,8 +325,18 @@ function removeObject(device){
 			throw "No Object present"
 		}
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 		device.currentCommand = ""
 		output("event",  {"device": device.name,"event":"finished"})
 	}
+}
+
+module.exports = {
+    constr,
+	addDevice,
+	removeDevice,
+	getDevices,
+	surveyData,
+	commands,
+	definitions
 }

@@ -1,15 +1,5 @@
 /*------------------- Do not change -------------------*/
-module.exports = {
-	addDevice,
-	removeDevice,
-	getDevices,
-	surveyData,
-    commands,
-	definitions
-}
-
-const parent = require.main.exports.parentGlue //For adressing the parent Scripts Functions
-
+let parentfunc
 let devices = []
 /*
 	Example Device: 
@@ -21,6 +11,7 @@ let devices = []
 	}
 */
 
+// eslint-disable-next-line no-unused-vars
 let currentPage
 
 /*------------------- Do not change the above -------------------*/
@@ -38,10 +29,18 @@ const definitions = {
 }
 
 /**
+ * Called when loaded. Saves the "address" of the main Process so that we can call its functions for output, events...
+ * @param {*} func The Connector Function defined by the main Process
+ */
+ function constr(func){
+    parentfunc = func
+}
+
+/**
  * Gets all registered devices and returns them to the main program
  */
 function getDevices() {
-	output("config", devices)
+    output("config", {"type": "allDevices", "devices": devices, "sender": definitions.scriptName})
 }
 
 /**
@@ -58,15 +57,15 @@ function getDevices() {
 		}
 		for(let i = 0; i < devices.length; i++) {
 			if(devices[i].name == name){
-				devices.splice(i)
-				output("console", "Removed Device successfully")
-				getDevices()
+				devices.splice(i, 1)
+                output("console", {"text": "Removed Device successfully", "sender": definitions.scriptName})
+				output("config", {"type": "removeDevice", "name": name, "sender": definitions.scriptName})
 				return //Ends the function because were finished. Its only possible to remove one device at a time
 			}
 		}
 		throw "Device not found"
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -98,7 +97,7 @@ function getDevices() {
 			"parameters": parameters,
 			"device": new SerialPort(parameters.port, {
 				baudRate: 9600,
-			  }),
+            }),
 			"parser": new Readline(),
 			"lastWeights": []
 		})
@@ -107,7 +106,7 @@ function getDevices() {
   
         devices[devicePosition].device.on("open", function () {
 			output("console", "Connection to "+ name +" at "+ parameters + " was established")
-			output("config", {}) //TBD
+			output("config", {"type": "addDevice", "name": name, "sender": definitions.scriptName}) 
         });    
         
         devices[devicePosition].parser.on('data', function (data) {
@@ -117,8 +116,12 @@ function getDevices() {
         devices[devicePosition].device.on('error', function(err) {
 			throw err
         })
+        devices[devicePosition-1].device.on('exit', function (err) {
+            removeDevice(devices[devicePosition-1].name)
+			throw err
+		})
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -136,7 +139,7 @@ function getDevices() {
  * @param {*} arg 
  */
 function output(type, arg) {
-	parent.connector(type, arg)
+	parentfunc.connector(type, arg) //Parent Files Function 
 }
 
 /**
@@ -144,8 +147,9 @@ function output(type, arg) {
  * @param {string} deviceName The device thats 
  * @param {*} command The exact definition is specified in the defintions variable
  */
+// eslint-disable-next-line no-unused-vars
 function commands(deviceName, command){
-	output("console", "This device has no commands")
+    output("console", {"text": "This device has no commands", "sender": definitions.scriptName})
 }
 
 //------ Above: Standard Functions, Necessary by Program Definition. Below: Custom Functions needed for Script funcionality
@@ -182,6 +186,16 @@ function weightFunction(device, data){
 			}
 		}
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
+}
+
+module.exports = {
+    constr,
+	addDevice,
+	removeDevice,
+	getDevices,
+	surveyData,
+    commands,
+	definitions
 }

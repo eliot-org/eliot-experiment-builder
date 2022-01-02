@@ -359,11 +359,11 @@
                         || this.surveyChoice.survey[y].module == "Training" || this.surveyChoice.survey[y].module == "Prä_Stimmungsabfrage"){
                             //Für Ländercodes
                             if(this.surveyChoice.survey[y].module == "POI" && this.surveyChoice.survey[y].part == "Demographie" && this.surveyChoice.survey[y].content.options == "LOAD" && (this.surveyChoice.survey[y].content.name == "POI_Demographie_origin"|| this.surveyChoice.survey[y].content.name == "POI_Demographie_residence")){
-                                this.computedSurvey.push({"material": "", "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                this.computedSurvey.push({"material": "", "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                     "content": {"name": this.surveyChoice.survey[y].content.name, "type": this.surveyChoice.survey[y].content.type, "text": this.surveyChoice.survey[y].content.text, "options": countrynames.getAllNames()}
                                 })
                             }else{
-                                this.computedSurvey.push({"material": "", "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                this.computedSurvey.push({"material": "", "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                     "content": this.surveyChoice.survey[y].content
                                 })
                                 console.log(this.computedSurvey)
@@ -392,11 +392,11 @@
                                         if(this.materialsChosenExtraInformation.includes(this.materialsChosen[x]) == false && this.materialsChosen[x].information !== null){//Wenn die Informationen nicht erst später gezeigt werden sollen//Nur wenn Material auch Informationen besitzt
                                             if(/*this.surveyChoice.survey[y].part == "Material Narrativ" &&*/ this.surveyChoice.survey[y].content.text == "LOAD"){
                                                 let tmpImg = (this.materialsChosen[x].image != "" ? this.materialsChosen[x].image : "leer.png")
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
+                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
                                                     "content": {"text": this.materialsChosen[x].information, "img": tmpImg}
                                                 })
                                             }else{
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                     "content": this.surveyChoice.survey[y].content
                                                 })
                                             }
@@ -407,17 +407,17 @@
                                         let tmpImg = (this.materialsChosen[x].extraImg != "" ? this.materialsChosen[x].extraImg : "leer.png")
                                         let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
                                         tmpContent.imgBefore = tmpImg //Zeigt nur bei der Präsentation das Materialspezifische Bild. Das eigentliche wird überschrieben
-                                        this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
+                                        this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
                                             "content": tmpContent
                                         })
                                     }else{
                                         if(((this.surveyChoice.survey[y].module == "OPTIK T1 IME") && (this.surveyChoice.survey[y].part == "OPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))
                                         /*|| ((this.surveyChoice.survey[y].module == "HAPTIK T1 IME") && (this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))*/){//Für automatischen EEG Trigger
-                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                 "content": this.surveyChoice.survey[y].content
                                             })
                                         }else{
-                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                 "content": this.surveyChoice.survey[y].content
                                             })
                                         }
@@ -444,7 +444,7 @@
                                             if(this.surveyChoice.survey[y].module == "T0 MN" /*&& this.surveyChoice.survey[y].part == "Material Narrativ"*/ && this.surveyChoice.survey[y].content.text == "LOAD"){
                                                 if(this.materialsChosen[x].information !== null){ //Nur wenn Material auch Informationen besitzt
                                                     let tmpImg = (this.materialsChosen[x].image != "" ? this.materialsChosen[x].image : "leer.png")
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
+                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
                                                         "content": {"text": this.materialsChosen[x].information, "img": tmpImg}
                                                     })
                                                 }
@@ -455,7 +455,7 @@
                                                 let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
                                                 Object.prototype.hasOwnProperty.call(tmpContent,"name") ? tmpContent.name = tmpContent.name +"_secondPresentation" : ""
                                                 tmpContent.imgBefore = tmpImg //Zeigt nur bei der Präsentation das Materialspezifische Bild. Das eigentliche wird überschrieben
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
+                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
                                                     "content": tmpContent
                                                 })
                                             }else{
@@ -463,11 +463,11 @@
                                                 Object.prototype.hasOwnProperty.call(tmpContent,"name") ? tmpContent.name = tmpContent.name +"_secondPresentation" : ""
                                                 if(((this.surveyChoice.survey[y].module == "OPTIK T1 IME") && (this.surveyChoice.survey[y].part == "T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))
                                                 /*|| ((this.surveyChoice.survey[y].module == "HAPTIK T1 IME") && (this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))*/){//Für automatischen EEG Trigger
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                         "content": tmpContent
                                                     })
                                                 }else{
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                         "content": tmpContent
                                                     })
                                                 }
@@ -501,6 +501,7 @@
                             //Push into computed Array
                             this.computedSurvey.push({
                                 "material": ""/*this.materialsChosen[this.materialsChosen.length-1]*/,
+                                "hardware": this.surveyChoice.survey[y].hardware,
                                 "module": this.surveyChoice.survey[y].module,
                                 "part": this.surveyChoice.survey[y].part,
                                 "type": this.surveyChoice.survey[y].type,
@@ -589,12 +590,12 @@
                 try{
                     let rawData = fs.readFileSync("src/renderer/assets/survey.json")
                     let jsonData = JSON.parse(rawData)
-                    tmp.push({"id":tmp.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
+                    this.surveyPresets.push({"id":this.surveyPresets.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
                 }catch(e){
                     console.log(e)
                 }
 
-                this.surveyPresets = tmp
+                //this.surveyPresets = tmp
 
                 for(let i=0; i<this.surveyPresets.length; i++){
                     this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})

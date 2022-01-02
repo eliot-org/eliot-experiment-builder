@@ -1,15 +1,5 @@
 /*------------------- Do not change -------------------*/
-module.exports = {
-	addDevice,
-	removeDevice,
-	getDevices,
-	surveyData,
-	commands,
-	definitions
-}
-
-const parent = require.main.exports.parentGlue //For adressing the parent Scripts Functions
-
+let parentfunc
 let devices = []
 /*
 	Example Device: 
@@ -19,6 +9,7 @@ let devices = []
 		"device": object
 	}
 */
+// eslint-disable-next-line no-unused-vars
 let currentPage
 
 /*------------------- Do not change the above -------------------*/
@@ -46,10 +37,18 @@ const definitions = {
 }
 
 /**
+ * Called when loaded. Saves the "address" of the main Process so that we can call its functions for output, events...
+ * @param {*} func The Connector Function defined by the main Process
+ */
+ function constr(func){
+    parentfunc = func
+}
+
+/**
  * Gets all registered devices and returns them to the main program
  */
 function getDevices() {
-	output("config", devices)
+    output("config", {"type": "allDevices", "devices": devices, "sender": definitions.scriptName})
 }
 
 /**
@@ -66,15 +65,15 @@ function removeDevice(name) {
 		}
 		for(let i = 0; i < devices.length; i++) {
 			if(devices[i].name == name){
-				devices.splice(i)
-				output("console", "Removed Device successfully")
-				getDevices()
+				devices.splice(i, 1)
+                output("console", {"text": "Removed Device successfully", "sender": definitions.scriptName})
+				output("config", {"type": "removeDevice", "name": name, "sender": definitions.scriptName})
 				return //Ends the function because were finished. Its only possible to remove one device at a time
 			}
 		}
 		throw "Device not found"
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -114,15 +113,19 @@ function addDevice(name, parameters) {
 
 		devices[devicePosition-1].device.on("open", function () {
 			output("console", "Connection to "+ name +" at "+ parameters + " was established")
-			output("config", {}) //TBD
+			output("config", {"type": "addDevice", "name": name, "sender": definitions.scriptName}) 
 			devices[devicePosition].device.write(Buffer.from([0]), e => console.log(e))
 		})
 
 		devices[devicePosition-1].device.on('error', function (err) {
 			throw err
 		})
+        devices[devicePosition-1].device.on('exit', function (err) {
+            removeDevice(devices[devicePosition-1].name)
+			throw err
+		})
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -140,7 +143,7 @@ function addDevice(name, parameters) {
  * @param {*} arg 
  */
 function output(type, arg) {
-	parent.connector(type, arg)
+	parentfunc.connector(type, arg) //Parent Files Function 
 }
 
 
@@ -176,7 +179,7 @@ function commands(deviceName, command){
 		}
 		throw "Device not found"
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
 }
 
@@ -190,9 +193,18 @@ function commands(deviceName, command){
 function trigger(device, bit) { 
 	try {	
 		device.device.write(Buffer.from([bit]), e => console.log(e))
-		buffer = Buffer.from([0])
 		setTimeout(function () { device.device.write(Buffer.from([0]), e => console.log(e)) }.bind(this), 10)
 	} catch (error) {
-		output("console", error)
+        output("console", {"text": error, "sender": definitions.scriptName})
 	}
+}
+
+module.exports = {
+    constr,
+	addDevice,
+	removeDevice,
+	getDevices,
+	surveyData,
+	commands,
+	definitions
 }

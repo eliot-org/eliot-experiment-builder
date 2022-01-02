@@ -1,82 +1,59 @@
 <template>
     <div class="admin-hardware-wrapper">
         <div class="hardware-overview-wrapper">
-
             <div class="hardware-box">
                 <div class="hardware-header" >
                     <div class="hardware-header-text">  
-                        LED & Arduino       
+                        Console
                     </div>
                 </div>
-                <div class="hardware-collapse" >
-                    Status: {{(boardStatus.message == null) ? boardStatus: boardStatus.message}}<br>
-                    <!--Fehler: {{(boardError != null) ? boardError.message : ""}}<br>-->
-                    Port: <input type="text"  v-model="port" class="input"><br>
-                    <button class="button" @click="connectToArduino()">Verbinden</button>
-                    <!--<button class="button" @click="pressButton1()">Drücke Knopf 1</button>-->
-                    <button class="button" @click="pressButton2()">Drücke Knopf 2</button>
-                     <!--<button class="button" @click="toggleLight()">Lichtschalter</button>-->
-                     <!--<button class="button" @click="changeBrightness()">Ändere Helligkeit</button>-->
-                    <!--<button class="button" @click="changeLightTemperature()">Ändere Lichtemperatur</button>-->
-                     <!--<button class="button" @click="disconnect()">Verbindung trennen</button>-->
-                </div>
-            </div>
-            
-            <div class="hardware-box">
-                <div class="hardware-header" >
-                    <div class="hardware-header-text">  
-                        Waage       
-                    </div>
-                </div>
-                <div class="hardware-collapse" >
-                    Status: {{(waageStatus.message == null) ? waageStatus: waageStatus.message}}<br>
-                    Port: <input type="text"  v-model="waagePort" class="input"><br>
-                    <button class="button" @click="connectWaage()">Verbinden</button>
+                <div class="hardware-collapse">
+                    <div style="max-height: 150px; min-height:25px; overflow: scroll; display:flex; flex-direction: column-reverse" v-html="console"></div>
                 </div>
             </div>
 
-            <div class="hardware-box">
+            <div class="hardware-box" v-for="(script, a) in scripts" v-bind:key="a">
                 <div class="hardware-header" >
                     <div class="hardware-header-text">  
-                        Triggerbox       
+                        {{script.scriptName}}
                     </div>
                 </div>
-                <div class="hardware-collapse" >
-                    Status: {{(triggerStatus.message == null) ? triggerStatus: triggerStatus.message}}<br>
-                    Port: <input type="text"  v-model="triggerPort" class="input"><br>
-                    <button class="button" @click="connectTrigger()">Verbinden</button>
-                    <button class="button" @click="trigger()">Trigger</button>
-                </div>
-            </div>
+                <div class="hardware-collapse">
+                    <div><h4>Commands</h4></div>
+                    <ul class="material-table">
+                        <li class="table-element" v-for="(command, b) in script.commands" v-bind:key="b">
+                            {{command}}
+                        </li>
+                    </ul>
 
-            <div class="hardware-box">
-                <div class="hardware-header" >
-                    <div class="hardware-header-text">  
-                        Roboter       
-                    </div>
-                </div>
-                <div class="hardware-collapse" >
-                    Nachricht vom Roboter: {{robotConsole}}<br>
-                    IP: <input type="text"  v-model="roboIp" class="input"><br>
-                    Port: <input type="text"  v-model="roboPort" class="input"><br>
-                    <button class="button" @click="connectToRobot()">Verbinden</button>
-                    <button class="button" @click="disconnectRobot()">Verbindung trennen</button>
-                    <button class="button" @click="addIp()">Adresse speichern</button><br>
-                    Verbindungsstatus: {{robotConnected}}
                     <hr>
-                    Lade Programm: <input type="text" v-model="programm" class="input">
-                    <button class="button" @click="loadProgram('load')">Lade</button><br>
-                    <button class="button" @click="command('play')">Play</button><br>
-                    <button class="button" @click="command('stop')">Stop</button><br>
-                    <button class="button" @click="command('pause')">Pause</button><br>
-                    <button class="button" @click="command('status')">Verbindungsstatus</button><br>
-                    <button class="button" @click="command('programState')">Programmzustand</button><br>
-                    <button class="button" @click="command('running')">Läuft?</button><br>
+
+                    <div><h4>Events</h4></div>
+                    <ul class="material-table">
+                        <li class="table-element" v-for="(event, c) in script.events" v-bind:key="c">
+                            {{event}}
+                        </li>
+                    </ul>
+
+                    <hr>
+
+                    <div>
+                        <div><h4>Devices</h4></div>
+                        {{script.devices}}<!--Missing Delete button-->
+                    </div>
+
+                    <hr>
+
+                    <div>
+                        <div><h4>New Device</h4></div>
+                        <div style="margin-left:20px" v-for="(parameter, d) in script.deviceParameters" v-bind:key="d">
+                            {{parameter.name.toUpperCase()}}: <input :type="parameter.type" v-model="parameter.input">
+                        </div>
+                        <button class="button" @click="createDevice(script)">Create</button>
+                    </div> 
                     
                 </div>
             </div>
-
-    
         </div>
     </div>
 </template>
@@ -85,11 +62,53 @@
 export default {
     data: function(){
         return{
-           
+            scripts: [],
+            console: ""
         }
     },
     methods:{
-        
+        createDevice: function(script){
+            let parameters = {}
+            let deviceName
+
+            for(let i = 0; i < script.deviceParameters.length; i++){
+                parameters[script.deviceParameters[i].name] = script.deviceParameters[i].input
+            }
+            deviceName = parameters["name"]
+            delete parameters["name"]
+
+            this.$electron.ipcRenderer.send("hardware", {"type": "createDevice", "scriptName": script.scriptName, "deviceName": deviceName, "parameters": parameters}) 
+        },
+        removeDevice: function(script, deviceName){
+            this.$electron.ipcRenderer.send("hardware", {"type": "removeDevice", "scriptName": script.scriptName, "deviceName": deviceName}) 
+        }
+    },
+    mounted(){
+        this.$electron.ipcRenderer.send("hardware", {"type": "getScripts"}) 
+        this.$electron.ipcRenderer.send("hardware", {"type": "getDevices"}) 
+        this.$electron.ipcRenderer.on("hardware", (event,arg) => {
+            switch (arg.type){
+                case "returnScripts": 
+                    this.scripts = arg.scripts
+                    for(let i = 0; i < this.scripts.length; i++){
+                        this.scripts[i].deviceParameters.unshift({"name": "name", "type": "string"}) //Add deviceName as parameter
+                    }
+                    break
+                case "console":
+                    console.log(arg.arg)
+                    this.console = this.console + "" + arg.arg.sender + ": " + arg.arg.text + "<br>"
+                    break
+                case "returnDevices": 
+                    for(let i = 0; i < arg.devices.length; i++){
+                        for(let j = 0; j < this.scripts.length; j++){ //Add deviceName as parameter
+                            if(this.scripts[j].scriptName == arg.devices[i].script){
+                                this.scripts[j].devices.push(arg.devices[i])
+                            }
+                        }
+                    }
+                    break
+            }
+        })
     }
 }
 </script>
@@ -126,7 +145,7 @@ export default {
     }
 
     .hardware-box{
-        margin-top: 25px;
+        margin-top:25px;
     }
 
     .hardware-header{
@@ -142,5 +161,9 @@ export default {
 
     .hardware-collapse{
         border: 1px solid black;
+    }
+
+    .table-element{
+        margin-left:40px;
     }
 </style>
