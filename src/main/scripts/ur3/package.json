@@ -1,0 +1,12 @@
+{
+    "name": "ur3",
+    "main": "./ur3.js",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "ISC",
+    
+    "dependencies": {
+        "net": ""
+    }
+}

@@ -1,6 +1,12 @@
-import { app, ipcMain, globalShortcut} from 'electron'
+import { dialog, app, ipcMain, globalShortcut} from 'electron'
 const electron = require("electron")
 const windowManager = require("electron-window-manager")
+const Store = require('electron-store')
+const store = new Store()
+const fs = require("fs")
+const path = require('path');
+import {PluginManager} from "live-plugin-manager";
+const manager = new PluginManager();
 let electronScreen
 let displays
 let externalDisplay 
@@ -10,8 +16,14 @@ let paused = false
 /*------------------ Import all HW Scripts ------------------*/
 //Still missing: Read Directory from config
 let devices = []
-const hwScripts = {}
+let hwScripts = {}
 var hwScriptsDefinitions = []
+let scriptLocation
+
+function setScriptLocation(){
+    scriptLocation = store.get("scriptLocation") === undefined ?  (process.env.NODE_ENV !== 'development' ? path.join(__dirname, "./scripts") : "") : store.get("scriptLocation")
+}
+setScriptLocation()
 
 let parentGlue = {
     /**
@@ -49,22 +61,22 @@ let parentGlue = {
     }
 }
 
-/**
- * 
- * @param {*} r 
- */
-function importAll(r) {
-    r.keys().forEach((key) => (hwScripts[key] = r(key)));
-    for (var key of Object.keys(hwScripts)) {
-        hwScripts[key].constr(parentGlue)
+function installHWScripts(){
+    try {
+        setScriptLocation()
+        hwScripts = {}
+        hwScriptsDefinitions = []
+        fs.readdirSync(scriptLocation).forEach(async function(file){
+            await manager.installFromPath(path.join(scriptLocation, file))
+            hwScripts[file] = manager.require(file)
+            hwScripts[file].constr(parentGlue)
+            hwScriptsDefinitions.push(hwScripts[file].definitions)
+        })
+    } catch (error) {
+        console.log(error)
     }
-} 
-
-importAll(require.context('./scripts/', true, /\.js$/))
-
-for (var key of Object.keys(hwScripts)) {
-    hwScriptsDefinitions.push(hwScripts[key].definitions)
 }
+installHWScripts()
 
 /**
  * 
@@ -107,6 +119,26 @@ ipcMain.on("hardware", (event,arg) => {
 })
 
 /*-----------------------------------------------------------*/
+
+ipcMain.handle('getStoreValue', (event, key) => {
+	return store.get(key)
+})
+ipcMain.handle('setStoreValue', (event, key, value) => {
+	store.set(key, value)
+})
+
+ipcMain.handle('openHWDirDialog', async (event) => {
+	dialog.showOpenDialog({
+        properties: ['openDirectory']
+    }).then((res) => {
+        if(res.canceled == false){
+            store.set("scriptLocation", res.filePaths[0])
+            event.sender.send("reloadScriptLocation")
+            installHWScripts()
+        }
+    })
+})
+
 
 //logic for which page a window should load
 ipcMain.on("WindowManagement", (event,arg) => {

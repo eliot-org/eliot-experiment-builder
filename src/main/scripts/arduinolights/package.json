@@ -1,0 +1,13 @@
+{
+    "name": "arduinolights",
+    "main": "./arduinoLights.js",
+    "version": "1.0.0",
+    "description": "",
+    "author": "",
+    "license": "ISC",
+    
+    "dependencies": {
+        "johnny-five": "^2.1.0",
+        "serialport": "^9.2.7"
+    }
+}

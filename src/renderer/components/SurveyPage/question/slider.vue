@@ -212,7 +212,7 @@
             init(){//Text wird über dem Slider angezeigt
                 for (var i=0;i<this.options.length;i++){
                     if(Object.prototype.hasOwnProperty.call(this.options[i],"data")){
-                        this.picked.push({name:this.options[i].name, text: this.options[i].text, value:Object.prototype.hasOwnProperty.call(this.options[i], "defaultValue") ? this.options[i].defaultValue :this.options[i].data[this.options[i].data.length/2]})//Für Slider wenn er Buchstaben hat
+                        this.picked.push({name:this.options[i].name, text: this.options[i].text, value:Object.prototype.hasOwnProperty.call(this.options[i], "defaultValue") ? this.options[i].defaultValue :this.options[i].data[Math.floor(this.options[i].data.length/2)]})//Für Slider wenn er Buchstaben hat
                     }else{
                         if(Object.prototype.hasOwnProperty.call(this.options[i],"min")){//Wenn custom min max
                             if(Object.prototype.hasOwnProperty.call(this.options[i],"max")){
