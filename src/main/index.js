@@ -33,18 +33,18 @@ let parentGlue = {
      */
     connector: function (type, arg) {
         if (type == "console") {
-            adminWindow.object.webContents.send("hardware", { "type": "console", "arg": arg })
+            adminWindow.object.webContents.send("hardwareConsole", arg )
         } else if (type == "config") {
             if (arg.type == "addDevice") {
                 devices.push({ "name": arg.name, "script": arg.sender })
-                adminWindow.object.webContents.send("hardware", { "type": "returnDevices", "devices": devices })
+                adminWindow.object.webContents.send("hardwareReturnDevices", devices)
             } else if (arg.type == "removeDevice") {
                 for (let i = 0; i < devices.length; i++) {
                     if (devices[i].name == arg.name) {
                         devices.splice(i, 1)
                     }
                 }
-                adminWindow.object.webContents.send("hardware", { "type": "returnDevices", "devices": devices })
+                adminWindow.object.webContents.send("hardwareReturnDevices", devices)
             } else if (arg.type == "allDevices") {
                 let tmp = []
                 for (let i = 0; i < devices.length; i++) {//Delete every device thats from the calling script
@@ -56,7 +56,7 @@ let parentGlue = {
                 devices = tmp
             }
         } else if (type == "event") {
-            surveyWindow.object.webContents.send("hardware", { "type": "event", "arg": arg})
+            surveyWindow.object.webContents.send("hardwareEvent", arg)
         }
     }
 }
@@ -71,6 +71,7 @@ function installHWScripts(){
             hwScripts[file] = manager.require(file)
             hwScripts[file].constr(parentGlue)
             hwScriptsDefinitions.push(hwScripts[file].definitions)
+            console.log("Loaded Hardware Script "+ hwScripts[file].definitions.scriptName)
         })
     } catch (error) {
         console.log(error)
@@ -78,43 +79,42 @@ function installHWScripts(){
 }
 installHWScripts()
 
-/**
- * 
- */
-ipcMain.on("hardware", (event,arg) => {
-    switch (arg.type) {
-        case "getScripts"://To: Adminpage, From: Adminpage
-            adminWindow.object.webContents.send("hardware", {"type": "returnScripts", "scripts": hwScriptsDefinitions})
+
+ipcMain.handle('hardwareGetScripts', () => { //To: Adminpage, From: Adminpage
+    adminWindow.object.webContents.send("hardwareReturnScripts", hwScriptsDefinitions)
+})
+
+ipcMain.handle('hardwareCreateDevice', (event, arg) => { //To: HW Scripts, From: Adminpage
+    for (let key of Object.keys(hwScripts)) {
+        if(hwScripts[key].definitions.scriptName == arg.scriptName){
+            hwScripts[key].addDevice(arg.deviceName, arg.parameters)
             break
-        case "createDevice": //To: HW Scripts, From: Adminpage
-            for (let key of Object.keys(hwScripts)) {
-                if(hwScripts[key].definitions.scriptName == arg.scriptName){
-                    hwScripts[key].addDevice(arg.deviceName, arg.parameters)
-                    break
-                }
-            }
+        }
+    }
+})
+
+ipcMain.handle('hardwareGetDevices', () => { //To: AdminPage, From: Adminpage
+    adminWindow.object.webContents.send("hardwareReturnDevices", devices)
+})
+
+ipcMain.handle('hardwareRemoveDevice', (event, arg) => { //To: HW Scripts, From: Adminpage
+    for (let key of Object.keys(hwScripts)) {
+        if(hwScripts[key].definitions.scriptName == arg.scriptName){
+            hwScripts[key].removeDevice(arg.deviceName)
             break
-        case "getDevices": //To: AdminPage, From: Adminpage
-            adminWindow.object.webContents.send("hardware", {"type": "returnDevices", "devices": devices})
-            break
-        case "removeDevice": //To: HW Scripts, From: Adminpage
-            for (let key of Object.keys(hwScripts)) {
-                if(hwScripts[key].definitions.scriptName == arg.scriptName){
-                    hwScripts[key].removeDevice(arg.deviceName)
-                    break
-                }
-            }
-            break
-        case "sendSurveyData": //To: HW Scripts, From: Surveypage
-            for (let key of Object.keys(hwScripts)) {
-                hwScripts[key].surveyData(arg.arg)
-            }
-            break
-        case "command"://To: HW Scripts, From: Surveypage
-            for (let key of Object.keys(hwScripts)) {
-                hwScripts[key].command(arg.device, arg.command)
-            }
-            break
+        }
+    }
+})
+
+ipcMain.handle('hardwareSendSurveyData', (event, arg) => { //To: HW Scripts, From: Surveypage
+    for (let key of Object.keys(hwScripts)) {
+        hwScripts[key].surveyData(arg.arg)
+    }
+})
+
+ipcMain.handle('hardwareCommand', (event, arg) => {
+    for (let key of Object.keys(hwScripts)) {
+        hwScripts[key].command(arg.device, arg.command)
     }
 })
 
@@ -123,9 +123,11 @@ ipcMain.on("hardware", (event,arg) => {
 ipcMain.handle('getStoreValue', (event, key) => {
 	return store.get(key)
 })
+
 ipcMain.handle('setStoreValue', (event, key, value) => {
 	store.set(key, value)
 })
+
 
 ipcMain.handle('openHWDirDialog', async (event) => {
 	dialog.showOpenDialog({

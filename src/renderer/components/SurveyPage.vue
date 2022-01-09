@@ -405,24 +405,22 @@ export default {
         /**
          * 
          */
-        this.$electron.ipcRenderer.on("hardware", (event,arg) => {
-            if(arg.type == "event"){
-                if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, "input")){
-                    for(let i = 0; i < this.survey[this.i].hardware.input.length; i++){
-                        if(this.survey[this.i].hardware.input[i].device == arg.arg.device && this.survey[this.i].hardware.input[i].on == arg.arg.event){
-                            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "page")){
-                                if(this.survey[this.i].hardware.input[i].page == "nextPage"){
-                                    this.nextPage()
-                                }/*else if(){
-                                    //Seitenabhänige events hier
-                                }*/
-                            }else if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "do")){
-                                this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
-                            }
+        this.$electron.ipcRenderer.on("hardwareEvent", (event,arg) => {
+            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, "input")){
+                for(let i = 0; i < this.survey[this.i].hardware.input.length; i++){
+                    if((this.survey[this.i].hardware.input[i].device == arg.arg.device || this.survey[this.i].hardware.input[i].device == "*") && this.survey[this.i].hardware.input[i].on == arg.arg.event){
+                        if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "page")){
+                            if(this.survey[this.i].hardware.input[i].page == "nextPage"){
+                                this.nextPage()
+                            }/*else if(){
+                                //Seitenabhänige events hier
+                            }*/
+                        }else if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "do")){
+                            this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
                         }
                     }
-                }   
-            }
+                }
+            }   
         })
 
         /**

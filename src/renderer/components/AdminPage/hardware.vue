@@ -77,7 +77,8 @@ export default {
         return{
             scripts: [],
             console: "",
-            devices: []
+            devices: [],
+            gotScripts: false,
         }
     },
     methods:{
@@ -91,35 +92,38 @@ export default {
             deviceName = parameters["name"]
             delete parameters["name"]
 
-            this.$electron.ipcRenderer.send("hardware", {"type": "createDevice", "scriptName": script.scriptName, "deviceName": deviceName, "parameters": parameters}) 
+            this.$electron.ipcRenderer.invoke("hardwareCreateDevice", {"scriptName": script.scriptName, "deviceName": deviceName, "parameters": parameters}) 
         },
         removeDevice: function(script, deviceName){
-            this.$electron.ipcRenderer.send("hardware", {"type": "removeDevice", "scriptName": script, "deviceName": deviceName}) 
+            this.$electron.ipcRenderer.invoke("hardwareRemoveDevice", {"scriptName": script, "deviceName": deviceName}) 
         },
         reloadDevices: function(){ 
-            this.$electron.ipcRenderer.send("hardware", {"type": "getDevices"}) 
+            this.$electron.ipcRenderer.invoke("hardwareGetDevices") 
         }
     },
     mounted(){
-        this.$electron.ipcRenderer.send("hardware", {"type": "getScripts"}) 
+        this.gotScripts = false
+        this.$electron.ipcRenderer.invoke("hardwareGetScripts") 
         this.reloadDevices()
-        this.$electron.ipcRenderer.on("hardware", (event,arg) => {
-            switch (arg.type){
-                case "returnScripts": 
-                    this.scripts = arg.scripts
-                    for(let i = 0; i < this.scripts.length; i++){
-                        this.scripts[i].deviceParameters.unshift({"name": "name", "type": "string"}) //Add deviceName as parameter
-                    }
-                    break
-                case "console":
-                    this.console = this.console + "" + arg.arg.sender + ": " + arg.arg.text + "<br>"
-                    break
-                case "returnDevices": 
-                    this.devices = arg.devices
-                    break
+
+        this.$electron.ipcRenderer.on("hardwareReturnScripts", (event,arg) => {
+            if(this.gotScripts == false){
+                this.gotScripts = true
+                this.scripts = arg
+                for(let i = 0; i < this.scripts.length; i++){
+                    this.scripts[i].deviceParameters.unshift({"name": "name", "type": "string"}) //Add deviceName as parameter
+                }
             }
         })
-    }
+        
+        this.$electron.ipcRenderer.on("hardwareReturnDevices", (event,arg) => {
+            this.devices = arg
+        })
+
+        this.$electron.ipcRenderer.on("hardwareConsole", (event,arg) => {
+            this.console = this.console + "" + arg.sender + ": " + arg.text + "<br>"
+        })
+    },
 }
 </script>
 

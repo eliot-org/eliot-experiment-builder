@@ -188,11 +188,11 @@
                                     "type": "object",
                                     "properties":{
                                         "device": {
-                                            "description": "Name of the device that should run the command",
+                                            "description": "Name of the device that emits the command. Command will only be run if this device emits the event. Set to * for any device",
                                             "type": "string"
                                         },
                                         "on":{
-                                            "description": "",
+                                            "description": "Which event triggers the command.",
                                             "type": "string"
                                         },
                                         "do":{
@@ -230,7 +230,8 @@
                                     },
                                     "required":[
                                         "device",
-                                        "command"
+                                        "on",
+                                        "do"
                                     ]
                                 }
                             }

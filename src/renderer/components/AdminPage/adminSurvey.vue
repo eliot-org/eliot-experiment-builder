@@ -709,7 +709,7 @@
                 }
             })
             
-            this.$electron.ipcRenderer.on("robotConnected", (event,arg) => {
+            /*this.$electron.ipcRenderer.on("robotConnected", (event,arg) => {
                 this.robotConnected = arg
                 console.log(arg)
             }) 
@@ -717,7 +717,7 @@
                 this.robotConsole = arg
                 console.log(arg)
             }) 
-            this.$electron.ipcRenderer.send("robotCommands", {command:"status", data:""})  
+            this.$electron.ipcRenderer.send("robotCommands", {command:"status", data:""})  */
 
             this.$electron.ipcRenderer.send("displays", {"arg": "getDisplays"})
 
