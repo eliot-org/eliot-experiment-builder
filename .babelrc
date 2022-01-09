@@ -11,7 +11,8 @@
             }
           }
         ]
-      ]
+      ],
+      "sourceType": "unambiguous"
     },
     "renderer": {
       "presets": [
@@ -21,7 +22,8 @@
             "modules": false
           }
         ]
-      ]
+      ],
+      "sourceType": "unambiguous"
     },
     "web": {
       "presets": [
@@ -31,7 +33,8 @@
             "modules": false
           }
         ]
-      ]
+      ],
+      "sourceType": "unambiguous"
     }
   },
   "plugins": [

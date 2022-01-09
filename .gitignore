@@ -10,3 +10,4 @@ thumbs.db
 !.gitkeep
 yarn.lock
 yarn-error.log
+plugin_packages/

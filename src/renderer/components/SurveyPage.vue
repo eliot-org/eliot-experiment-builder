@@ -13,7 +13,7 @@
         </div>
         
         <transition name="fade" mode="out-in" v-if="gotSurvey">
-            <router-view :material="(i>=survey.length) ? '': survey[i].material" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers" v-on:eegTrigger="triggerEEG()" v-on:toggleLight="toggleLight()" v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()"></router-view>
+            <router-view :material="(i>=survey.length) ? '': survey[i].material" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers" v-on:eegTrigger="triggerEEG()" v-on:toggleLight="toggleLight()" v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
         </transition>
 
         <div class="countup">
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 const countrynames = require("countrynames")
 export default {
     data: function(){
@@ -50,74 +49,6 @@ export default {
             progress: 0,  
             //the time already in the survey
             timer: "",
-            //If the robot is Connected
-            robotConnected: false,
-            //What the robot has sent to us
-            robotConsole: "",
-            //Are we waiting for the robot to finish playing the program
-            waitingForPlay: false,
-            //Are we waiting on the robot to load the program
-            waitingForLoad: false,
-            //Translation for the objects script and the real robot program
-            robotPosTranslation: {RA1: "E_re_A1", RA2: "E_re_A2", RA3: "E_re_A3", RB1: "E_re_B1", RB2: "E_re_B2", RB3: "E_re_B3", RC1: "E_re_C1", RC2: "E_re_C2", 
-                                RC3: "E_re_C3" , RD1: "E_re_D1", RD2: "E_re_D2", RD3:"E_re_D3", LA1: "E_li_A1", LA2: "E_li_A2", LA3: "E_li_A3", LB1: "E_li_B1", 
-                                LB2: "E_li_B2", LB3: "E_li_B3", LC1: "E_li_C1", LC2: "E_li_C2", LC3: "E_li_C3" , LD1: "E_li_D1", LD2: "E_li_D2", LD3:"E_li_D3"},
-            //What stage the object is in, so is there even one, are we waiting for it to be brought...
-            materialTransportStage: 0, //0: kein material am liegen , 1: warte auf entfernung/material liegt, 2: entferne gerade, 3: warte auf hinbringen, 4: bringe gerade
-            //Are we ready to continue to the next page
-            readyForNextPage: false,
-            //Will be filled by timeout, when we are waiting on the robot to play
-            playingTimeout: null,
-            //Will be filled by robot timeout
-            backTimeout: null,
-            //Will be filled by robot timeout
-            presentTimeout: null,
-            //Last inputs by waage
-            lastWeights: [],//Letzte gemessene Gewichte Array
-        }
-    },
-    watch:{
-        /**
-         * Watch the robot console. On change checks if we were waiting for the program to load and then plays the program. Or if we were waiting for it to finish playing
-         * then it continues to the next stage. Either bring the next material(if we removed the previous) or continue to next page(if new one was brought)
-         */
-        robotConsole: function(newVal){
-            console.log("-----------")
-            console.log("HHHHH")
-            console.log("materialTransportStage:" + this.materialTransportStage)
-            if(this.waitingForLoad && newVal.includes("Loading program: /programs/")){
-                this.waitingForLoad = false
-                    console.log("DDDD")
-                this.robotPlayCommand()
-                //DDDDD war hier
-            }
-            console.log("waitingforplay:" + this.waitingForPlay)
-            if(newVal.includes("STOPPED") && this.waitingForPlay){
-                    console.log("CCCCC")
-                this.waitingForPlay = false
-                if(this.materialTransportStage == 2){
-                    console.log("BBBBB")
-                    clearTimeout(this.backTimeout)
-                    this.materialTransportStage = 3
-                    setTimeout(this.robotComm, 1000)
-                }else if(this.materialTransportStage == 4){
-                    console.log("AAAAA")
-                    this.materialTransportStage = 1
-                    this.readyForNextPage = true
-                }
-            }
-        },
-        /**
-         * If we are ready for the next page then clear all timeouts and call the nextPage funtion in one second
-         */
-        readyForNextPage: function(newVal){
-                    console.log("EEEEE")
-            if(newVal == true){
-                this.readyForNextPage = false
-                clearTimeout(this.presentTimeout)
-                setTimeout(this.nextPage, 1000)
-                    console.log("FFFFF")
-            }
         }
     },
     methods:{
@@ -160,12 +91,7 @@ export default {
                 document.getElementById('countupsecond').innerHTML = countupsecond
             }, 1000)
 
-            this.receivedCode = event
-            
-            this.setLight()
-
-            this.robotComm()
-            
+            this.receivedCode = event           
 
             if(!this.paused){ //Kann nur passieren wenn nicht pausiert
                 
@@ -190,15 +116,10 @@ export default {
          */
         nextPage: function() {
             if(!this.paused){ //Kann nur passieren wenn nicht pausiert
+                this.hardwareCommand("onPageEnd")
                 this.i++
+                this.sendSurveyDataToHW()
                 this.progress = parseInt((this.i/(this.survey.length-1))*100)
-                this.setLight()
-                this.setTrigger()
-                this.robotComm()
-                console.log(this.survey[this.i])
-                console.log(this.i)
-                console.log(this.survey.length)
-                console.log(this.i==this.survey.length-1)
                 if(this.i==(this.survey.length-1)){ //Fürs beenden
                     clearInterval (this.timer)
 
@@ -216,220 +137,37 @@ export default {
                         this.sendAnswers()
                     }                    
                 }else{
-                    if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
-                        this.nextPage()
-                    }
+                    //if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
+                        //this.nextPage()
+                    //}
                     if (this.$router.currentRoute.name != this.getNextPage()) {
                         this.$router.push({ name: this.getNextPage(), params: { index: this.i}}) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
                     }
                     window.scrollTo(0,0);
+                    this.hardwareCommand("onPageLoad")
                 }
             }
         },
         /**
-         * As long as the robot is still playing the program, calls itself to check that status. If the robot is finished then different funtions notice that in the robotconsole.
-         * This is just to update the console as the robot doesnt do that after finishing playing
-         */
-        robotProgramStateCommandRecursion: function(){//Solange auf play status = fertig gewartet wird überprüfe status alle 250ms
-            this.$electron.ipcRenderer.send("robotCommands", {command:"programState", data:""})
-            console.log("RECURSIOOOON")
-            if(this.waitingForPlay){
-               setTimeout(this.robotProgramStateCommandRecursion, 500)
-            }
+         * 
+         */    
+        sendSurveyDataToHW: function(){
+            this.$electron.ipcRenderer.send("hardware", {"type": "sendSurveyData", "arg": this.survey[this.i]})           
         },
         /**
-         * Orders the robot to play and sets a timeout of 35 seconds while starting the recursion to check the robot console
-         */
-        robotPlayCommand: function(){
-            console.log("PLAY IT")
-            clearTimeout(this.playingTimeout)
-            this.waitingForPlay = true
-            this.$electron.ipcRenderer.send("robotCommands", {command:"play", data:""})
-            setTimeout(this.robotProgramStateCommandRecursion, 1000)
-            this.playingTimeout = setTimeout(function(){
-                if(this.waitingForPlay == true){
-                    console.log("Some Robot Communication failed")
-                    this.waitingForPlay = false
-                }
-            }.bind(this),35000)
-        },
-        /**
-         * Responsible for bringing and/or removing materials. Checks all prerequesites and then starts the process. First for removal then for bringing
-         * Has different workflows for different stages
-         */
-        robotComm:  function(){
-            console.log(this.survey[this.i].module)
-            console.log(this.survey[this.i].part)
-            console.log(this.robotConnected)
-            if(this.survey[this.i].module == "Roboterfahrt" && this.survey[this.i].part == "Fahrt" && this.robotConnected){
-                //zweimal, einmal vorheriges wegnehmen, einmal neues dazulegen, außer bei letztem und erstem material
-                console.log(this.i)
-                if(this.i > 0){ //Nicht beim Survey start nach altem material suchen da es nicht existieren kann
-                    console.log(this.survey[this.i-1].material)
-                    console.log(Object.prototype.hasOwnProperty.call(this.survey[this.i-1].material,"roboPos"))
-                    console.log(this.materialTransportStage)
-                    console.log(this.survey[this.i-1].material.roboPos)
-                    if(this.survey[this.i-1].material != "" && Object.prototype.hasOwnProperty.call(this.survey[this.i-1].material,"roboPos") && this.materialTransportStage == 1
-                    && this.survey[this.i-1].material.roboPos != ""){//Hier altes wegfahren
-                        this.materialTransportStage = 2
-                        this.waitingForLoad = true  
-                        this.$electron.ipcRenderer.send("robotCommands", {command:"load", data:"/programs/"+ this.robotPosTranslation[this.survey[this.i-1].material.roboPos] +"_back.urp"})
-                        this.backTimeout = setTimeout(function(){
-                            if(this.waitingForLoad == true/* && this.materialTransportStage == 2*/){
-                                console.log("Some Robot Communication failed")
-                                this.waitingForLoad = false
-                            }
-                        }.bind(this),35000)
-                    }else if(this.materialTransportStage != 3 && this.materialTransportStage != 4){//wenn noch im transport dann nicht
-                        this.materialTransportStage = 0
-                    }
-                }
-
-                if(this.i < (this.survey.length-1)){//Nicht beim Survey ende nach neuem material suchen da es nicht existieren kann
-                    if(this.survey[this.i+1].material != "" && Object.prototype.hasOwnProperty.call(this.survey[this.i+1].material,"roboPos") && 
-                    (this.materialTransportStage == 0 || this.materialTransportStage == 3) && this.survey[this.i+1].material.roboPos != ""){//Hier neues holen außer wenn nächstes modul kein material hat
-                        this.materialTransportStage = 4
-                    console.log("GGGGG")
-                        this.waitingForLoad = true  
-                        console.log(this.robotPosTranslation)
-                        console.log(this.survey[this.i+1])
-                        console.log("i: "+this.i)
-                        this.$electron.ipcRenderer.send("robotCommands", {command:"load", data:"/programs/"+ this.robotPosTranslation[this.survey[this.i+1].material.roboPos] +"_present.urp"})
-                        this.presentTimeout = setTimeout(function(){
-                            if(this.waitingForLoad == true /*&& this.materialTransportStage == 4*/){
-                                console.log("Some Robot Communication failed")
-                                this.waitingForLoad = false
-                            }
-                        }.bind(this),35000)
-                    }else if(this.materialTransportStage != 1 && this.materialTransportStage != 2){//wenn nicht im transport
-                        this.materialTransportStage = 0
-                        this.readyForNextPage = true
-                    }
-                }
-            }
-        },
-        /**
-         * Toggles the external lights if the prerequesites are right
-         */
-        toggleLight(){
-            console.log(Object.prototype.hasOwnProperty.call(this.survey[this.i].content,"light"))
-            console.log(this.survey[this.i].content.light == "on")
-            console.log(this.lightStatus)
-            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content,"light")){//Wenn Frage Licht hat
-                if(this.survey[this.i].content.light == "on"){//Wenn es angemacht wurde
-                    if(this.lightStatus == 0){ //Wenn Lampe noch aus ist dann anmachen(Kurzes Drücken des Tasters)
-                        try{
-                            this.lightStatus = 1
-                            this.$electron.ipcRenderer.send("setPin", {pin:3,state:1})     
-                            setTimeout(function(){this.$electron.ipcRenderer.send("setPin", {pin:3,state:0})}.bind(this), 1000);
-                            //board.digitalWrite(3, 1)
-                            //setTimeout(function(){ board.digitalWrite(3, 0) }, 1000);
-                        }catch(e){
-                            console.log(e)
-                        }
-                    }else if(this.lightStatus == 1){
-                        try{
-                            this.$electron.ipcRenderer.send("setPin", {pin:3,state:1})     
-                            setTimeout(function(){this.$electron.ipcRenderer.send("setPin", {pin:3,state:0})}.bind(this), 1000);
-                            //board.digitalWrite(3, 1)
-                            //setTimeout(function(){ board.digitalWrite(3, 0) }, 1000); 
-                            this.lightStatus = 0
-                        }catch(e){
-                            console.log(e)
-                        }
-                    }
-                }
-            }
-        },
-        /**
-         * Set the trigger on pages that want it, except on timers
-         */
-        setTrigger: function(){ //Für automatisch wenn seite geöffnet. Außer bei Timern, da wird es vom timer selber aufgerufen
-            console.log(Object.prototype.hasOwnProperty.call(this.survey[this.i].content,"eeg"))
-            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content,"eeg") && this.survey[this.i].type != "timer"){
-                if(this.survey[this.i].content.eeg == "trigger"){
-                    //this.$electron.ipcRenderer.send("setPin", {pin:8,state:1})   
-                    //setTimeout(function() {this.$electron.ipcRenderer.send("setPin", {pin:8,state:0})}.bind(this), 500)
-                    let arg
-                    if(this.survey[this.i].part == "HAPTIK T1 IME Präsentation"){
-                        arg = 2
-                    }else if(this.survey[this.i].part == "OPTIK T1 IME Präsentation"){
-                        arg = 1
-                    }
-                    this.$electron.ipcRenderer.send("trigger",arg)
-                }
-            }
-        },
-        /**
-         * just trigger eeg, only called by timers
-         */
-        triggerEEG: function(){
-            //console.log(this.survey[this.i].content.hasOwnProperty("eeg"))
-            //if(this.survey[this.i].content.hasOwnProperty("eeg")){
-                //if(this.survey[this.i].content.eeg == "trigger"){
-                    console.log("EEG now")
-                    //this.$electron.ipcRenderer.send("setPin", {pin:8,state:1})   Alte Implementation über Arduino
-                    //setTimeout(function() {this.$electron.ipcRenderer.send("setPin", {pin:8,state:0})}.bind(this), 500)
-                    let arg
-                    if(this.survey[this.i].part == "HAPTIK T1 IME Präsentation"){
-                        arg = 2
-                    }else if(this.survey[this.i].part == "OPTIK T1 IME Präsentation"){
-                        arg = 1
+         * 
+         */    
+        hardwareCommand: function(type){
+            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, type)){
+                for(let i = 0; i < this.survey[i].hardware[type].length; i++){
+                    if(type == "afterXSeconds"){
+                        setTimeout(() => this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds)  
                     }else{
-                        arg = 4
-                    }
-                    this.$electron.ipcRenderer.send("trigger",arg)
-                //}
-            //}
-        },
-        /**
-         * Set the light 
-         */
-        setLight: function(){
-            console.log("SETLIGHT:------------------------")
-            console.log(Object.prototype.hasOwnProperty.call(this.survey[this.i].content,"light"))
-            console.log(this.lightStatus)
-            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content,"light") /*&& this.survey[this.i].type != "timer"*/){
-                if(this.survey[this.i].content.light == "on"){
-                    if(this.lightStatus == 0){ //Wenn Lampe noch aus ist dann anmachen(Kurzes Drücken des Tasters)
-                        try{
-                            this.lightStatus = 1
-                            this.$electron.ipcRenderer.send("setPin", {pin:3,state:1})   
-                            setTimeout(function() {this.$electron.ipcRenderer.send("setPin", {pin:3,state:0})}.bind(this), 1000);
-                            //board.digitalWrite(3, 1)
-                            //setTimeout(function(){ board.digitalWrite(3, 0) }, 1000);
-                        }catch(e){
-                            console.log(e)
-                        }
-                    }
-                }else{//Ansonsten ausmachen wenn noch an
-                    if(this.lightStatus == 1){
-                        try{
-                            this.$electron.ipcRenderer.send("setPin", {pin:3,state:1})  
-                            setTimeout(function() {this.$electron.ipcRenderer.send("setPin", {pin:3,state:0})}.bind(this), 1000)
-
-                            //board.digitalWrite(3, 1)
-                            //setTimeout(function(){ board.digitalWrite(3, 0) }, 1000); 
-                            this.lightStatus = 0
-                        }catch(e){
-                            console.log(e)
-                        }
+                        this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command})       
                     }
                 }
-            }else{
-                if(this.lightStatus == 1){
-                    try{
-                        this.$electron.ipcRenderer.send("setPin", {pin:3,state:1})  
-                        setTimeout(function(){this.$electron.ipcRenderer.send("setPin", {pin:3,state:0})}.bind(this), 1000)
-                        //board.digitalWrite(3, 1)
-                        //setTimeout(function(){ board.digitalWrite(3, 0) }, 1000);
-                        this.lightStatus = 0
-                    }catch(e){
-                        console.log(e)
-                    }
-                }
-            }
-        },
+            } 
+        },  
         /**
          * Gets the type of the next page
          */
@@ -659,68 +397,32 @@ export default {
         sendProbandData: function(){
             if(this.sentProbandData == false){
                 this.sentProbandData = true
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/proband/store', data: this.probandData, method: 'POST' }).then(resp => {
-                        this.receivedCode = resp.data.proband.code
-                        console.log(resp)
-                        this.sendAnswers()
-                }).catch(err => console.log(err))
+                ///Removed Axios
             }
         },
     },
     created(){ 
         /**
-         * On data from the waage. Adds the data to the last weights array (maybe removes old ones). If wheigt change is +-5 from average over lastWeights then trigger eeg
+         * 
          */
-        this.$electron.ipcRenderer.on("waageConsole", (event,arg) => {
-            if(this.materialTransportStage == 1 && this.survey[this.i].type == "timer"){ //Wenn Material bereits liegt und wir im timer sind
-                //console.log(arg)
-                if(this.lastWeights.length <= 0){ //Wenn noch keine Gewichtsdaten vorhanden sind einfach erstmal pushen
-                    this.lastWeights.push(arg)
-                }else{
-                    let sum = 0
-                    for(let i = 0; i < this.lastWeights.length; i++){
-                        sum = parseInt(sum) + parseInt(this.lastWeights[i])
-                    }
-                    let avg = parseInt(sum) / this.lastWeights.length;
-                    if(arg <= avg+5 && arg >= avg-5){//Ist das neue Gewicht im bisherigen Bereich?
-                        this.lastWeights.push(arg)//Dann füge es zum Bereich hinzu
-                        if(this.lastWeights.length > 3000){
-                            this.lastWeights = this.lastWeights.slice(1)//Nehme erstes Element raus. So bleiben wir bei 10 Elementen
-                        } 
-                    }else if((arg >= avg+5) || (arg <= avg-5)){//Wenn nicht, dann nehme an dass Hand abgelegt wurde. Solange in bestimmtem Bereich(+-30 bis +-200)
-                        this.lastWeights = [arg]//Setze lastWeights zurück
-                        console.log("EEE")
-                        this.$electron.ipcRenderer.send("trigger",3)
-                        console.log("EEG TRIGGER durch Waage!")
+        this.$electron.ipcRenderer.on("hardwareEvent", (event,arg) => {
+            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, "input")){
+                for(let i = 0; i < this.survey[this.i].hardware.input.length; i++){
+                    if((this.survey[this.i].hardware.input[i].device == arg.arg.device || this.survey[this.i].hardware.input[i].device == "*") && this.survey[this.i].hardware.input[i].on == arg.arg.event){
+                        if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "page")){
+                            if(this.survey[this.i].hardware.input[i].page == "nextPage"){
+                                this.nextPage()
+                            }/*else if(){
+                                //Seitenabhänige events hier
+                            }*/
+                        }else if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "do")){
+                            this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
+                        }
                     }
                 }
-            }
+            }   
         })
 
-        /**
-         * Update robot connected status
-         */
-        this.$electron.ipcRenderer.on("robotConnected", (event,arg) => {
-            this.robotConnected = arg
-            console.log(arg)
-        }) 
-
-        /**
-         * Update the robot console
-         */
-        this.$electron.ipcRenderer.on("robotConsole", (event,arg) => {
-            this.robotConsole = arg
-            console.log(arg)
-        }) 
-        //Get the robots status
-        this.$electron.ipcRenderer.send("robotCommands", {command:"status", data:""})
-        /**
-         * Log output of arduino(external light)
-         */
-        this.$electron.ipcRenderer.on("arduinoConsole", (event,arg) => {
-            console.log(arg)
-        })
-        
         /**
          * get survey Data from adminpage
          */
@@ -741,11 +443,7 @@ export default {
                 console.log("Got SurveyData")
                 console.log(arg.survey)
                 this.survey = arg.survey
-                this.port = arg.port
-                //this.initializeArduino()
-                this.$electron.ipcRenderer.send("connectArduino", this.port)  
                 this.gotSurvey = true
-                axios.defaults.baseURL = arg.baseURL
             }else if(arg == "Beenden"){
                 console.log("Will end soon. Sending Answers now")
                 this.answers.proband = this.receivedCode
@@ -760,16 +458,6 @@ export default {
                 this.$electron.ipcRenderer.send("surveyOps", "ended")
             }
         })
-        //To not show an empty Page, but the first question page
-        /*if(this.i==0){
-            this.i=0
-            this.$router.push({ name: this.getNextPage(), params: { question: this.i}}).catch(err => {})
-        }*/
-    },
-    mounted(){ 
-        //get robot status
-        this.$electron.ipcRenderer.send("robotCommands", {command: "status", data: ""})  
-        
     },
     beforeDestroy () {
         /**

@@ -60,34 +60,190 @@
             "items": {
                 "description": "Each a single Page shown in the running Survey.",
                 "type": "object",
-                "items":{
-                    "type": "object",
-                    "properties":{
-                        "module": {
-                            "description": "The chapter/section this Page belongs to",
-                            "type": "string"
-                        },
-                        "part":{
-                            "description": "The subsection of the chapter/section this Page belongs to",
-                            "type": "string"
-                        },
-                        "type":{
-                            "description": "What type of page it is",
-                            "type": "string",
-                            "enum":["question", "timer", "explanationPic", "explanation", "manual"]
-                        },
-                        "content":{
-                            "description": "The content depends on the type you chose for this Page. For more details look at the corresponding schema",
-                            "type": "object"
-                        }
+                "properties":{
+                    "module": {
+                        "description": "The chapter/section this Page belongs to",
+                        "type": "string"
                     },
-                    "required":[
-                        "module",
-                        "part",
-                        "type",
-                        "content"
-                    ]
-                }
+                    "part":{
+                        "description": "The subsection of the chapter/section this Page belongs to",
+                        "type": "string"
+                    },
+                    "type":{
+                        "description": "What type of page it is",
+                        "type": "string",
+                        "enum":["question", "timer", "explanationPic", "explanation", "manual"]
+                    },
+                    "content":{
+                        "description": "The content depends on the type you chose for this Page. For more details look at the corresponding schema",
+                        "type": "object"
+                    },
+                    "hardware":{
+                        "description": "seitenabhängige fehlen noch",
+                        "type": "object",
+                        "properties":{
+                            "onPageLoad": {
+                                "description": "Called when the Page has loaded",
+                                "type": "array",
+                                "items":{
+                                    "description": "Each Element are the details for a command.",
+                                    "type": "object",
+                                    "properties":{
+                                        "device": {
+                                            "description": "Name of the device that should run the command",
+                                            "type": "string"
+                                        },
+                                        "command":{
+                                            "description": "What specific command should be run. There are more properties than just the name possible. Refer to the Hardware Scripts Definitions for more information",
+                                            "type": "object",
+                                            "properties":{
+                                                "name": {
+                                                    "description": "The name of the command",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required":[
+                                                "name"
+                                            ]
+                                        }
+                                    },
+                                    "required":[
+                                        "device",
+                                        "command"
+                                    ]
+                                }
+                            },
+                            "afterXSeconds": {
+                                "description": "Called a set amount of seconds after the page has loaded",
+                                "type": "array",
+                                "items":{
+                                    "description": "Each Element are the details for a command.",
+                                    "type": "object",
+                                    "properties":{
+                                        "seconds":{
+                                            "description": "After how many seconds the command should be run",
+                                            "type": "number"
+                                        },
+                                        "device": {
+                                            "description": "Name of the device that should run the command",
+                                            "type": "string"
+                                        },
+                                        "command":{
+                                            "description": "What specific command should be run. There are more properties than just the name possible. Refer to the Hardware Scripts Definitions for more information",
+                                            "type": "object",
+                                            "properties":{
+                                                "name": {
+                                                    "description": "The name of the command",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required":[
+                                                "name"
+                                            ]
+                                        }
+                                    },
+                                    "required":[
+                                        "seconds",
+                                        "device",
+                                        "command"
+                                    ]
+                                }
+                            },
+                            "onPageEnd": {
+                                "description": "Called when the page is finished and were about to load the next one",
+                                "type": "array",
+                                "items":{
+                                    "description": "Each Element are the details for a command.",
+                                    "type": "object",
+                                    "properties":{
+                                        "device": {
+                                            "description": "Name of the device that should run the command",
+                                            "type": "string"
+                                        },
+                                        "command":{
+                                            "description": "What specific command should be run. There are more properties than just the name possible. Refer to the Hardware Scripts Definitions for more information",
+                                            "type": "object",
+                                            "properties":{
+                                                "name": {
+                                                    "description": "The name of the command",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required":[
+                                                "name"
+                                            ]
+                                        }
+                                    },
+                                    "required":[
+                                        "device",
+                                        "command"
+                                    ]
+                                }
+                            },
+                            "input":{
+                                "description": "Called when a Device emits an event. Compares the emitted event to those adressed here. If a match is found it then runs the specified command on the specified device.",
+                                "type": "array",
+                                "items":{
+                                    "description": "Each Element are the details for a command.",
+                                    "type": "object",
+                                    "properties":{
+                                        "device": {
+                                            "description": "Name of the device that emits the command. Command will only be run if this device emits the event. Set to * for any device",
+                                            "type": "string"
+                                        },
+                                        "on":{
+                                            "description": "Which event triggers the command.",
+                                            "type": "string"
+                                        },
+                                        "do":{
+                                            "description": "Defines the command a device should run after the event has been registered",
+                                            "type": "object",
+                                            "properties":{
+                                                "device": {
+                                                    "description": "Name of the device that should run the command",
+                                                    "type": "string"
+                                                },
+                                                "command":{
+                                                    "description": "What specific command should be run. There are more properties than just the name possible. Refer to the Hardware Scripts Definitions for more information",
+                                                    "type": "object",
+                                                    "properties":{
+                                                        "name": {
+                                                            "description": "The name of the command",
+                                                            "type": "string"
+                                                        },
+                                                        "required":[
+                                                            "name"
+                                                        ]
+                                                    }
+                                                }
+                                            },
+                                            "required":[
+                                                "device",
+                                                "command"
+                                            ]
+                                        },
+                                        "page":{
+                                            "description": "What the Surveypage should do. nextPage loads the next page",
+                                            "type": "string",
+                                            "enum":["nextPage", "Es fehlen die seitenabhängigen"]
+                                        }
+                                    },
+                                    "required":[
+                                        "device",
+                                        "on",
+                                        "do"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                },
+                "required":[
+                    "module",
+                    "part",
+                    "type",
+                    "content"
+                ]
             }
         }
     },

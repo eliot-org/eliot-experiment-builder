@@ -6,33 +6,7 @@
 
 <script>
 export default {
-  name: "ELIOT",
-  computed: {
-    isLoggedIn: function () {
-      return this.$store.getters.isLoggedIn;
-    },
-  },
-  methods: {
-      //Global logout Function
-    logout: function () {
-      this.$store.dispatch("logout").then(() => {
-        if (this.$router.currentRoute.name != "/login") {
-          this.$router.push("/login");
-        }
-      });
-    },
-  },
-  created: function () {
-      //Logs the user out if a server response is with code 401
-    this.$http.interceptors.response.use(undefined, function (err) {
-      return new Promise(function () {
-        if (err.status === 401 && err.config && !err.config.__isRetryRequest) {
-          this.$store.dispatch("logout");
-        }
-        throw err;
-      });
-    });
-  },
+  name: "ELIOT"
 };
 </script>
 

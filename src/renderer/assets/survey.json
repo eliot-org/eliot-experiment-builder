@@ -1,0 +1,736 @@
+{"name": "ELIOT Interface",
+	"modules": [
+		
+		{"id": "POI", "label": "POI", "children": [
+			{"id": "POI Intro", "label": "POI Intro"},
+			
+			{"id": "POI Einleitung", "label": "POI Einleitung"},
+			{"id": "POI Forschungsgegenstand", "label": "POI Forschungsgegenstand"},
+			{"id": "POI Einverständniserklärung", "label": "POI Einverständniserklärung"},
+			{"id": "Start", "label": "Start"},
+
+			{"id": "Demographie", "label": "Demographie"},
+			{"id": "Milieu Identifikation", "label": "Milieu Identifikation"},
+			{"id": "Normative Grundorientierung", "label": "Normative Grundorientierung"},
+			{"id": "Allgemeines Konsumverhalten", "label": "Allgemeines Konsumverhalten"},
+			
+			{"id": "Markenvertrauen", "label": "Markenvertrauen"},
+			{"id": "Markenvertrauen_VW", "label": "Markenvertrauen_VW"},
+			{"id": "Markenvertrauen_Audi", "label": "Markenvertrauen_Audi"},
+			{"id": "Markenvertrauen_Fiat", "label": "Markenvertrauen_Fiat"},
+		
+			{"id": "Markenvertrauen_H&M", "label": "Markenvertrauen_H&M"},
+			{"id": "Markenvertrauen_Patagonia", "label": "Markenvertrauen_Patagonia"},
+			{"id": "Markenvertrauen_Vaude", "label": "Markenvertrauen_Vaude"},
+
+			
+			{"id": "NPIS: Need for product information seeking", "label": "NPIS: Need for product information seeking"},
+			{"id": "SFOC: Slow fashion orientation construct", "label": "SFOC: Slow fashion orientation construct"},
+			{"id": "NEP: New Ecological Paradigm Scale", "label": "NEP: New Ecological Paradigm Scale"},
+			{"id": "BFI-10: 10 Item Big Five Inventory", "label": "BFI-10: 10 Item Big Five Inventory"},
+			{"id": "SPQ (Tavassoli et al., 2014)", "label": "SPQ (Tavassoli et al., 2014)"},
+
+
+	
+			{"id": "POI Outro", "label": "POI Outro"}
+			]},
+
+
+		{"id": "Intro", "label": "Intro"},
+
+		{"id": "Einleitung", "label": "Einleitung","children": [
+			{"id": "Information Messsequenz", "label": "Information Messsequenz"},
+			{"id": "Datenanonymisierung", "label": "Datenanonymisierung"},
+			{"id": "Einverständniserklärung", "label": "Einverständniserklärung"},
+
+			{"id": "Information Sicherheit", "label": "Information Sicherheit"}
+			]},
+
+
+		{"id": "Training", "label": "Training", "children": [
+			{"id": "Information Trainingsrunde", "label": "Information Trainingsrunde"},
+			{"id": "Trainingsrunde", "label": "Trainingsrunde"}
+			]},
+
+
+		{"id": "Prä_Stimmungsabfrage", "label": "Prä SA", "children": [
+			{"id": "Prä Stimmung", "label": "Prä Stimmung"}
+			]},
+
+		
+		{"id": "OPTIK T1 IME", "label": "OPTIK T1 IME", "children": [
+			{"id": "OPTIK T1 IME Instruktion", "label": "OPTIK T1 IME Instruktion"},
+			{"id": "OPTIK T1 IME Präsentation", "label": "OPTIK T1 IME Präsentation"},
+			{"id": "OPTIK T1 IME Initiale Besetzung", "label": "OPTIK T1 IME Initiale Besetzung"},
+			{"id": "OPTIK T1 IME Attractiveness", "label": "OPTIK T1 IME Attractiveness"},
+			{"id": "OPTIK T1 IME Practical qualities", "label": "OPTIK T1 IME Practical qualities"}
+			]},
+		
+		{"id": "OPTIK KIKIBUBA", "label": "OPTIK KIKIBUBA", "children": [
+			{"id": "OPTIK KIKIBUBA1", "label": "OPTIK KIKIBUBA1"},
+			{"id": "OPTIK KIKIBUBA2", "label": "OPTIK KIKIBUBA2"}
+			]},
+
+		{"id": "OPTIK T2 EME", "label": "OPTIK T2 EME", "children": [
+			{"id": "OPTIK T2 EME Instruktion", "label": "OPTIK T2 EME Instruktion"},
+			{"id": "OPTIK T2 EME Physikalische Evaluation HE1", "label": "OPTIK T2 EME Physikalische Evaluation HE1"},
+			{"id": "OPTIK T2 EME Physikalische Evaluation HE2", "label": "OPTIK T2 EME Physikalische Evaluation HE2"},
+			{"id": "OPTIK T2 EME Aesthetisches Verknügen (Blijlevenstal, 2017)", "label": "OPTIK T2 EME Aesthetisches Verknügen (Blijlevenstal, 2017)"}
+			]},
+
+
+		{"id": "HAPTIK T1 IME", "label": "HAPTIK T1 IME", "children": [
+			{"id": "HAPTIK T1 IME Instruktion", "label": "HAPTIK T1 IME Instruktion"},
+			{"id": "HAPTIK T1 IME Präsentation", "label": "HAPTIK T1 IME Präsentation"},
+			{"id": "HAPTIK T1 IME Initiale Besetzung", "label": "HAPTIK T1 IME Initiale Besetzung"},
+			{"id": "HAPTIK T1 IME Attractiveness", "label": "HAPTIK T1 IME Attractiveness"},
+			{"id": "HAPTIK T1 IME Practical qualities", "label": "HAPTIK T1 IME Practical qualities"}
+			]},
+
+	    {"id": "HAPTIK KIKIBUBA", "label": "HAPTIK KIKI BUBA", "children": [
+			{"id": "HAPTIK KIKIBUBA1", "label": "HAPTIK KIKIBUBA1"},
+			{"id": "HAPTIK KIKIBUBA2", "label": "HAPTIK KIKIBUBA2"}
+			]},
+
+		{"id": "HAPTIK T2 EME", "label": "HAPTIK T2 EME", "children": [
+			{"id": "HAPTIK T2 EME Instruktion", "label": "HAPTIK T2 EME Instruktion"},
+			{"id": "HAPTIK T2 EME Physikalische Evaluation HE1", "label": "HAPTIK T2 EME Physikalische Evaluation HE1"},
+			{"id": "HAPTIK T2 EME Physikalische Evaluation HE2", "label": "HAPTIK T2 EME Physikalische Evaluation HE2"}
+			]},
+
+		
+		{"id": "T3 EMO ME", "label": "T3 EMO ME", "children": [
+			{"id": "T3 EMO ME Emotionale Evaluation", "label": "T3 EMO ME Emotionale Evaluation"},
+			{"id": "T3 EMO ME PrEmo2 (Laurans & Desmet, 2012)", "label": "T3 EMO ME PrEmo2 (Laurans & Desmet, 2012)"}
+			]},
+
+
+		{"id": "T4 SI", "label": "T4 SI", "children": [
+			{"id": "T4 SENSUALE INTERAKTION", "label": "T4 SENSUALE INTERAKTION"}
+			]},
+		{"id": "T5 MA", "label": "T5 MA", "children": [
+			{"id": "T5 MATERIAL ASSOZIATION Personal association", "label": "T5 MATERIAL ASSOZIATION Personal association"},
+			{"id": "T5 MATERIAL ASSOZIATION Category association", "label": "T5 MATERIAL ASSOZIATION Category association"},
+			{"id": "T5 MATERIAL ASSOZIATION Product association", "label": "T5 MATERIAL ASSOZIATION Product association"},
+			{"id": "T5 MATERIAL ASSOZIATION Automotive association", "label": "T5 MATERIAL ASSOZIATION Automotive association"},
+			{"id": "T5 MATERIAL ASSOZIATION Milieu association", "label": "T5 MATERIAL ASSOZIATION Milieu association"}
+			]},
+
+		{"id": "T0 MN", "label": "T0 MN", "children": [
+			{"id": "T0 MATERIAL NARRATIV Informationsabgabe", "label": "T0 MATERIAL NARRATIV Informationsabgabe"},
+			{"id": "T0 MATERIAL NARRATIV Evaluation", "label": "T0 MATERIAL NARRATIV Evaluation"},
+			{"id": "T0 MATERIAL NARRATIV Innovation", "label": "T0 MATERIAL NARRATIV Innovation"}
+			]},
+
+		{"id": "TE", "label": "TE", "children": [
+			{"id": "Material Ende", "label": "Material Ende"}
+			]},
+
+		{"id": "Post_Stimmungsabfrage", "label": "Post SA", "children": [
+			{"id": "Post_Stimmung", "label": "Post Stimmung"}
+			]},
+
+		{"id": "Outro", "label": "Outro", "children": [
+			{"id": "Labor Verabschiedung", "label": "Verabschiedung"}
+			]}
+	],
+	"survey": [
+		{"module": "POI", "part": "POI Intro", "type": "manual", "content": {"text": "","imagePosition": "behind", "channel":"ma", "img": "title3.png"}},
+		{"module": "POI", "part": "POI Intro", "type": "explanationPic", "content": {"text": "<br><b>HERZLICH WILLKOMMEN</b> <br><br>Zu jedem Zeitpunkt nehmen wir über unsere Sinne die Umgebung wahr. Durch die Verarbeitung dieser Reize teilen wir die Welt und ihre Objekte in gut und schlecht, anziehend oder zu vermeidend – je elaborierter, desto nuancierter – und richten daran unser Verhalten aus.<br><br> ELIOT wurde entwickelt, um die sinnliche Materialerfahrung möglichst objektiv zu messen. Zu diesem Zweck wird eine Abfrage dieser mit einem neurowissenschaftlichen Ansatz kombiniert. Vor der Messung werden Sie von der*dem Versuchsleiter*in eine ausführliche Erklärung des Messsystems erhalten.<br>Scheuen Sie sich bitte nicht Fragen zu stellen.","imagePosition": "left", "img": "intro1.jpg"}},
+		
+		{"module": "POI", "part": "POI Intro", "type": "explanationPic", "content": {"text": "<b></b>", "imagePosition": "behind", "img":"video.mp4"}},
+		{"module": "POI", "part": "POI Forschungsgegenstand", "type": "explanationPic", "content": {"text": "<b>Forschungsgegenstand dieser Studie:</b> <br> Vergleich der frühen Reizverarbeitung mit der späteren bewussten Wahrnehmung und Bewertung des sinnlichen Erlebens.", "imagePosition": "left", "img": "left3.jpg"}},
+		{"module": "POI", "part": "POI Einleitung", "type": "explanationPic", "content": {"text": "Diese Onlineabfrage wird einmalig durchgeführt und qualifiziert Sie bei sorgfältiger Bearbeitung für die Messungen im Labor. Die Daten werden anonymisiert, sodass kein Rückschluss auf Ihre Person möglich sein wird. <br> <br> Insgesamt wird die Umfrage ca. 30 min dauern. Bitte nehmen Sie sich diese Zeit ohne Unterbrechung, um den Fragebogen ungestört und konzentriert am Stück zu bearbeiten. Andernfalls können Ihre Daten leider nicht verwendet werden. Beantworten Sie den Fragebogen bitte ausschließlich am PC oder Laptop.","imagePosition": "left", "img": "left1.jpg"}},
+		{"module": "POI", "part": "POI Einverständniserklärung", "type": "question", "content": {"name": "POI_Einverständniserklärung", "type": "radio","text": "Für die Teilnahme ist Ihre Einwilligung zu der folgenden Einverständniserklärung notwendig:", "options":["Ich bin damit einverstanden, dass im Rahmen der Studie bzw. des Projektes meine Daten aufgezeichnet und anonymisiert (d.h. ohne Namensnennung) zur Auswertung der Ergebnisse verwendet werden. Ich bin darüber informiert worden, dass alle hier erhobenen Daten strikt vertraulich gemäß des Datenschutzes behandelt werden und ich jeder Zeit ohne Angabe von Gründen vom Versuch zurücktreten kann, ohne dass sich für mich hierdurch negative Folgen ergeben. Einer wissenschaftlichen Auswertung der anonymisierten Daten und einer möglichen Veröffentlichung der Ergebnisse stimme ich zu. Weiterhin bin ich davon in Kenntnis gesetzt worden, dass ich neben der Tätigkeit als Prüfende/Panellist keinen Vertrag als studentische Hilfskraft haben darf. Sollte ich während der Tätigkeit als Proband/in einen Vertrag als studentische Hilfskraft abschließen, muss ich dieses umgehend der betreuenden Person melden. Ab dem Vertragsabschluss kann keine Aufwandsentschädigung mehr ausgezahlt werden. Ich versichere hiermit, dass ich keine neurologische Krankheit (z.B. Epilepsie, Schlaganfall) habe oder hatte und keine Beruhigungsmittel oder Medikamente nehme, die auf das zentrale Nervensystem wirken. Weiterhin bestätige ich, dass ich meines Wissens nicht an einer körperlichen oder physischen Erkrankung leide."]}},
+        {"module": "POI", "part": "Start", "type": "explanationPic", "content": {"text": "Zum Starten der Abfrage klicken Sie bitte auf WEITER.","imagePosition": "left", "img": "left5.jpg"}},
+
+		{"module": "POI", "part": "Demographie", "type": "explanationPic", "content": {"text": "","imagePosition": "behind", "img": "data.mp4"}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_handedness","type": "yes-no", "text": "Sind Sie Links- oder Rechtshänder?", "options":["Links","Rechts"]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_head","type": "input", "text": "Bitte messen Sie ihren Kopfumfang und geben Sie diesen hier in cm an:<br>", "options":["num"]}},
+		
+		{"module": "POI", "part": "Demographie", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "bo.mp4"}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_age", "type": "input", "text": "Wie alt sind Sie?", "options":["num"]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_gender", "type": "radio", "text": "Welches Geschlecht haben Sie?", "options":["Weiblich", "Anders", "Männlich"]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_education", "type": "radio", "text": "Was ist Ihr höchster Bildungsabschluss?", "options":["Kein Schulabschluss", "Grund-/Hauptschulabschluss", "Mittlere Reife (Realschulabschluss)", "Fachhochschulabschluss", "Allgemeine Hochschulreife (Abitur)", "Abgeschlossene Ausbildung", "Meister", "Bachelor", "Master", "Staatsexamen", "Diplom","Approbation", "Promotion", "Sonstiges"]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_profession", "type": "radio", "text": "In welche der folgenden Berufskategorien würden Sie sich einordnen?", "options":["Schüler*in","Student*in", "Arbeitssuchend", "Selbständigkeit & Freiberuflichkeit","Techniker*in und gleichrangiger nichttechnischer Beruf","Führungskraft", "Medizinischer und Pflegeberuf", "Akademischer Beruf", "Projektarbeits- und Entwicklungskraft", "Lehrkraft","Bürokraft und verwandter Beruf", "Dienstleistungsberuf und Verkäufer*in", "Fachkräfte in der Landwirtschaft und Fischerei", "Handwerks- und verwandter Beruf", "Anlagen- und Maschinenbediener*in und Montageberuf", "Hilfsarbeitskraft", "Militärischer Beruf", "Sonstiges"]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_profession2", "type": "radio", "text": "Falls Sie Auszubildender*de / Student*in sind oder waren, welcher Fachrichtung ist Ihr*e Ausbildung / Studium am ehesten zuzuordnen?", "options":["keine Ausbildung / kein Studium", "Agrar- und Forst­wissenschaften/-wirtschaft", "Gesellschafts- und Sozial­wissenschaften", "Ingenieur­wissenschaften", "Kunst", "Musik", "Design", "Mathematik", "Naturwissenschaften", "Medizin", "Gesund­heitswissen­schaften/-wirtschaft", "Sprach- und Kulturwissen­schaften", "Wirtschafts- und Rechts­wissenschaften", "Lehramt", "Öffentliche Verwaltung", "Sonstiges"]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_income","type": "radio", "text": "In welcher Gehaltsstufe würden Sie Ihr monatliches Nettoeinkommen einordnen?", "options":["Unter 400","400 - 1000", "1000 - 1500", "1500 - 2500","2500 - 4000","4000 - 6000","Über 6000","Keine Angabe"]}},
+		
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_origin","type": "select", "text": "Wo haben Sie Ihre ersten 6 Lebensjahre verbracht? <br> <br> Die folgende Liste ist in englischer Sprache:", "options":"LOAD"}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"name": "POI_Demographie_residence","type": "select", "text": "Wo haben Sie im letzten Jahr gelebt? <br> <br> Die folgende Liste ist in englischer Sprache:", "options": "LOAD"}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"type": "slider", "text": "Wie würden Sie das Umfeld Ihrer Kindheit einordnen? <br> <br> Eine Eingabe erfolgt über das Tippen auf die entsprechende Slider Position. Das direkte Ziehen des Sliderpunktes ist nicht notwendig.", "options":[
+			{"name": "POI_Demographie_ländlich_städtisch1", "sliderStyle":"neutral1", "min": 0, "max": 100,"tooltip":"false","marks":{"0":"ländlich", "25":"eher ländlich", "50": "ausgeglichen", "75":"eher städtisch", "100":"städtisch"}, "img": ["Village.png","ev.png","dorf.png","ec.png","City.png"]}
+		]}},
+		{"module": "POI", "part": "Demographie", "type": "question", "content": {"type": "slider", "text": "Wie würden Sie das Umfeld Ihrer letzten 5 Lebensjahre einordnen?", "options":[
+			{"name": "POI_Demographie_ländlich_städtisch2", "sliderStyle":"neutral1","min": 0, "max": 100,"tooltip":"false", "marks":{"0":"ländlich", "25":"eher ländlich", "50": "ausgeglichen", "75":"eher städtisch", "100":"städtisch"},"img": ["Village.png","ev.png","dorf.png","ec.png","City.png"]}
+		]}},
+
+		
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu? <br> <br> (Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b>", "options":[
+			"average", 
+			{"name": "POI_milieu_conservative1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Erfolg als zentraler Beweggrund","marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_conservative2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Führungsanspruch", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},
+			{"name": "POI_milieu_conservative3", "sliderStyle":"neutral2", "defaultValue":0, "text":"Gesellschaftliche Verantwortung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},
+			{"name": "POI_milieu_conservative4","sliderStyle":"neutral2", "defaultValue":0, "text":"Standesbewusstsein <br> (Gefühl der Zugehörigkeit zu einem Stand)", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},
+			{"name": "POI_milieu_conservative5", "sliderStyle":"neutral2", "defaultValue":0, "text":"Exklusivitätsanspruch <br> (betont einen nur für einen kleinen Kreis zugänglichen Lebensstil)", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b>", "options":[
+			"average",
+			{"name": "POI_milieu_liberal1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Postmaterielle Haltung <br>(betont das Streben nach nicht-materiellen Gütern, wie Gesundheit, Freiheit und Glück)", "marks":{"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_liberal2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Kritische Weltsicht", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_liberal3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Kosmopolitische Haltung <br> (Weltanschauung, die die gesamte Erde als Heimat betrachtet und dem Nationalismus entgegen steht)", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_liberal5", "sliderStyle":"neutral2", "defaultValue":0, "text": "Kunst- und Kulturorientierung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}} 
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br> (Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b>", "options":[
+			"average",
+			{"name": "POI_milieu_performance1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Global‐ökonomisches Denken", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_performance2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Networking- und Multitasking", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_performance3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Konsum- und Stilorientierung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_performance4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Konkurrierende Grundhaltung (auf Wettbewerb beruhend)", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_performance5", "sliderStyle":"neutral2", "defaultValue":0, "text": "Technik- und IT-Affinität", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu? <br> <br> (Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b>", "options":[
+			"average",
+			{"name": "POI_milieu_creative1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Selbstbild als Trendsetter", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_creative2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Mobilitätsanspruch <br>(betont nicht an einen Ort gebunden zu sein)","marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_creative3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Online und offline Vernetztsein", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_creative4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Zielorientierung – ohne direktes Karrieredenken", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_creative5", "sliderStyle":"neutral2", "defaultValue":0, "text": "Individualismus und Nonkonformismus <br>(persönliche Einstellung, die nicht in Übereinstimmung mit den allgemein anerkannten Ansichten, dem vorherrschenden Lebensstil oder dem kulturellen Mainstream stehen)", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br> (Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b>", "options":[
+			"average",
+			{"name": "POI_milieu_pragmatic1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Lebenspragmatismus und Nützlichkeitsdenken", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_pragmatic3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Spaß-, Komfort- und Unterhaltungsorientierung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_pragmatic4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Flexibilität und Weltoffenheit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_pragmatic5", "sliderStyle":"neutral2", "defaultValue":0, "text": "Bedürfnis nach Verankerung und Zugehörigkeit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}} 
+			]}},
+	
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br> (Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b>", "options":[
+			"average",
+			{"name": "POI_milieu_civil1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Leistungs‐ und Anpassungsbereitschaft", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},  
+			{"name": "POI_milieu_civil2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Bejahung der gesellschaftlichen Ordnung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_civil3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Streben nach beruflicher und sozialer Entwicklung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_civil4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Gesicherte und harmonische Verhältnisse", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers) </b>", "options":[
+			"average",
+			{"name": "POI_milieu_ecological1", "sliderStyle":"neutral2", "defaultValue":0,"text": "Ausgeprägtes ökologisches und soziales Gewissen", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_ecological2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Postwachstumsorientierung <br>(hinterfragt die Sinnhaftigkeit von Wirtschaftswachstum und die Machbarkeit von grünem Wachstum)", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_ecological3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Politische Korrektheit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_ecological4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Spiritualität und Achtsamkeit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},  
+			{"name": "POI_milieu_ecological5", "sliderStyle":"neutral2", "defaultValue":0, "text": "Soziale- und kulturelle Offenheit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br> (Bitte scrollen Sie bis zum Schluss runter </b>", "options":[
+			"average",
+			{"name": "POI_milieu_traditional1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Bescheidenheit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_traditional2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Sparsamkeit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_traditional3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Bodenständigkeit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_traditional4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Arbeitsmoral", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br> (Bitte scrollen Sie bis zum Schluss runter</b>", "options":[
+			"average",
+			{"name": "POI_milieu_hedonistic1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Leben im Hier und Jetzt", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_hedonistic2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Spontaner Konsumstil", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},  
+			{"name": "POI_milieu_hedonistic3", "sliderStyle":"neutral2", "defaultValue":0,"text": "Trendorientierung", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}},  
+			{"name": "POI_milieu_hedonistic4", "sliderStyle":"neutral2", "defaultValue":0, "text": "Ausbrechen aus den Zwängen des Alltags in der Freizeit", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+	
+		{"module": "POI", "part": "Milieu Identifikation", "type": "question", "content": {"type": "polygonGraph", "text": "Inwieweit treffen die folgenden Gesichtspunkte für Ihren Lebensstil und Ihr Selbstbild zu?<br> <br> <br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)</b> ", "options":[
+			"average",
+			{"name": "POI_milieu_precarious1", "sliderStyle":"neutral2", "defaultValue":0, "text": "Selbstbild als Benachteiligte der Gesellschaft", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_precarious2", "sliderStyle":"neutral2", "defaultValue":0, "text": "Zukunftsängste", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}, 
+			{"name": "POI_milieu_precarious3", "sliderStyle":"neutral2", "defaultValue":0, "text": "Wunsch nach stärkerer sozialer, politischer und gesellschaftlicher Teilhabe", "marks": {"0":"trifft nicht zu", "25":"trifft eher nicht zu", "50":"trifft zu", "75":"trifft eher zu", "100":"trifft voll zu"}}
+			]}},
+		
+		{"module": "POI", "part": "Normative Grundorientierung", "type": "question", "content": {"type": "slider", "text": "Wie würden Sie Ihre Grundorientierung auf der folgenden Skala einschätzen?", "options":[
+			{"name": "POI_norm", "sliderStyle":"neutral1", "text":"Grundorientierung","marks": {"0": "<b>traditionell</b>","25":"eher traditionell", "50":"ausgeglichen", "75":"eher modern", "100":"<b>modern</b>"}}
+		]}},
+		
+		{"module": "POI", "part": "Allgemeines Konsumverhalten", "type": "explanationPic", "content": {"text": "","imagePosition": "behind","img": "net.mp4"}},
+		{"module": "POI", "part": "Allgemeines Konsumverhalten", "type": "question", "content": {"type": "slider","text": "Wie würden Sie Ihr Konsumverhalten und Ihre Vorlieben anhand dieser Attribute einschätzen?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options":[
+			{"name": "POI_overall_timeless", "sliderStyle":"neutral1",  "marks": {"0": "<b>zeitlos</b>", "25":"eher zeitlos", "50":"ausgeglichen", "75":"eher modisch", "100":"<b>modisch</b>"}}, 
+			{"name": "POI_overall_aesthetic", "sliderStyle":"neutral1",  "marks": {"0": "<b>ästhetisch</b>", "25":"eher ästhetisch", "50":"ausgeglichen", "75":"eher funktional", "100":"<b>funktional</b>"}}, 
+			{"name": "POI_overall_emotional",  "sliderStyle":"neutral1",  "marks": {"0": "<b>emotional</b>", "25":"eher emotional", "50":"ausgeglichen", "75":"eher rational", "100":"<b>rational</b>"}}, 
+			{"name": "POI_overall_price",  "sliderStyle":"neutral1", "marks": {"0": "<b>Preis<b>", "25":"eher Preis", "50":"ausgeglichen", "75":"eher Qualität", "100":"<b>Qualität<b>"}} 
+		]}},
+
+		{"module": "POI", "part": "Allgemeines Konsumverhalten", "type": "question", "content": {"type": "polygonGraph", "text": "Was sind für Sie wichtige Eigenschaften beim Kauf von Produkten?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options":[
+			{"name": "POI_overall_manufacturing", "sliderStyle":"neutral2", "text":"Verarbeitung", "min": 0, "max": 100, "marks":{"0":"unwichtig", "25":"eher unwichtig", "50":"ausgeglichen", "75":"eher wichtig", "100":"sehr wichtig"}}, 
+			{"name": "POI_overall_longevity", "sliderStyle":"neutral2","text":"Haltbarkeit", "min": 0, "max": 100, "marks": {"0":"unwichtig", "25":"eher unwichtig", "50":"ausgeglichen", "75":"eher wichtig", "100":"sehr wichtig"}},
+			{"name": "POI_overall_sustainable", "sliderStyle":"neutral2","text":"Nachhaltigkeit", "min": 0, "max": 100, "marks": {"0":"unwichtig", "25":"eher unwichtig", "50":"ausgeglichen", "75":"eher wichtig", "100":"sehr wichtig"}},
+			{"name": "POI_overall_repairability", "sliderStyle":"neutral2","text":"Reparierbarkeit", "min": 0, "max": 100, "marks": {"0":"unwichtig", "25":"eher unwichtig", "50":"ausgeglichen", "75":"eher wichtig", "100":"sehr wichtig"}},
+			{"name": "POI_overall_multiuse", "sliderStyle":"neutral2","text":"Mehrfachnutzung", "min": 0, "max": 100, "marks": {"0":"unwichtig", "25":"eher unwichtig", "50":"ausgeglichen", "75":"eher wichtig", "100":"sehr wichtig"}},
+			{"name": "POI_overall_diverseresell", "sliderStyle":"neutral2","text":"Wiederverkaufbarkeit", "min": 0, "max": 100, "marks": {"0":"unwichtig", "25":"eher unwichtig", "50":"ausgeglichen", "75":"eher wichtig", "100":"sehr wichtig"}}
+		]}},
+
+		{"module": "POI", "part": "Allgemeines Konsumverhalten", "type": "question", "content": {"type": "slider", "text": "Wie würden Sie Ihr Konsumverhalten anhand dieser Attribute einschätzen?", "options":[
+			{"name": "POI_overall_innovative", "sliderStyle":"neutral1", "text":"", "marks": {"0": "bewährte Produkte", "25":"eher bewährte Produkte", "50":"ausgeglichen", "75":"eher innovative Produkte", "100":"innovative Produkte"}}, 
+			{"name": "POI_overall_established", "sliderStyle":"neutral1", "text":"","marks": {"0": "etablierte Produkte", "25":"eher etablierte Produkte", "50":"ausgeglichen", "75":"eher neue Produkte", "100":"neue Produkte"}} 
+		]}},
+			
+	
+		{"module": "POI", "part": "Markenvertrauen", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind","img": "wa.mp4"}},
+		
+		{"module": "POI", "part": "Markenvertrauen_VW", "type": "question", "content": {"type": "polygonGraph", "img": "VW.png", "text": "<b>Markenvertrauen</b><br><br> Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br> <b>Volkswagen:<b>", "options":[
+			{"name": "POI_brand_vw_quality", "sliderStyle":"quality", "marks": {"50": "Qualität"}},
+			{"name": "POI_brand_vw_repairability", "sliderStyle":"quality","marks": {"50": "Reparierbarkeit"}},
+			{"name": "POI_brand_vw_prestige", "sliderStyle":"quality","marks": {"50": "Prestige"}},
+			{"name": "POI_brand_vw_longevity", "sliderStyle":"quality","marks": {"50": "Langlebigkeit"}},
+			{"name": "POI_brand_vw_safety", "sliderStyle":"quality", "marks": {"50": "Sicherheit"}},
+			{"name": "POI_brand_vw_aesthetic", "sliderStyle":"quality","marks": {"50": "Ästhetik"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_VW", "type": "question", "content": {"type": "polygonGraph", "img": "VW.png", "text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Volkswagen:<b>", "options":[
+			"average",
+			{"name": "POI_brand_vw_resources", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Rohstoffgewinnung"}},
+			{"name": "POI_brand_vw_preproduction", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Vorproduktion"}},
+			{"name": "POI_brand_vw_production", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Produktion"}},
+			{"name": "POI_brand_vw_consumeplace", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltiger Produktionsort in Relation zum Konsumort"}}
+		]}},
+
+		{"module": "POI", "part": "Markenvertrauen_Fiat", "type": "question", "content": {"type": "polygonGraph", "img": "Fiat.png", "text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Fiat:<b>", "options":[
+			{"name": "POI_brand_Fiat_quality",  "sliderStyle":"quality", "marks": {"50": "Qualität"}},
+			{"name": "POI_brand_Fiat_repairability", "sliderStyle":"quality", "marks": {"50": "Reparierbarkeit"}},
+			{"name": "POI_brand_Fiat_prestige", "sliderStyle":"quality","marks": {"50": "Prestige"}},
+			{"name": "POI_brand_Fiat_longevity", "sliderStyle":"quality","marks": {"50": "Langlebigkeit"}},
+			{"name": "POI_brand_Fiat_safety", "sliderStyle":"quality", "marks": {"50": "Sicherheit"}},
+			{"name": "POI_brand_Fiat_aesthetic", "sliderStyle":"quality", "marks": {"50": "Ästhetik"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_Fiat", "type": "question", "content": {"type": "polygonGraph", "img": "Fiat.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Fiat:<b>", "options":[
+			"average",
+			{"name": "POI_brand_Fiat_resources", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Rohstoffgewinnung"}},
+			{"name": "POI_brand_Fiat_preproduction", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Vorproduktion"}},
+			{"name": "POI_brand_Fiat_production",  "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Produktion"}},
+			{"name": "POI_brand_Fiat_consumeplace", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltiger Produktionsort in Relation zum Konsumort"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_Audi", "type": "question", "content": {"type": "polygonGraph", "img": "Audi.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br><br> Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Audi:<b>","options":[
+			{"name": "POI_brand_Audi_quality", "sliderStyle":"quality", "marks": {"50": "Qualität"}},
+			{"name": "POI_brand_Audi_repairability", "sliderStyle":"quality", "marks": {"50": "Reparierbarkeit"}},
+			{"name": "POI_brand_Audi_prestige", "sliderStyle":"quality", "marks": {"50": "Prestige"}},
+			{"name": "POI_brand_Audi_longevity", "sliderStyle":"quality", "marks": {"50": "Langlebigkeit"}},
+			{"name": "POI_brand_Audi_safety", "sliderStyle":"quality", "marks": {"50": "Sicherheit"}},
+			{"name": "POI_brand_Audi_aesthetic", "sliderStyle":"quality", "marks": {"50": "Ästhetik"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_Audi", "type": "question", "content": {"type": "polygonGraph", "img": "Audi.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Audi:<b>","options":[		
+			"average",
+			{"name": "POI_brand_Audi_resources", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Rohstoffgewinnung"}},
+			{"name": "POI_brand_Audi_preproduction","sliderStyle":"neutral2",  "marks": {"50": "Nachhaltige Vorproduktion"}},
+			{"name": "POI_brand_Audi_production",  "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Produktion"}},
+			{"name": "POI_brand_Audi_consumeplace", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltiger Produktionsort in Relation zum Konsumort"}}
+		]}},
+
+		{"module": "POI", "part": "Markenvertrauen_H&M", "type": "question", "content": {"type": "polygonGraph", "img": "H&M.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>H&M:<b>", "options":[
+			{"name": "POI_brand_H&M_quality", "sliderStyle":"quality", "marks": {"50": "Qualität"}},
+			{"name": "POI_brand_H&M_repairability", "sliderStyle":"quality", "marks": {"50": "Reparierbarkeit"}},
+			{"name": "POI_brand_H&M_prestige", "sliderStyle":"quality", "marks": {"50": "Prestige"}},
+			{"name": "POI_brand_H&M_longevity", "sliderStyle":"quality", "marks": {"50": "Langlebigkeit"}},
+			{"name": "POI_brand_H&M_safety", "sliderStyle":"quality", "marks": {"50": "Sicherheit"}},
+			{"name": "POI_brand_H&M_aesthetic", "sliderStyle":"quality", "marks": {"50": "Ästhetik"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_H&M", "type": "question", "content": {"type": "polygonGraph", "img": "H&M.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>H&M:<b>", "options":[
+			"average",
+			{"name": "POI_brand_H&M_resources", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Rohstoffgewinnung"}},
+			{"name": "POI_brand_H&M_preproduction", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Vorproduktion"}},
+			{"name": "POI_brand_H&M_production",  "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Produktion"}},
+			{"name": "POI_brand_H&M_consumeplace", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltiger Produktionsort in Relation zum Konsumort"}}
+		]}},
+
+		{"module": "POI", "part": "Markenvertrauen_Patagonia", "type": "question", "content": {"type": "polygonGraph", "img": "Patagonia.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Patagonia:<b>", "options":[
+			{"name": "POI_brand_Patagonia_quality", "sliderStyle":"quality", "marks": {"50": "Qualität"}},
+			{"name": "POI_brand_Patagonia_repairability", "sliderStyle":"quality", "marks": {"50": "Reparierbarkeit"}},
+			{"name": "POI_brand_Patagonia_prestige", "sliderStyle":"quality", "marks": {"50": "Prestige"}},
+			{"name": "POI_brand_Patagonia_longevity", "sliderStyle":"quality", "marks": {"50": "Langlebigkeit"}},
+			{"name": "POI_brand_Patagonia_safety", "sliderStyle":"quality", "marks": {"50": "Sicherheit"}},
+			{"name": "POI_brand_Patagonia_aesthetic", "sliderStyle":"quality", "marks": {"50": "Ästhetik"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_Patagonia", "type": "question", "content": {"type": "polygonGraph", "img": "Patagonia.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Patagonia:<b>", "options":[
+			"average",
+			{"name": "POI_brand_Patagonia_resources", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Rohstoffgewinnung"}},
+			{"name": "POI_brand_Patagonia_preproduction", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Vorproduktion"}},
+			{"name": "POI_brand_Patagonia_production",  "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Produktion"}},
+			{"name": "POI_brand_Patagonia_consumeplace", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltiger Produktionsort in Relation zum Konsumort"}}
+		]}},
+
+		{"module": "POI", "part": "Markenvertrauen_Vaude", "type": "question", "content": {"type": "polygonGraph", "img": "Vaude.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Vaude:<b>", "options":[
+			{"name": "POI_brand_Vaude_quality", "sliderStyle":"quality", "marks": {"50": "Qualität"}},
+			{"name": "POI_brand_Vaude_repairability", "sliderStyle":"quality", "marks": {"50": "Reparierbarkeit"}},
+			{"name": "POI_brand_Vaude_prestige", "sliderStyle":"quality", "marks": {"50": "Prestige"}},
+			{"name": "POI_brand_Vaude_longevity", "sliderStyle":"quality", "marks": {"50": "Langlebigkeit"}},
+			{"name": "POI_brand_Vaude_safety", "sliderStyle":"quality", "marks": {"50": "Sicherheit"}},
+			{"name": "POI_brand_Vaude_aesthetic", "sliderStyle":"quality", "marks": {"50": "Ästhetik"}}
+		]}},
+		{"module": "POI", "part": "Markenvertrauen_Vaude", "type": "question", "content": {"type": "polygonGraph", "img": "Vaude.png","text": "<b>Markenvertrauen</b><br><br>Wie bewerten Sie diese Marke anhand der folgenden Kriterien? <br> <br>Hier geht es um Ihr subjektives Bild der Marke, nicht um objektives Wissen. Sollten Sie die Marke nicht kennen, klicken sie ohne eine Eingabe auf Weiter.<br><br><b>Vaude:<b>", "options":[
+			"average",
+			{"name": "POI_brand_Vaude_resources", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Rohstoffgewinnung"}},
+			{"name": "POI_brand_Vaude_preproduction", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Vorproduktion"}},
+			{"name": "POI_brand_Vaude_production",  "sliderStyle":"neutral2", "marks": {"50": "Nachhaltige Produktion"}},
+			{"name": "POI_brand_Vaude_consumeplace", "sliderStyle":"neutral2", "marks": {"50": "Nachhaltiger Produktionsort in Relation zum Konsumort"}}
+		]}},
+		
+		{"module": "POI", "part": "NPIS: Need for product information seeking", "type": "question", "content": {"type": "slider", "text": "In welchem Maß stimmen Sie den folgenden Aussagen zu?", "options":[
+			{"name": "POI_information_newspaper", "tooltip":"false", "defaultValue":"unsicher", "text":"Ich mag Zeitungen und Magazine, die über neue Marken und Produkte informieren.","data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_information_socialmedia", "tooltip":"false", "defaultValue":"unsicher", "text":"Ich nutze Social Media, um Informationen über Marken und Produkte zu bekommen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_information_places", "tooltip":"false", "defaultValue":"unsicher", "text":"Ich suche gerne Orte auf, an denen ich Informationen über neue Produkte und Marken bekomme.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]}
+			]}},
+		
+
+		{"module": "POI", "part": "SFOC: Slow fashion orientation construct", "type": "question", "content": {"type": "slider", "text": "Nachfolgend finden Sie einige Aussagen. Geben Sie bitte für jede Aussage an, in welchem Maße Sie mit ihr übereinstimmen.<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options":[
+			{"name": "POI_sfoc_justice1", "tooltip":"false", "defaultValue":"unsicher","text": "Ich mache mir Sorgen wegen der Arbeitsbedingungen bei der Herstellung, wenn ich Kleidung kaufe.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_justice2","tooltip":"false", "defaultValue":"unsicher","text": "Ich mache mir Sorgen bezüglich des Fairtrades, wenn ich Kleidung kaufe.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_justice3", "tooltip":"false", "defaultValue":"unsicher", "text": "Faire Vergütung für Kleidungsproduzenten ist mir beim Kauf von Kleidung wichtig.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_authenticity1", "tooltip":"false", "defaultValue":"unsicher", "text": "Handgefertigte Kleidung ist hochwertiger als Kleidung aus Massenproduktion.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_handmade", "tooltip":"false", "defaultValue":"unsicher", "text": "Handarbeit ist sehr wichtig bei Kleidung.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_authenticity2", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich schätze Keidung, die durch traditionelle Techniken hergestellt wurde.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_longevity", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich neige dazu, Kleidunstücke eher so lange wie möglich zu tragen, anstatt sie schnell zu entsorgen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_functionality1", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich mag es, die gleiche Kleidung auf verschiedene Arten zu tragen.","data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_functionality2", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich bevorzuge einfache und klassische Designs.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_locality1", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich glaube, dass Kleidung aus lokal produzierten Materialien hochwertiger ist.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_locality2", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich bevorzuge es Kleidung zu kaufen, die in Deutschland/Europa hergestellt wurde, im Vergleich zu Kleidung aus dem Ausland.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_locality3", "tooltip":"false", "defaultValue":"unsicher", "text": "Wir müssen deutsche/europäische Bekleidungsmarken unterstützen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_exlusivity1", "tooltip":"false", "defaultValue":"unsicher", "text": "Limitierte Editionen haben für mich einen besonderen Reiz.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_exlusivity2", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich finde außergewöhnliche Kleidungstücke anziehend.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_sfoc_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text": "Ich genieße es, Kleidung zu besitzen, die andere nicht haben.", "data":["starkes widersprechen","mildes widersprechen", "unsicher","mildes zustimmen","starkes zustimmen"]}
+		]}},
+		
+		{"module": "POI", "part": "NEP: New Ecological Paradigm Scale", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "eva.mp4"}},
+
+		{"module": "POI", "part": "NEP: New Ecological Paradigm Scale", "type": "question", "content": {"type": "slider", "text": "Nachfolgend finden Sie einige Aussagen zur Beziehung zwischen Mensch und Umwelt. Geben Sie bitte für jede Aussage an, in welchem Maße Sie mit ihr übereinstimmen.<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Wir nähern uns dem Limit der Bevölkerungszahl, die die Erde bewältigen kann.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Menschen haben das Recht ihre natürliche Umwelt zu verändern, um sie an ihre Bedürfnisse anzupassen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Wenn Menschen sich in die Natur einmischen, hat das oft katastrophale Konsequenzen.","data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Der menschliche Einfallsreichtum wird dafür sorgen, dass wir die Erde nicht unbewohnbar machen.","data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Menschen missbrauchen die Umwelt schwer.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Die Erde hat eine Menge natürlicher Ressourcen, wenn wir nur lernen diese zu fördern.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Pflanzen und Tiere haben das gleiche Recht zu leben wie Menschen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Das Gleichgewicht der Natur ist stark genug, um den Einfluss der modernen Industrienationen zu bewältigen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Abgesehen von unseren speziellen Fähigkeiten sind wir Menschen immer noch den Naturgesetzen unterworfen.","data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher",  "text":"Die sogenannte “Umweltkrise”, mit der die Menschheit konfrontiert ist, wird völlig übertrieben.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Die Erde ist wie ein Raumschiff mit wenig Platz und wenig Ressourcen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Menschen sind dazu geboren, über den Rest der Natur zu herrschen.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Das Gleichgewicht der Natur ist sehr empfindlich und leicht zu stören.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Menschen werden möglicherweise genug darüber lernen, wie die Natur funktioniert, um sie kontrollieren zu können.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]},
+			{"name": "POI_nep_exlusivity3", "tooltip":"false", "defaultValue":"unsicher", "text":"Wenn die Dinge so weitergehen wie bisher, werden wir bald eine große Umweltkatastrophe erleben.", "data":["starkes Widersprechen","mildes Widersprechen", "unsicher","mildes Zustimmen","starkes Zustimmen"]}
+		]}},
+
+		{"module": "POI", "part": "BFI-10: 10 Item Big Five Inventory", "type": "question", "content": {"type": "slider", "text": "Inwieweit treffen die folgenden Aussagen auf Sie zu?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+			{"name": "POI_bfi-10_1_extra_neg", "tooltip":"false", "defaultValue":"weder noch", "text": "Ich bin eher zurückhaltend, reserviert.","data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_2_verträg", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich schenke anderen leicht Vertrauen, glaube an das Gute im Menschen. ", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]},  
+			{"name": "POI_bfi-10_3_gewiss_neg", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich bin bequem, neige zur Faulheit.","data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_4_neuro_neg", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich bin entspannt, lasse mich durch Stress nicht aus der Ruhen bringen. ", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_5_offen_neg", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich habe nur wenig künstlerisches Interesse.", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_6_extra", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich gehe aus mir heraus, bin gesellig.", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_7_verträg_neg", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich neige dazu, andere zu kritisieren.", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_8_gewiss", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich erledige Aufgaben gründlich.","data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_9_neuro", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich werde leicht nervös und unsicher.", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}, 
+			{"name": "POI_bfi-10_10_offen", "tooltip":"false", "defaultValue":"weder noch", "text":"Ich habe eine aktive Vorstellungskraft, bin fantasievoll.", "data":["trifft überhaupt nicht zu","trifft eher nicht zu", "weder noch","eher zutreffend","trifft voll und ganz zu"]}
+		]}},
+
+		{"module": "POI", "part": "SPQ (Tavassoli et al., 2014)", "type": "question", "content": {"type": "slider", "text": "Inwieweit stimmen Sie den einzelnen Aussagen zu oder nicht zu?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+			{"name": "POI_SPQ_1_touch-temperature", "tooltip":"false", "text": "Ich würde einen 10-Grad-Temperaturunterschied des Wetters nicht bemerken.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]},
+			{"name": "POI_SPQ_2_touch-temperature", "tooltip":"false", "text": "Ich müsste 10 Minuten warten bis sich ein heißes Getränk abgekühlt hat, bevor ich es trinken kann. Andernfalls wäre es mir zu heiß.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_3_touch_pain", "tooltip":"false", "text": "Ich hätte keine Angst davor mich zu verletzen, wenn ich bei hoher Geschwindigkeit mit dem Fahrrad stürze.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_4_touch-temperature", "tooltip":"false", "text": "Ich vertrage keine heißen Duschen (über 40 °C /105 °F).","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_5_touch-pain", "tooltip":"false", "text": "Ich bräuchte keine Anästhesie, um einen zahnärztlichen Eingriff, wie zum Beispiel eine Kariesfüllung, zu ertragen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_6_touch-pain", "tooltip":"false", "text": "Ich wäre in der Lage, einen Schnitt von einem Millimeter in meiner Haut zu spüren.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_7_touch-temperature", "tooltip":"false", "text": "Ich wäre in der Lage, eine winzige Veränderung (zum Beispiel 1 Grad) der Termperatur des Wetters zu bemerken.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_8_touch-temperature", "tooltip":"false", "text": "Ich wäre in der Lage, nach einer Minute eine Veränderung in der Temperatur einer Tasse Kaffee zu spüren.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_9_touch-temperature", "tooltip":"false", "text": "Ich müsste im Winter keinen Mantel tragen, auch wenn die Außentemperatur null Grad beträgt.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_10_touch-vibration", "tooltip":"false", "text": "Ich wäre nicht in der Lage, die Schwingungen von lauter Musik zu spüren, wenn ich neben dem Lautsprecher säße (zum Beispiel bei einem Konzert).","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_11_touch-vibration", "tooltip":"false", "text": "Ich wäre nicht in der Lage eine kleine Lautstärkeänderung in der Musik, als Unterschied in der Schwingung auf meiner Haut, zu spüren.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_12_touch-vibration", "tooltip":"false", "text": "Ich würde den Unterschied zwischen ebenem und unebenem Boden nicht bemerken, wenn ich auf dem Rücksitz eines Autos sitzend darüber fahre.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]},  
+			{"name": "POI_SPQ_13_touch-vibration", "tooltip":"false", "text": "Wenn ich gehen würde, könnte ich die Vibrationen eines vorbeifahrenden Lastwagens spüren, selbst wenn meine Augen geschlossen wären.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_14_touch-vibration", "tooltip":"false", "text": "Wenn mein Mobiltelefon in meiner Tasche vibrieren würde, würde ich es schnell spüren.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_15_touch-pressure", "tooltip":"false", "text": "Ich könnte den Gewichtsunterschied zwischen zwei verschiedenen Münzgrößen auf meiner Handfläche erkennen, wenn meine Augen geschlossen wären.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_16_touch-pressure", "tooltip":"false", "text": "Ich würde das Gummiband spüren, das meine Socken hochhält, wenn ich innehalte und darüber nachdenke.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_17_touch-pressure", "tooltip":"false", "text": "Ich bemerke das Gewicht und den Druck eines Hutes auf meinem Kopf.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_18_touch-pressure", "tooltip":"false", "text": "Ich würde das Etikett auf der Rückseite meines Hemdes nicht spüren, selbst wenn ich daran denken würde.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_19_vision", "tooltip":"false", "text": "Ich würde fühlen, wenn ein einziges Haar meinen Handrücken berühren würde.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_20_vision-motion", "tooltip":"false", "text": "Ich wäre nicht in der Lage, die Bewegung der Flügel eines rotierenden Ventilators zu erkennen, selbst wenn sie sich mit minimaler Geschwindigkeit bewegen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_21_vision-motion", "tooltip":"false", "text": "Ich bemerke das Flackern eines Desktop-Computers, selbst wenn er einwandfrei funktioniert.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_22_vision-motion", "tooltip":"false", "text": "Ich wäre in der Lage, die einzelnen Blätter eines rotierenden Ventilators zu sehen, auch wenn dieser mit maximaler Geschwindigkeit läuft.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_23_vision-motion", "tooltip":"false", "text": "Ich kann nicht sagen, ob die Autos, die mich auf der Straße überholen, unterschiedlich schnell fahren.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_24_vision-motion", "tooltip":"false", "text": "Ich bekomme leicht Reisekrankheit/Übelkeit (zum Beispiel Auto- oder Seekrankheit).","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_25_vision-brightness", "tooltip":"false", "text": "Ich wäre in der Lage die Veränderung der Helligkeit eines Lichts jedes Mal visuell zu erkennen, wenn die Dimmersteuerung um eine Stufe verändert wird.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_26_vision-brightness", "tooltip":"false", "text": "In einer dunklen Nacht wäre ich nicht in der Lage große Objekte, wie geparkte Autos, klar zu erkennen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_27_vision-brightness", "tooltip":"false", "text": "Ohne Sonnenbrille kann ich bei hellem Sonnenlicht hinausgehen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_28_vision-brightness", "tooltip":"false", "text": "Ich habe mich entschieden, gedeckte Farben zu tragen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_29_vision-acuity", "tooltip":"false", "text": "Ich kann auf einer Seite geschriebene Worte, die andere Leute lesen können, nicht lesen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]},
+			{"name": "POI_SPQ_30_vision-acuity", "tooltip":"false", "text": "Ich wäre in der Lage, ein Straßenschild aus einer Entfernung von 30 Metern (100 Fuß) zu lesen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_31_vision-acuity", "tooltip":"false", "text": "Ich wäre in der Lage, Kleingedrucktes, wie zum Beispiel eine Seriennummer auf der Rückseite einer DVD, in einer Entfernung von 3 Metern (10 Fuß), zu lesen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_32_vision-acuity", "tooltip":"false", "text": "Ich schließe Vorhänge, um helles Licht zu vermeiden.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_33_vision-acuity", "tooltip":"false", "text": "Ich kann in den meisten Umgebungen Staubpartikel in der Luft sehen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_34_vision-acuity", "tooltip":"false", "text": "Ich hätte Schwierigkeiten ein einzelnes Blatt deutlich zu sehen, selbst an einem Baum der in der Nähe ist.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_35_vision-acuity", "tooltip":"false", "text": "Ich finde es schwierig, in einer klaren Nacht einzelne Sterne zu sehen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_36_vision-colour", "tooltip":"false", "text": "Ich kann helle Farben nur für kurze Zeit betrachten.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_37_vision-colour", "tooltip":"false", "text": "Ich könnte zwei Arten von grünen Äpfeln nicht allein anhand ihrer Farbe unterscheiden.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_39_vision-colour", "tooltip":"false", "text": "Wenn ich mir in einem Geschäft einen Stapel blauer Pullover ansehe, die identisch sein sollen, wäre ich in der Lage Unterschiede zwischen ihnen zu erkennen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}, 
+			{"name": "POI_SPQ_40_vision-colour", "tooltip":"false", "text": "Ich wäre nicht in der Lage, die Farbe eines Pullovers im Geschäft mit der Farbe meiner Hose zu Hause abzugleichen und abzustimmen.","data":["stimme stark nicht zu","stimme nicht zu", "stimme zu","stimme stark zu"]}
+			]}},
+
+
+		{"module": "POI Outro", "part": "POI Verabschiedung", "type": "explanationPic", "content": {"text": "<br><br><br>Hiermit haben Sie die online Abfrage von Eliot abgeschlossen. <br>Vielen Dank für Ihre Teilnahme. Wir freuen uns, Sie bald in unserem Neurosensorik Labor begrüßen zu dürfen!", "imagePosition": "behind", "img": "behind2.jpg"}},
+		
+		{"module": "Intro", "part": "Intro", "type": "manual", "content": {"text": "","imagePosition": "behind", "channel":"ma", "img": "title3.png"}},
+		{"module": "Intro", "part": "Intro", "type": "explanationPic", "content": {"text": "<br><b>HERZLICH WILLKOMMEN IM NEUROSENSORIK LABOR</b> <br><br>Zu jedem Zeitpunkt nehmen wir über unsere Sinne die Umgebung wahr. Durch die Verarbeitung dieser Reize teilen wir die Welt und ihre Objekte in gut und schlecht, anziehend oder zu vermeidend – je elaborierter, desto nuancierter – und richten daran unser Verhalten aus.<br><br> ELIOT wurde entwickelt, um die sinnliche Materialerfahrung möglichst objektiv zu messen. Zu diesem Zweck wird eine Abfrage dieser mit einem neurowissenschaftlichen Ansatz kombiniert. Vor der Messung werden Sie von dem*der Versuchsleiter*in eine ausführliche Erklärung des Messsystems erhalten.<br>Scheuen Sie sich bitte nicht Fragen zu stellen.<br><br>","imagePosition": "left", "img": "intro1.jpg"}},
+		{"module": "Einleitung", "part": "Forschungsgegenstand", "type": "explanationPic", "content": {"text": "<b>Forschungsgegenstand dieser Studie:</b> <br> Vergleich der frühen Reizverarbeitung mit der späteren bewussten Wahrnehmung und Bewertung des sinnlichen Erlebens.", "imagePosition": "left", "img": "left3.jpg"}},
+		{"module": "Einleitung", "part": "Information Messsequenz", "type": "explanationPic", "content": {"text": "Im Zentrum der Messung steht Ihre optische- und haptische Wahrnehmung von einer Auswahl an Oberflächen. Hierfür werden Ihnen einige Materialien präsentiert. Die Messung erfolgt auf zwei Stufen: <br>  <br> Zunächst haben Sie 10 Sekunden Zeit das Material optisch/haptisch zu untersuchen. Bitte konzentrieren Sie sich während dieser Zeit nur auf Ihren sinnlichen Eindruck und versuchen Sie anderweitige Gedanken auszublenden.  <br> Nach dieser Wahrnehmungsphase geben Sie bitte eine spontane Bewertung Ihrer sinnlichen Erfahrung bezüglich des Materials ab.  <br>  <br> Danach folgt eine Phase, in der Sie gleichzeitig das Material untersuchen und bewerten können. Das Material wird jeweils zunächst optisch und anschließend haptisch abgefragt.", "imagePosition": "left", "img": "left1.jpg"}},
+		
+		{"module": "Einleitung", "part": "Datenanonymisierung", "type": "explanationPic", "content": {"text": "Die Daten werden anonymisiert, sodass kein Rückschluss mehr auf Ihre Person möglich sein wird. Insgesamt wird die Messung ohne Vor- und Nachbereitung ca. 60 Minuten in Anspruch nehmen. Bitte konzentrieren Sie sich auf den Ablauf der Messung und Ihre sinnliche Erfahrung, da die Daten andernfalls leider nicht verwendet werden können. Im Folgenden erhalten Sie eine ausführliche Erklärung über die Anforderungen der Messung.","imagePosition": "left", "img": "left4.jpg"}},
+		{"module": "Einleitung", "part": "Information Sicherheit", "type": "explanationPic", "content": {"text": "Um Ihr Wohlbefinden während der gesamten Messung garantieren zu können, wurden die folgenden Vorkehrungen getroffen: <br><br> Links oben in der Ecke des Laborraums befindet sich eine Kamera. Diese dient der Kontrolle, dass alles nach Messplan läuft. Über ein verbautes Mikrofon können Sie jederzeit mit der*dem Versuchsleiter*in kommunizieren. <br><br>Links an der Wand befindet sich ein roter Schalter. Durch Drücken des Schalters wird im Labor der Strom ausgeschaltet und die gesamte Messung geht verloren. Deshalb sollten Sie diesen nur im absoluten Notfall nutzen.<br><br>", "imagePosition": "left", "img": "Versuchsstand.jpg"}},
+		{"module": "Einleitung", "part": "Einverständniserklärung", "type": "question", "content": {"type": "radio","text": "Für Ihre Teilnahme ist Ihre erneute Einwilligung zu der folgenden Einverständniserklärung notwendig:", "options":["Ich bin damit einverstanden, dass im Rahmen der Studie bzw. des Projektes meine Daten aufgezeichnet und anonymisiert (d.h. ohne Namensnennung) zur Auswertung der Ergebnisse verwendet werden. Ich bin darüber informiert worden, dass alle hier erhobenen Daten strikt vertraulich gemäß des Datenschutzes behandelt werden und ich jeder Zeit ohne Angabe von Gründen vom Versuch zurücktreten kann, ohne dass sich für mich hierdurch negative Folgen ergeben. Einer wissenschaftlichen Auswertung der anonymisierten Daten und einer möglichen Veröffentlichung der Ergebnisse stimme ich zu. Weiterhin bin ich davon in Kenntnis gesetzt worden, dass ich neben der Tätigkeit als Prüfende/Panellist keinen Vertrag als studentische Hilfskraft haben darf. Sollte ich während der Tätigkeit als Proband/in einen Vertrag als studentische Hilfskraft abschließen, muss ich dieses umgehend der betreuenden Person melden. Ab dem Vertragsabschluss kann keine Aufwandsentschädigung mehr ausgezahlt werden. Ich versichere hiermit, dass ich keine neurologische Krankheit (z.B. Epilepsie, Schlaganfall) habe oder hatte und keine Beruhigungsmittel oder Medikamente nehme, die auf das zentrale Nervensystem wirken. Weiterhin bestätige ich, dass ich meines Wissens nicht an einer körperlichen oder physischen Erkrankung leide."]}},
+		
+		{"module": "Training", "part": "Information Trainingsrunde", "type": "explanationPic", "content": {"text": "In der nun folgenden Trainingsrunde stellen wir Ihnen die Fragetypen vor<br><br>", "imagePosition": "left", "img": "left6.jpg"}},
+		{"module": "Training", "part": "Information Trainingsrunde", "type": "explanationPic", "content": {"text": "Bei dem ersten Fragetyp tippen Sie in die Matrix, lassen Sie ihren Finger auf dem Display und ziehen diesen in eine beliebige Richtung, um die Attraktivität zu bewerten.<br><br>", "imagePosition": "top", "img": "circle.gif"}},
+		{"module": "Training", "part": "Trainingsrunde", "type": "question", "content": {"name": "Übungsfrage 1", "type": "matrix_circle", "text": "Bitte charakterisieren Sie den Teddybär anhand der Attribute der Bewertungsmatrix.<br>", "options": [{"links":"Unangenehm","rechts":"Angenehm","unten":"Beruhigend","oben":"Aktivierend","ausrichtung":"vertikal", "dritteDimension":"Attraktivität","kreisgröße":150}], "img": "teddy.png"}},
+		{"module": "Training", "part": "Trainingsrunde", "type": "question", "content": {"name": "Übungsfrage 2", "type": "matrix_circle", "text": "Bitte charakterisieren Sie den Kaktus anhand der Attribute der Bewertungsmatrix.<br>", "options": [{"links":"Unangenehm","rechts":"Angenehm","unten":"Beruhigend","oben":"Aktivierend","ausrichtung":"vertikal", "dritteDimension":"Attraktivität","kreisgröße":150}], "img": "kak.png"}},
+		
+				{"module": "Training", "part": "Trainingsrunde", "type": "question", "content": {"name": "Übungsfrage 3", "type": "matrix", "text": "Bitte charakterisieren Sie den Teddybär anhand der Attribute der Bewertungsmatrix. <br><br>Das Ziehen des Kreises entfällt hier.", "options": ["Hart", "Weich", "Unangenehm", "Angenehm", "horizontal"], "img": "teddy.png"}},
+			{"module": "Training", "part": "Trainingsrunde", "type": "question", "content": {"name": "Übungsfrage 4", "type": "matrix", "text": "Bitte charakterisieren Sie den Kaktus anhand der Attribute der Bewertungsmatrix.<br><br>Das Ziehen des Kreises entfällt hier.", "options": ["Nicht stachelig", "Stachelig", "Unangenehm", "Angenehm", "horizontal"], "img": "kak.png"}},
+
+		{"module": "Training", "part": "Trainingsrunde", "type": "question", "content": {"name": "Übungsfrage 5", "type": "polygonGraph", "img": "teddy.png", "text": "Bitte charakterisieren Sie den Teddybär anhand der Attribute. Eine Eingabe erfolgt über das Tippen auf die entsprechende Slider Position. Das direkte Ziehen des Sliderpunktes ist nicht notwendig.<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+				{"name": "T_pq_flausch","text":"Flauschigkeit",  "sliderText": "<div style='text-align:center'>Flauschigkeit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+				{"name": "T_pq_lang", "text":"Langlebigkeit", "sliderText": "<div style='text-align:center'>Langlebigkeit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+				{"name": "T_pq_gen", "text":"Genügsamkeit", "sliderText": "<div style='text-align:center'>Genügsamkeit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+				{"name": "T_pq_aesthetics", "text":"Ästhetik", "sliderText": "<div style='text-align:center'>Ästhetik</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+				]}},
+		{"module": "Training", "part": "Trainingsrunde", "type": "question", "content": {"name": "Übungsfrage 6", "type": "polygonGraph", "img": "kak.png", "text": "Bitte charakterisieren Sie den Kaktus anhand der Attribute. Eine Eingabe erfolgt über das Tippen auf die entsprechende Slider Position. Das direkte Ziehen des Sliderpunktes ist nicht notwendig.<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+				{"name": "K_pq_flausch", "text":"Stacheligkeit", "sliderText": "<div style='text-align:center'>Stacheligkeit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+				{"name": "K_pq_lang", "text":"Langlebigkeit",  "sliderText": "<div style='text-align:center'>Langlebigkeit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+				{"name": "K_pq_gen", "text":"Genügsamkeit", "sliderText": "<div style='text-align:center'>Genügsamkeit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+				{"name": "K_pq_aesthetics", "text":"Ästhetik", "sliderText": "<div style='text-align:center'>Ästhetik</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+				]}},
+
+	
+		{"module": "Prä_Stimmungsabfrage", "part": "Prä_Stimmungsabfrage", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "ques.mp4"}},
+		{"module": "Prä_Stimmungsabfrage", "part": "Prä_Stimmungsabfrage", "type": "question", "content": {"name": "PRÄ_ST", "type": "matrix","text": "<b>AKTUELLE STIMMUNG:</b><br><br>Bitte nehmen Sie sich einen Moment Zeit und schätzen Sie dann Ihre aktuelle Stimmung ein?", "options": ["Negativ","Positiv", "Passiv","Aktiv", "diagonal"]}},
+		
+		
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Instruktion", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind","img": "optik.mp4"}},	
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Instruktion", "type": "explanationPic", "content": {"text": "","imagePosition": "behind","img": "initial.mp4"}},
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Instruktion", "type": "explanationPic", "content": {"text": "<b>ERSTER EINDRUCK</b><br><br> Sie haben insgesamt 10 Sekunden Zeit, um einen <b>ersten optischen Eindruck</b> des Materials zu erhalten. Nehmen Sie das Material bis zum akustischen Signal bewusst und genau wahr. <br>Im Anschluss folgen einige Fragen zu Ihrer optischen Wahrnehmung. <br> <br> <b>Klicken Sie auf WEITER und richten Sie Ihren Blick auf das Material:</b>"}},
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Präsentation", "type": "timer", "content": {"light":"on", "textBefore": "Wahrnehmungsphase", "imgBefore": "auge.png", "textAfter": "<b>Die Wahrnehmungsphase ist beendet.</b> <br><br> Bitte wenden Sie Ihren Blick von dem Präsentationsraum ab und beantworten Sie die nachfolgenden Fragen.", "timer": 10}},
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Initiale Besetzung", "type": "question", "content": {"name": "OPTIK_T1_IME", "type": "matrix_circle","text": "Wie schätzen Sie spontan die Wirkung des Materials auf Sie ein? Mit dem Ziehen des Kreises bewerten Sie die Attraktivität", "options": [{"links":"Unangenehm","rechts":"Angenehm","unten":"Beruhigend","oben":"Aktivierend","ausrichtung":"vertikal", "dritteDimension":"Attraktivität","kreisgröße":150}]}},
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Attractiveness", "type": "question", "content": {"type": "polygonGraph", "text": "Wie schätzen Sie spontan die anziehende Wirkung des Materials auf Sie ein?", "options": [
+			{"name": "OPTIK_T1_IME_attraction", "sliderStyle":"quality", "marks": {"0": "Unattraktiv","100": "Attraktiv"}}
+		]}},
+		
+		{"module": "OPTIK T1 IME", "part": "OPTIK T1 IME Practical qualities", "type": "question","content": {"type": "polygonGraph", "text": "Wie würden Sie Ihren ersten <b>optischen Eindruck</b> anhand der folgenden praktischen Eigenschaften beschreiben?", "options": [
+			{"name": "OPTIK_T1_IME_pq_value", "text": "Wertigkeit", "sliderText": "<div style='text-align:center'>Wertigkeit</div>","sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T1_IME_pq_quality", "text": "Qualität","sliderText": "<div style='text-align:center'>Qualität</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T1_IME_pq_durability", "text": "Haltbarkeitt","sliderText": "<div style='text-align:center'>Haltbarkeit</div>","sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T1_IME_pq_cleanability", "text": "Reinigbarkeit","sliderText": "<div style='text-align:center'>Reinigbarkeit</div>","sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T1_IME_pq_aesthetics", "text": "Ästhetik","sliderText": "<div style='text-align:center'>Ästhetik</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+		]}},
+
+		{"module": "OPTIK KIKIBUBA", "part": "OPTIK KIKIBUBA1", "type": "question", "content": {"name": "OPTIK KIKIBUBA1","type": "yes-no", "text": "Entscheiden Sie spontan, zu welchem der beiden Namen Ihre Wahrnehmung des Materials besser passt.", "options":["Kiki","Buba"]}},
+		{"module": "OPTIK KIKIBUBA", "part": "OPTIK KIKIBUBA2", "type": "question", "content": {"name": "OPTIK KIKIBUBA2","type": "slider", "text": "Entscheiden Sie spontan, zu welchem der beiden Objekte Ihre Wahrnehmung des Materials besser passt.", "options":[
+			{"name": "OPTIK KIKIBUBA2", "sliderStyle":"neutral1","min": -100, "max": 100,"tooltip":"false","img": ["kiki.mp4","buba.mp4"], "marks":{"-100":"", "100":""}}
+				]}},
+				
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Instruktion", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "elabo.mp4"}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Instruktion", "type": "explanationPic", "content": {"text": "<b>ZWEITER EINDRUCK</b><br><br>Für den <b>zweiten optischen Eindruck</b> können Sie nach Belieben zwischen dem Betrachten des Materials und der Beurteilung über die nachfolgenden Attribute wechseln."}},	
+		
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_grob_fein", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Grob", "Fein", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_rau_glatt", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Rau", "Glatt", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_haftend_nicht haftend", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Haftend", "Nicht haftend","Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_hart_weich", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Hart", "Weich", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_starr_elastisch", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Starr", "Elastisch", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_kalt_warm", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Kalt", "Warm", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_feucht_trocken", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren optischen Eindruck präzise zu beschreiben", "options": ["Feucht", "Trocken", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"light":"on", "name": "OPTIK_T2_HE_matt_glaenzend", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres visuellen Eindruckes zu beschreiben", "options": ["Matt", "Glänzend", "Unangenehm","Angenehm", "horizontal"]}},
+
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Physikalische Evaluation HE2", "type": "question", "content": {"light":"on", "type": "polygonGraph", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren <b>zweiten optischen Eindruck</b> präzise zu beschreiben", "options": [	
+			{"name": "OPTIK_T2_EME_Feinheit", "text":"Feinheit",  "sliderText": "<div style='text-align:center'>Feinheit</div>","sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Rauheit", "text":"Rauheit","sliderText": "<div style='text-align:center'>Rauheit</div>","sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Haftung",  "text":"Haftung","sliderText": "<div style='text-align:center'>Haftung</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Härte", "text":"Härte","sliderText": "<div style='text-align:center'>Härte</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Elastizität", "text":"Elastizität","sliderText": "<div style='text-align:center'>Elastizität</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Wärme", "text":"Wärme","sliderText":"<div style='text-align:center'>Wärme</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Trockenheit", "text":"Trockenheit","sliderText": "<div style='text-align:center'>Trockenheit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "OPTIK_T2_EME_Glanz", "text":"Glanz","sliderText": "<div style='text-align:center'>Glanz</div>", "sliderStyle":"neutral2", "marks":{"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+			]}},
+
+
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Aesthetisches Verknügen (Blijlevenstal, 2017)", "type": "explanationPic", "content": {"light":"on","text": "<b>Aesthetische Wirkung</b>", "img": "elabo.png"}},
+		{"module": "OPTIK T2 EME", "part": "OPTIK T2 EME Aesthetisches Verknügen (Blijlevenstal, 2017)", "type": "question", "content": {"light":"on", "type": "polygonGraph", "text": "Bitte beschreiben Sie dieses Material anhand Ihrer Zustimmung zu folgenden Aussagen:<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+			{"name": "OPTIK_T2_EME_AP1", "sliderStyle":"quality", "marks": {"50": "Ich mag es, dieses Material zu sehen."}},
+			{"name": "OPTIK_T2_EME_AP2", "sliderStyle":"quality", "marks": {"50": "Es ist schön, dieses Material zu sehen."}},
+			{"name": "OPTIK_T2_EME_AP3", "sliderStyle":"quality", "marks": {"50": "Ich empfinde es als angenehm, dieses Material zu betrachten."}},
+			{"name": "OPTIK_T2_EME_AP4", "sliderStyle":"quality", "marks": {"50": "Ich erlebe dieses Material als anziehend."}},
+			{"name": "OPTIK_T2_EME_AP5", "sliderStyle":"quality", "marks": {"50": "Dieses Material ist schön."}}
+			]}},
+	
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Instruktion", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind","img": "haptik.mp4"}},
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Instruktion", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind","img": "initial.mp4"}},
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Instruktion", "type": "explanationPic", "content": {"text": "<b>ERSTER EINDRUCK</b><br><br> Sie haben insgesamt 10 Sekunden Zeit, um einen <b>ersten haptischen Eindruck</b> vom Material zu erhalten. Nehmen Sie das Material bis zum akustischen Signal bewusst und genau wahr. Schließen Sie dafür während der Wahrnehmungsphase Ihre Augen. Bitte betasten Sie das Material, wie links dargestellt.<br> Im Anschluss folgen einige Fragen zu Ihrer haptischen Wahrnehmung. Beginn und Ende der Phase sind mit einem Ton gekennzeichnet. Beginnen Sie erst mit dem Start des Timers das Material zu betasten. Dieser setzt nach 3 Sekunden nach dem Klicken auf Weiter ein.<br> <br> <b>Führen Sie nun Ihre Hand über das Material, klicken Sie auf WEITER und beginnen Sie mit geschlossenen Augen das Material zu betasten:</b>", "imagePosition": "left", "img": "hand.gif"}},
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Präsentation", "type": "timer", "content": {"textBefore": "Wahrnehmungsphase", "textAfter": "<b>Die Wahrnehmungsphase ist beendet.</b> <br><br> Bitte nehmen Sie die Hand aus dem Präsentationsraum und beantworten Sie die nachfolgenden Fragen.", "imgBefore": "halt.png", "timer": 10}},
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Initiale Besetzung", "type": "question", "content": {"name": "T1_HAPTIK_IME","type": "matrix_circle", "text": "Wie schätzen Sie spontan die Wirkung des Materials auf Sie ein? Mit dem Ziehen des Kreises bewerten Sie die Attraktivität", "options": [{"links":"Unangenehm","rechts":"Angenehm","unten":"Beruhigend","oben":"Aktivierend","ausrichtung":"vertikal", "dritteDimension":"Attraktivität","kreisgröße":150}]}},
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Attractiveness", "type": "question", "content": {"type": "polygonGraph", "text": "Wie schätzen Sie spontan die anziehende Wirkung des Materials auf Sie ein?", "options": [{"name": "T1_HAPTIK_IME_attraction", "sliderStyle":"quality", "marks": {"0": "Unattraktiv","100": "Attraktiv"}}
+		]}},
+
+		{"module": "HAPTIK T1 IME", "part": "HAPTIK T1 IME Practical qualities", "type": "question", "content": {"type": "polygonGraph", "text": "Wie würden Sie Ihren <b>ersten haptischen Eindruck</b> anhand der folgenden praktischen Eigenschaften beschreiben?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+			{"name": "T1_HAPTIK_IME_pq_value", "text":"Wertigkeit", "sliderText": "<div style='text-align:center'>Wertigkeit</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T1_HAPTIK_IME_pq_quality",  "text":"Qualität", "sliderText": "<div style='text-align:center'>Qualität</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T1_HAPTIK_IME_pq_durability",  "text":"Haltbarkeit", "sliderText": "<div style='text-align:center'>Haltbarkeit</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T1_HAPTIK_IME_pq_cleanability",  "text":"Reinigbarkeit", "sliderText": "<div style='text-align:center'>Reinigbarkeit</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T1_HAPTIK_IME_pq_aesthetics",  "text":"Ästhetik", "sliderText": "<div style='text-align:center'>Ästhetik</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+		]}},
+
+	    {"module": "HAPTIK KIKIBUBA", "part": "HAPTIK KIKIBUBA1", "type": "question", "content": {"name": "HAPTIK KIKIBUBA1","type": "yes-no", "text": "Entscheiden Sie spontan, zu welchem der beiden Namen Ihre Wahrnehmung des Materials besser passt.", "options":["Kiki","Buba"]}},
+             {"module": "HAPTIK KIKIBUBA", "part": "HAPTIK KIKIBUBA2", "type": "question", "content": {"name": "HAPTIK KIKIBUBA2", "type": "slider", "text": "Entscheiden Sie spontan, zu welchem der beiden Objekte Ihre Wahrnehmung des Materials besser passt.", "options":[
+                {"name": "HAPTIK KIKIBUBA2", "sliderStyle":"neutral1","min": -100, "max": 100,"tooltip":"false","img": ["kiki.mp4","buba.mp4"], "marks":{"-100":"", "100":""}}
+                    ]}},
+		
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Instruktion", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind","img": "elabo.mp4"}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Instruktion", "type": "explanationPic", "content": {"text": "<b>ZWEITER EINDRUCK</b><br><br>Für den <b>zweiten haptischen Eindruck</b> können Sie nach Belieben zwischen dem Betasten des Materials und der Beurteilung über die nachfolgenden Attribute wechseln."}},
+		
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_grob_fein", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Grob", "Fein", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_rau_glatt", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Rau", "Glatt", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_haftend_nicht haftend", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Haftend", "Nicht haftend", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_hart_weich", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Hart", "Weich", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_starr_elastisch", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Starr", "Elastisch", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_kalt_warm", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Kalt", "Warm", "Unangenehm","Angenehm", "horizontal"]}},
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE1", "type": "question", "content": {"name": "T2_HAPTIK_HE_feucht_trocken", "type": "matrix", "text": "Bitte nutzen Sie die folgenden Adjektive, um das Material präzise anhand Ihres haptischen Eindruckes zu beschreiben", "options": ["Feucht", "Trocken", "Unangenehm","Angenehm", "horizontal"]}},
+		
+		{"module": "HAPTIK T2 EME", "part": "HAPTIK T2 EME Physikalische Evaluation HE2", "type": "question", "content": {"type": "polygonGraph", "text": "Bitte nutzen Sie die folgenden Adjektive, um Ihren <b>zweiten optischen Eindruck</b> präzise zu beschreiben", "options": [
+			{"name": "HAPTIK_T2_EME_Feinheit", "text":"Feinheit", "sliderText": "<div style='text-align:center'>Feinheit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "HAPTIK_T2_EME_Rauheit", "text":"Rauheit", "sliderText": "<div style='text-align:center'>Rauheit</div>", "sliderStyle":"neutral2", "marks":{"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "HAPTIK_T2_EME_Haftung", "text":"Haftung","sliderText": "<div style='text-align:center'>Haftung</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "HAPTIK_T2_EME_Härte", "text":"Härte","sliderText": "<div style='text-align:center'>Härte</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "HAPTIK_T2_EME_Elastizität", "text":"Elastizität","sliderText": "<div style='text-align:center'>Elastizität</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "HAPTIK_T2_EME_Wärme", "text":"Wärme","sliderText": "<div style='text-align:center'>Wärme</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "HAPTIK_T2_EME_Trockenheit","text":"Trockenheit", "sliderText": "<div style='text-align:center'>Trockenheit</div>", "sliderStyle":"neutral2", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+			]}},
+	
+		{"module": "T3 EMO ME", "part": "T3 EMO ME", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "emo.mp4"}},		
+		{"module": "T3 EMO ME", "part": "T3 EMO ME Emotionale Evaluation", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "Bitte bewerten Sie das Material auf Basis Ihres optischen und haptischen Eindruckes. Es ist möglich, dass manche der Adjektive logisch nicht zu Ihrem sinnlichen Eindruck passen. Versuchen Sie über die Adjektive, den vielleicht noch so geringen emotionalen Eindruck - ausgehend von Ihrer sinnlichen Wahrnehmung - zu beschreiben.<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": ["hide",
+			{"name": "T3_Emo_aufgregend", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Beruhigend", "100":"Aufregend"}}, 
+			{"name": "T3_Emo_vertraut", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Fremd", "100":"Vertraut"}}, 
+			{"name": "T3_Emo_anziehend", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Abstoßend", "100":"Anziehend"}}, 
+			{"name": "T3_Emo_harmonisch", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Unharmonisch", "100":"Harmonisch"}}, 
+			{"name": "T3_Emo_originell", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Konventionell", "100":"Originell"}}, 
+			{"name": "T3_Emo_natürlich", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Künstlich", "100":"Natürlich"}}, 
+			{"name": "T3_Emo_emotional", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Nüchtern", "100":"Emotional"}}, 
+			{"name": "T3_Emo_zart", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Robust", "100":"Zart"}}, 
+			{"name": "T3_Emo_verspielt", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Geradlinig", "100":"Verspielt"}},  
+			{"name": "T3_Emo_zurückhaltend", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Dominant", "100":"Zurückhaltend"}}
+		]}},
+	
+		{"module": "T3 EMO ME", "part": "T3 EMO ME PrEmo2 (Laurans & Desmet, 2012)", "type": "question", "content": {"light":"on", "name": "", "type": "slider", "text": "Drücken die folgenden Emotionen aus, was Sie beim Betrachten des Materials fühlen?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+			{"name": "T0 MN_PrEmo_Freude", "text": "Freude", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+			{"name": "T0 MN_PrEmo_Zufriedenheit", "text":"Zufriedenheit", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+			{"name": "T0 MN_PrEmo_Faszination", "text":"Faszination","tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+			{"name": "T0 MN_PrEmo_Langeweile", "text":"Langeweile", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+			{"name": "T0 MN_PrEmo_Unzufriedenheit", "text":"Unzufriedenheit","tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+			{"name": "T0 MN_PrEmo_Ekel", "text":"Ekel", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]}
+		]}},
+
+
+		{"module": "T4 SI", "part": "T4 SI", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind","img": "puz.mp4"}},
+		{"module": "T4 SI", "part": "T4 SI", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "<b>SINNLICHE INTERAKTION</b><br><br> Bitte nutzen Sie die folgenden Beschreibungen, um die Beziehung zwischen Ihrem optischen und haptischen Eindruck darzustellen.", "options": [
+			{"name": "T4_SI_MA_einheitlich", "sliderStyle":"neutral2", "marks": {"50": "Ich empfinde dieses Material als einheitlich"}},
+			{"name": "T4_SI_MA_stimmig", "sliderStyle":"neutral2", "marks": {"50": "Ich empfinde dieses Material als in sich stimmig"}},
+			{"name": "T4_SI_MA_harmonisch", "sliderStyle":"neutral2", "marks": {"50": "Ich empfinde dieses Material als harmonisch"}}
+		]}},
+		
+		{"module": "T5 MA", "part": "Material Assoziation", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "flieger.mp4"}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Personal association", "type": "question", "content": {"name": "T5_Association_personal", "type": "matrix", "text": "<b>MATERIAL ASSOZIATION</b><br><br>Wie würden Sie Ihre erste Assoziation zu dem Material beschreiben? <br> Denken Sie an persönliche Assoziationen, wie Personen, Orte oder Ereignisse.", "options": ["Schwache Assoziation", "Starke Assoziation", "Negative Assoziation", "Positive Assoziation", "horizontal"]}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Personal association", "type": "question", "content": {"name": "T5_Association_personal", "type": "matrix", "text": "<b>MATERIAL ASSOZIATION</b><br><br> Wie würden Sie Ihre erste Assoziation zu dem Material beschreiben? <br> Denken Sie an persönliche Assoziationen, wie Personen, Orte oder Ereignisse.", "options": ["Schwache Assoziation", "Starke Assoziation", "Allgemeine Assoziation", "Persönliche Assoziation", "vertikal"]}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Category association", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "<b>MATERIAL ASSOZIATION</b><br><br> Wie würden Sie Ihre Assoziation zu dem Material anhand der folgenden Kategorien beschreiben?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": ["hide",
+			{"name": "T5_Association_category_natur", "sliderStyle":"neutral2", "marks": {"50": "Natur"}},
+			{"name": "T5_Association_category_technik", "sliderStyle":"neutral2", "marks": {"50": "Technik"}},
+			{"name": "T5_Association_category_zukunft", "sliderStyle":"neutral2", "marks": {"50": "Zukunft"}},
+			{"name": "T5_Association_category_fortschritt", "sliderStyle":"neutral2", "marks": {"50": "Fortschritt"}},
+			{"name": "T5_Association_category_vergangenheit", "sliderStyle":"neutral2", "marks": {"50": "Vergangenheit"}},
+			{"name": "T5_Association_category_kindheit", "sliderStyle":"neutral2", "marks": {"50": "Kindheit"}},
+			{"name": "T5_Association_category_design", "sliderStyle":"neutral2", "marks": {"50": "Design"}},
+			{"name": "T5_Association_category_kunst", "sliderStyle":"neutral2", "marks": {"50": "Kunst"}}
+			]}},
+		
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Product association", "type": "explanationPic", "content": {"text": "<br>Kleidung</b>", "img": "kleid.png"}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Product association", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "Wie würden Sie Ihre Assoziation zu dem Material anhand der folgenden Produktklassen beschreiben? <br> <b>Bekleidung</b>", "options": ["hide",
+			{"name": "T5_Association_pro_garm_klasse", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Budgetklasse", "100":"Luxusklasse"}}
+		]}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Product association", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "Wie würden Sie Ihre Assoziation zu dem Material anhand der folgenden Produktklassen beschreiben? <br> <b>Bekleidung</b><br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": ["hide",
+			{"name": "T5_Association_pro_garm_frei", "sliderStyle":"neutral2", "marks": {"50": "Freizeitkleidung"}},
+			{"name": "T5_Association_pro_garm_alltag", "sliderStyle":"neutral2", "marks": {"50": "Alltagskleidung"}},
+			{"name": "T5_Association_pro_garm_alltag", "sliderStyle":"neutral2", "marks": {"50": "Geschäftskleidung"}},	
+			{"name": "T5_Association_pro_garm_alltag", "sliderStyle":"neutral2", "marks": {"50": "Arbeitskleidung"}},			
+			{"name": "T5_Association_pro_garm_fashion", "sliderStyle":"neutral2", "marks": {"50": "Mode/Trend/Fashion Kleidung"}},
+			{"name": "T5_Association_pro_garm_fashion", "sliderStyle":"neutral2", "marks": {"50": "Haute Couture (französisch für „gehobene Schneiderei“)"}},
+			{"name": "T5_Association_pro_garm_outdoor", "sliderStyle":"neutral2", "marks": {"50": "Outdoorkleidung"}},
+			{"name": "T5_Association_pro_garm_sport", "sliderStyle":"neutral2", "marks": {"50": "Sportkleidung"}}
+		]}},
+		
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Product association", "type": "explanationPic", "content": {"light":"on", "text": "<br>Inneneinrichtung</b>", "img": "innen.png"}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Product association", "type": "question", "content": {"name": "", "type": "polygonGraph", "text": "Wie würden Sie Ihre Assoziation zu dem Material anhand der folgenden Produktklassen beschreiben? <br> <b>Inneneinrichtung</b>", "options": ["hide",
+			{"name": "T5_Association_pro_int_klasse", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Budgetklasse", "100":"Luxusklasse"}}
+			]}},
+
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Automotive association", "type": "explanationPic", "content": {"light":"on", "text": "<br>Automobil</b>", "img": "bus.png"}},
+			{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Automotive association", "type": "question", "content": {"name": "", "type": "polygonGraph", "text": "Wie würden Sie Ihre Assoziation zu dem Material anhand der folgenden Produktklassen beschreiben? <br> <b>Automobiles Interieur</b>", "options": ["hide",
+				{"name": "T5_Association_auto_klasse", "sliderStyle":"neutral1", "min": -100, "max": 100,"tooltip":"false", "marks": {"-100": "Budgetklasse", "100":"Luxusklasse"}}
+		]}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Automotive association", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "Bitte ordnen Sie dem Material einen passenden Einsatzort im Automobil zu<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": ["hide",
+			{"name": "T5_Association_Sitz", "sliderStyle":"neutral2", "img": ["sitz.png"], "marks": {"50": "Sitz"}},
+			{"name": "T5_Association_Lenkrad", "sliderStyle":"neutral2", "img": ["lenkrad.png"], "marks": {"50": "Lenkrad"}},
+			{"name": "T5_Association_Tuerverkleidung","sliderStyle":"neutral2", "img": ["tür.png"], "marks": {"50": "Türverkleidung"}},
+			{"name": "T5_Association_Instrumententafel", "sliderStyle":"neutral2", "img": ["speedometer.png"], "marks": {"50": "Instrumententafel"}},
+			{"name": "T5_Association_Mittelkonsole", "sliderStyle":"neutral2", "img": ["mittel.png"], "marks": {"50": "Mittelkonsole"}},
+			{"name": "T5_Association_Amaturen", "sliderStyle":"neutral2", "img": ["mittel.png"], "marks": {"50": "Amaturen"}},
+			{"name": "T5_Association_Himmel", "sliderStyle":"neutral2", "img": ["him.png"], "marks": {"50": "Himmel"}},
+			{"name": "T5_Association_Amaturen", "sliderStyle":"neutral2", "img": ["int.png"], "marks": {"50": "Interface"}},
+			{"name": "T5_Association_Amaturen", "sliderStyle":"neutral2", "img": ["back.png"], "marks": {"50": "Kofferraum"}}	
+		]}},
+		{"module": "T5 MA", "part": "T5 MATERIAL ASSOZIATION Milieu association", "type": "question", "content": {"light":"on", "name": "", "type": "polygonGraph", "text": "Wie würden Sie Ihre Assoziation zu dem Material anhand der folgenden Milieuklassen beschreiben?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": ["hide",
+			{"name": "T5_Asspciation_conservative", "sliderStyle":"neutral2", "marks": {"50": "Konservativ-etabliert"}},
+			{"name": "T5_Association_liberal", "sliderStyle":"neutral2", "marks": {"50": "Liberal‐intellektuell"}},
+			{"name": "T5_Association_efficient", "sliderStyle":"neutral2", "marks": {"50": "Effizienz-leistungsorientiert"}},
+			{"name": "T5_Association_ambitioned", "sliderStyle":"neutral2", "marks": {"50": "Ambitioniert-kreativ"}},
+			{"name": "T5_Association_adaptive", "sliderStyle":"neutral2", "marks": {"50": "Adaptiv‐pragmatisch"}},
+			{"name": "T5_Association_middle", "sliderStyle":"neutral2", "marks": {"50": "Bürgerliche Mitte"}},
+			{"name": "T5_Asspciation_social", "sliderStyle":"neutral2", "marks": {"50": "Sozial-ökologisch"}},
+			{"name": "T5_Association_traditional", "sliderStyle":"neutral2", "marks": {"50": "Traditionell"}},
+			{"name": "T5_Association_precarious","sliderStyle":"neutral2", "marks": {"50": "Prekär"}}
+		]}},
+
+
+		{"module": "T0 MN", "part": "Material Narrativ", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "story2.mp4"}},
+		{"module": "T0 MN", "part": "Material Narrativ", "type": "explanation", "content": {"text": "LOAD"}},
+		{"module": "T0 MN", "part": "T0 MATERIAL NARRATIV Evaluation", "type": "question", "content": {"light":"on","name": "T0 MATERIAL NARRATIV Evaluation", "type": "matrix", "text": "Wie bewerten Sie das Material anhand der Ihnen gegebenen Materialinformationen und in welchem Maß können Sie sich mit diesen identifizieren? ", "options": ["- Identifikation", "+ Identifikation", "Missfallen" , "Gefallen", "diagonal"]}},
+		{"module": "T0 MN", "part": "T0 MATERIAL NARRATIV Evaluation", "type": "question", "content": {"light":"on","name": "T0 MATERIAL NARRATIV Innovation", "type": "matrix", "text": "Wie bewerten Sie die Materialinformationen und als wie innovativ empfinden Sie diese? <br> <br> Sie können nach Belieben zwischen dem Betrachten und Betasten des Materials wechseln.", "options": ["Konservativ", "Innovativ","Missfallen", "Gefallen", "horizontal"]}},
+		{"module": "T0 MN", "part": "T0 MATERIAL NARRATIV Evaluation", "type": "question", "content": {"light":"on","name": "T0 MATERIAL NARRATIV Valence", "type": "matrix_circle","text": "Wie schätzen Sie spontan die Wirkung des Materials auf Sie ein? Mit dem Ziehen des Kreises bewerten Sie die Attraktivität", "options": [{"links":"Unangenehm","rechts":"Angenehm","unten":"Beruhigend","oben":"Aktivierend","ausrichtung":"vertikal", "dritteDimension":"Attraktivität","kreisgröße":150}]}},
+		{"module": "T0 MN", "part": "T0 MATERIAL NARRATIV Evaluation", "type": "question","content": {"light":"on", "type": "polygonGraph", "text": "Wie würden Sie das Material vor dem Hintergrund der Materialinformationen auf den folgenden praktischen Dimensionen beschreiben? <br> <br> Sie können nach Belieben zwischen dem Betrachten und Betasten des Materials wechseln.", "options": [
+			{"name": "T0 MN_pq_value", "text": "<div style='text-align:center'>Wertigkeit</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T0 MN_pq_quality", "text": "<div style='text-align:center'>Qualität</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T0 MN_pq_durability", "text": "<div style='text-align:center'>Haltbarkeit</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T0 MN_pq_cleanability", "text": "<div style='text-align:center'>Reinigbarkeit</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}},
+			{"name": "T0 MN_pq_aesthetics", "text": "<div style='text-align:center'>Ästhetik</div>", "sliderStyle":"quality", "marks": {"0": "nicht <br> wahrnehmbar","25": "schwach","50": "moderat","75": "stark","100": "höchst wahrnehmbar"}}
+		]}},
+
+			{"module": "T0 MN", "part": "T0 MATERIAL NARRATIV Evaluation", "type": "question", "content": {"light":"on", "name": "", "type": "slider", "text": "Drücken die folgenden Emotionen aus, was Sie beim Betrachten des Materials fühlen?<br> <br>(Bitte scrollen Sie bis zum Ende der Seite mittels des rechten Schiebers)", "options": [
+				{"name": "T0 MN_PrEmo_Freude", "text": "Freude", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+				{"name": "T0 MN_PrEmo_Zufriedenheit", "text":"Zufriedenheit", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+				{"name": "T0 MN_PrEmo_Faszination", "text":"Faszination","tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+				{"name": "T0 MN_PrEmo_Langeweile", "text":"Langeweile", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+				{"name": "T0 MN_PrEmo_Unzufriedenheit", "text":"Unzufriedenheit","tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]},
+				{"name": "T0 MN_PrEmo_Ekel", "text":"Ekel", "tooltip":"false", "data":["Ich fühle die Emotion nicht","Ich fühle die Emotion teilweise","Ich fühle die Emotion"]}
+			]}},
+	
+
+	
+	{"module": "TE", "part": "TE", "type": "explanationPic", "content": {"continueDelay":5,"text": "<br><b>Die Bewertung dieses Materials ist abgeschlossen</b> <br><br>Klicken Sie auf den Weiter-Button, um fortzufahren<br><br>","imagePosition": "left", "img": "intro1.jpg"}},
+
+
+	{"module": "Post_Stimmungsabfrage", "part": "Post_Stimmungsabfrage", "type": "explanationPic", "content": {"text": "", "imagePosition": "behind", "img": "ques.mp4"}},
+	{"module": "Post_Stimmungsabfrage", "part": "Post_Stimmungsabfrage", "type": "question", "content": {"name": "POST_ST", "type": "matrix","text": "<b>AKTUELLE STIMMUNG</b><br><br>Bitte nehmen Sie sich vor dem Ende noch einmal einen Moment Zeit Ihre aktuelle Stimmung einzuschätzen.", "options": ["Negativ","Positiv", "Passiv","Aktiv", "diagonal"]}},	
+	
+	{"module": "Outro", "part": "Labor Verabschiedung", "type": "explanationPic", "content": {"text": "<br><br><br>Damit haben Sie den Versuch abgeschlossen. <br>Vielen Dank für Ihre Teilnahme! Wir freuen uns sehr, Sie bald wieder in unserem Labor begrüßen zu dürfen.<br>", "imagePosition": "behind", "img": "behind2.jpg"}}
+	]
+}

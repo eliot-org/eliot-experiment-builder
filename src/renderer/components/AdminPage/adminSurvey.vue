@@ -136,7 +136,6 @@
 </template>
 
 <script>
-    import axios from 'axios'
     import materialModal from './AdminSurvey/materialModal'
     import presetModal from './AdminSurvey/presetModal'
     const countrynames = require("countrynames")
@@ -294,6 +293,11 @@
                 }
             },
             computeSurvey: function(){
+                /*
+                    BRauchen auch aktuelles und nächstes material in jedem arrobject für roboter
+
+
+                */
                 console.log(this.materialsChosen)
                 //Für die Roboterfahrten um zu wissen wie lang die Survey sein wird und wie viele Fragen nicht einzigartig sind (wie z.b. Poi, Outro,usw)
                 //let surveyChoiceLengthWithChosenModules = 0
@@ -355,11 +359,11 @@
                         || this.surveyChoice.survey[y].module == "Training" || this.surveyChoice.survey[y].module == "Prä_Stimmungsabfrage"){
                             //Für Ländercodes
                             if(this.surveyChoice.survey[y].module == "POI" && this.surveyChoice.survey[y].part == "Demographie" && this.surveyChoice.survey[y].content.options == "LOAD" && (this.surveyChoice.survey[y].content.name == "POI_Demographie_origin"|| this.surveyChoice.survey[y].content.name == "POI_Demographie_residence")){
-                                this.computedSurvey.push({"material": "", "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                this.computedSurvey.push({"material": "", "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                     "content": {"name": this.surveyChoice.survey[y].content.name, "type": this.surveyChoice.survey[y].content.type, "text": this.surveyChoice.survey[y].content.text, "options": countrynames.getAllNames()}
                                 })
                             }else{
-                                this.computedSurvey.push({"material": "", "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                this.computedSurvey.push({"material": "", "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                     "content": this.surveyChoice.survey[y].content
                                 })
                                 console.log(this.computedSurvey)
@@ -388,11 +392,11 @@
                                         if(this.materialsChosenExtraInformation.includes(this.materialsChosen[x]) == false && this.materialsChosen[x].information !== null){//Wenn die Informationen nicht erst später gezeigt werden sollen//Nur wenn Material auch Informationen besitzt
                                             if(/*this.surveyChoice.survey[y].part == "Material Narrativ" &&*/ this.surveyChoice.survey[y].content.text == "LOAD"){
                                                 let tmpImg = (this.materialsChosen[x].image != "" ? this.materialsChosen[x].image : "leer.png")
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
+                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
                                                     "content": {"text": this.materialsChosen[x].information, "img": tmpImg}
                                                 })
                                             }else{
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                     "content": this.surveyChoice.survey[y].content
                                                 })
                                             }
@@ -403,17 +407,17 @@
                                         let tmpImg = (this.materialsChosen[x].extraImg != "" ? this.materialsChosen[x].extraImg : "leer.png")
                                         let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
                                         tmpContent.imgBefore = tmpImg //Zeigt nur bei der Präsentation das Materialspezifische Bild. Das eigentliche wird überschrieben
-                                        this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
+                                        this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
                                             "content": tmpContent
                                         })
                                     }else{
                                         if(((this.surveyChoice.survey[y].module == "OPTIK T1 IME") && (this.surveyChoice.survey[y].part == "OPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))
                                         /*|| ((this.surveyChoice.survey[y].module == "HAPTIK T1 IME") && (this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))*/){//Für automatischen EEG Trigger
-                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                 "content": this.surveyChoice.survey[y].content
                                             })
                                         }else{
-                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                 "content": this.surveyChoice.survey[y].content
                                             })
                                         }
@@ -440,7 +444,7 @@
                                             if(this.surveyChoice.survey[y].module == "T0 MN" /*&& this.surveyChoice.survey[y].part == "Material Narrativ"*/ && this.surveyChoice.survey[y].content.text == "LOAD"){
                                                 if(this.materialsChosen[x].information !== null){ //Nur wenn Material auch Informationen besitzt
                                                     let tmpImg = (this.materialsChosen[x].image != "" ? this.materialsChosen[x].image : "leer.png")
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
+                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
                                                         "content": {"text": this.materialsChosen[x].information, "img": tmpImg}
                                                     })
                                                 }
@@ -451,7 +455,7 @@
                                                 let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
                                                 Object.prototype.hasOwnProperty.call(tmpContent,"name") ? tmpContent.name = tmpContent.name +"_secondPresentation" : ""
                                                 tmpContent.imgBefore = tmpImg //Zeigt nur bei der Präsentation das Materialspezifische Bild. Das eigentliche wird überschrieben
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
+                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
                                                     "content": tmpContent
                                                 })
                                             }else{
@@ -459,11 +463,11 @@
                                                 Object.prototype.hasOwnProperty.call(tmpContent,"name") ? tmpContent.name = tmpContent.name +"_secondPresentation" : ""
                                                 if(((this.surveyChoice.survey[y].module == "OPTIK T1 IME") && (this.surveyChoice.survey[y].part == "T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))
                                                 /*|| ((this.surveyChoice.survey[y].module == "HAPTIK T1 IME") && (this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))*/){//Für automatischen EEG Trigger
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                         "content": tmpContent
                                                     })
                                                 }else{
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
+                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
                                                         "content": tmpContent
                                                     })
                                                 }
@@ -497,6 +501,7 @@
                             //Push into computed Array
                             this.computedSurvey.push({
                                 "material": ""/*this.materialsChosen[this.materialsChosen.length-1]*/,
+                                "hardware": this.surveyChoice.survey[y].hardware,
                                 "module": this.surveyChoice.survey[y].module,
                                 "part": this.surveyChoice.survey[y].part,
                                 "type": this.surveyChoice.survey[y].type,
@@ -582,65 +587,31 @@
                 this.manualChannel = null
             },
             loadSurveys: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/survey/getAll')
-                .then(response => {
-                    var tmp=[]
-                    for(let i=0; i<response.data.surveys.length; i++){
-                        tmp.push({"id":i, "name": response.data.surveys[i].name, "modules": response.data.surveys[i].modules, "survey": response.data.surveys[i].survey})
-                    }
-                    
-                    try{
-                        let rawData = fs.readFileSync("src/renderer/assets/survey.json")
-                        let jsonData = JSON.parse(rawData)
-                        tmp.push({"id":tmp.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
-                    }catch(e){
-                        console.log(e)
-                    }
+                try{
+                    let rawData = fs.readFileSync("src/renderer/assets/survey.json")
+                    let jsonData = JSON.parse(rawData)
+                    this.surveyPresets.push({"id":this.surveyPresets.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
+                }catch(e){
+                    console.log(e)
+                }
 
-                    this.surveyPresets = tmp
+                //this.surveyPresets = tmp
 
-                    for(let i=0; i<this.surveyPresets.length; i++){
-                        this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})
-                    } 
-                    
-
-                })
-                .catch(error => console.log(error))
+                for(let i=0; i<this.surveyPresets.length; i++){
+                    this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})
+                } 
             },
             loadMaterials: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/material/getAllOrdered')
-                .then(response => {
-                    var tmp=[]
-                    for(var i=0; i<response.data.materials.length; i++){
-                        tmp.push({"id": response.data.materials[i]._id,"name":response.data.materials[i].name, "information": response.data.materials[i].information,
-                        "image":response.data.materials[i].image, "showExtraImg": response.data.materials[i].showExtraImg, "extraImg": response.data.materials[i].extraImg,
-                        "bomId":response.data.materials[i].bomId, "roboPos": response.data.materials[i].roboPos})
-                    }
-                    this.materials = tmp
-                    
-                })
-                .catch(error => console.log(error))
+               
             },
             loadPresets: function(){
-                axios.get('https://'+axios.defaults.baseURL+'/api/preset/getAll').then(response => {
-                    this.presets = response.data.presets
-                    console.log(response)
-                })
-                .catch(error => console.log(error))
+                
             },
             addPreset: function(name, modules){
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/preset/store', data: {name: name , modules: modules}, method: 'POST' }).then(response => {
-                    console.log(response)
-                    this.loadPresets()
-                })
-                .catch(error => console.log(error))
+                
             },
             deletePreset: function(toDelete){
-                axios({url: 'https://'+axios.defaults.baseURL+'/api/preset/delete', data: toDelete, method: 'POST' }).then(response => {
-                    console.log(response)
-                    this.loadPresets()
-                })
-                .catch(error => console.log(error))
+                
             },
             saveAnswers: function(){
                 if(this.answersSent == false){
@@ -653,16 +624,8 @@
                         this.answers.proband = "Generic"
                     }
                     this.answers.online = false
-                    axios({url: 'https://'+axios.defaults.baseURL+'/api/answer/store', data: this.answers, method: 'POST' }).then(resp => {
-                        console.log(resp)
-                        this.answerSaveStatus = resp.statusText
-                    // this.answers = {}
-                    // this.showingAnswers = false
-                    // this.manualChannel = null
-                    }).catch(err => console.log(err))
-                    //this.answers = {}
-                    //this.showingAnswers = false
-                    //this.manualChannel = null
+                   
+                   //removed axios
                 }
             },
             shuffle(array){//Fisher-Yates Shuffle
@@ -706,7 +669,7 @@
                     this.answersSent = false
                 }else if(arg == "getSurveyData"){//Wenn die Umfrage angefragt wird. Dann wirds an Umfragefenster geschickt
                     console.log("Sending SurveyData now")
-                    this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendSurveyData", "survey": this.computedSurvey, "port": this.port, "baseURL": axios.defaults.baseURL})
+                    this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendSurveyData", "survey": this.computedSurvey, "port": this.port})
                 }else if(arg == "readyToEnd"){//User hat Umfrageende erreicht. Umfrage kann jetzt beendet werden. Zeige Button dafür
                     console.log("Ready to End")
                     this.manualChannel = "Beenden"
@@ -746,7 +709,7 @@
                 }
             })
             
-            this.$electron.ipcRenderer.on("robotConnected", (event,arg) => {
+            /*this.$electron.ipcRenderer.on("robotConnected", (event,arg) => {
                 this.robotConnected = arg
                 console.log(arg)
             }) 
@@ -754,7 +717,7 @@
                 this.robotConsole = arg
                 console.log(arg)
             }) 
-            this.$electron.ipcRenderer.send("robotCommands", {command:"status", data:""})  
+            this.$electron.ipcRenderer.send("robotCommands", {command:"status", data:""})  */
 
             this.$electron.ipcRenderer.send("displays", {"arg": "getDisplays"})
 

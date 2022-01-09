@@ -47,7 +47,6 @@
 
 <script>
     import polygraph from './polygonGraph/polygraph'
-    import axios from 'axios'
     export default{
         props:{
             //The options for this question
@@ -118,20 +117,7 @@
                     }
                     return require('../../../assets/leer.png') 
                 }catch(e){
-                    if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"img")){
-                        if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"marks")){
-                            if(Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).includes(pos.toString())){
-                                return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[(this.graphAverage() ? (i+1) : i)].img[Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).findIndex((e) => e === pos.toString())] 
-                            }
-                        }else{
-                            if(pos == 0){
-                                return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[(this.graphAverage() ? (i+1) : i)].img[0]
-                            }else if(pos == 100){
-                                return 'https://'+axios.defaults.baseURL+'/storage/'+ this.options[(this.graphAverage() ? (i+1) : i)].img[1]
-                            }
-                        }
-                    }
-                    return 'https://'+axios.defaults.baseURL+'/storage/leer.png' 
+                    console.log(e)
                 }
             },
             //Do we want to load an image for slider i
