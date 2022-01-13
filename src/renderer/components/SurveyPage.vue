@@ -416,7 +416,11 @@ export default {
                                 //Seitenabhänige events hier
                             }*/
                         }else if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "do")){
-                            this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
+                            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "delay")){
+                                setTimeout(() => this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command}), this.survey[this.i].hardware.input[i].delay)
+                            }else{
+                                this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
+                            }
                         }
                     }
                 }

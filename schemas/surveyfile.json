@@ -215,6 +215,10 @@
                                                             "name"
                                                         ]
                                                     }
+                                                },
+                                                "delay":{
+                                                    "description": "An optional delay after which the command should be run.",
+                                                    "type": "number"
                                                 }
                                             },
                                             "required":[
