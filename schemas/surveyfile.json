@@ -113,7 +113,7 @@
                                     ]
                                 }
                             },
-                            "afterXSeconds": {
+                            "delayed": {
                                 "description": "Called a set amount of seconds after the page has loaded",
                                 "type": "array",
                                 "items":{

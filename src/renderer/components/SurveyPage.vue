@@ -160,7 +160,7 @@ export default {
         hardwareCommand: function(type){
             if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, type)){
                 for(let i = 0; i < this.survey[i].hardware[type].length; i++){
-                    if(type == "afterXSeconds"){
+                    if(type == "delayed"){
                         setTimeout(() => this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds)  
                     }else{
                         this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command})       
