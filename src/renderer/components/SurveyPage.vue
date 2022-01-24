@@ -385,7 +385,7 @@ export default {
             this.answers.proband = this.receivedCode
             
             let countuphour = document.getElementById('countuphour').innerHTML
-            let countupminute = document.getElementById('countuphour').innerHTML 
+            let countupminute = document.getElementById('countupminute').innerHTML 
             let countupsecond = document.getElementById('countupsecond').innerHTML
 
             this.answers.länge = countuphour+":"+countupminute+":"+countupsecond
