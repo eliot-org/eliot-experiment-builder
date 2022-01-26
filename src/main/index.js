@@ -181,6 +181,13 @@ ipcMain.on("displays", (event,arg) => {
 ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the survey. Will be sent by AdminWindow
   if(arg == "start"){//Start the Survey
     console.log("Opening Survey")
+    surveyWindow = windowManager.createNew("surveyWindow", "Survey", surveyURL, "survey", {
+        webPreferences: {
+            nodeIntegration: true,
+            contextIsolation: false,
+            enableRemoteModule: true,
+        }
+    },false)
     surveyWindow.open()
     surveyWindow.object.setBounds({ x: (externalDisplay.bounds.x + 50), y: (externalDisplay.bounds.y + 50), width: 800, height: 600})
     surveyWindow.object.maximize()
@@ -205,14 +212,18 @@ ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the su
   }else if(arg == "Beenden"){
     surveyWindow.object.webContents.send("surveyOps", arg)
   }else if(arg == "ended"){
-    if(surveyWindow.object != null){
-      surveyWindow.close()
+    if(surveyWindow != null){
+        if(surveyWindow.object != null){
+        surveyWindow.destroy()
+        }
     }
     paused = false
     adminWindow.object.webContents.send("surveyOps", "ended")
   }else if(arg == "abort"){//Abort the Survey
-    if(surveyWindow.object != null){
-      surveyWindow.close()
+    if(surveyWindow != null){
+        if(surveyWindow.object != null){
+        surveyWindow.destroy()
+        }
     }
     paused = false
     event.sender.send("surveyOps", "aborted")
@@ -265,34 +276,38 @@ var adminWindow = windowManager.createNew("adminWindow", "ELIOT", adminURL, "adm
         enableRemoteModule: true,
     }
 },false)
-var surveyWindow = windowManager.createNew("surveyWindow", "Survey", surveyURL, "survey", {
+var surveyWindow/* = windowManager.createNew("surveyWindow", "Survey", surveyURL, "survey", {
     webPreferences: {
         nodeIntegration: true,
         contextIsolation: false,
         enableRemoteModule: true,
     }
-},false)
+},false)*/
 
 function createWindow () {
   adminWindow.open()
   adminWindow.object.maximize()
 
   globalShortcut.register("CmdOrCtrl+P", function(){
-    if(surveyWindow.object != null){
-      if(paused==true){
-        surveyWindow.object.webContents.send("surveyOps", "unpause")
-        adminWindow.object.webContents.send("surveyOps", "unpause")
-        paused = false
-      }else if(paused == false){
-        surveyWindow.object.webContents.send("surveyOps", "pause")
-        adminWindow.object.webContents.send("surveyOps", "pause")
-        paused = true
-      }
+    if(surveyWindow != null){
+        if(surveyWindow.object != null){
+        if(paused==true){
+            surveyWindow.object.webContents.send("surveyOps", "unpause")
+            adminWindow.object.webContents.send("surveyOps", "unpause")
+            paused = false
+        }else if(paused == false){
+            surveyWindow.object.webContents.send("surveyOps", "pause")
+            adminWindow.object.webContents.send("surveyOps", "pause")
+            paused = true
+        }
+        }
     }
   })
   globalShortcut.register("CmdOrCtrl+B", function(){
-    if(surveyWindow.object != null){
-      adminWindow.object.webContents.send("surveyOps", "confirmManualStep")
+    if(surveyWindow != null){
+        if(surveyWindow.object != null){
+        adminWindow.object.webContents.send("surveyOps", "confirmManualStep")
+        }
     }
   })
 
