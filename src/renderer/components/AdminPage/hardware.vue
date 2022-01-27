@@ -101,6 +101,9 @@ export default {
             this.$electron.ipcRenderer.invoke("hardwareGetDevices") 
         }
     },
+    destroyed(){    
+        this.$electron.ipcRenderer.removeAllListeners()
+    },
     mounted(){
         this.gotScripts = false
         this.$electron.ipcRenderer.invoke("hardwareGetScripts") 

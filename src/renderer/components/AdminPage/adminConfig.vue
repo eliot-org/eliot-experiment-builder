@@ -33,6 +33,9 @@ export default {
             this.scriptLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'scriptLocation')
         }
     },
+    destroyed(){    
+        this.$electron.ipcRenderer.removeAllListeners()
+    },
     mounted(){
         this.getHWScriptLocation()
         this.$electron.ipcRenderer.on('reloadScriptLocation', () => {

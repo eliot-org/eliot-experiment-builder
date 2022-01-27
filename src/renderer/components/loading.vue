@@ -26,6 +26,9 @@ export default {
             shell.openExternal(event.srcElement.href)
         }
     },
+    destroyed(){    
+        this.$electron.ipcRenderer.removeAllListeners()
+    },
     mounted(){ 
         /**
          * Called when the Main process sends on the surveyOps channel. arg includes the data to which page this instance should go to. So if it is a admin or surveypage

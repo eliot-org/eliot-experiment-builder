@@ -18,8 +18,6 @@ import vSelect from 'vue-select'
 Vue.component('v-select', vSelect)
 import 'vue-select/dist/vue-select.css';
 
-const {ipcRenderer} = require("electron").ipcRenderer
-
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 Vue.http = Vue.prototype.$http = axios
 //Vue.config.productionTip = false

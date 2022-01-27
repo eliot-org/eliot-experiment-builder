@@ -647,6 +647,9 @@
                 this.$electron.ipcRenderer.send("displays", {"arg": "setExternalDisplay","externalDisplay":this.unprocessedDisplays[this.externalDisplay.id]})
             }
         },
+        destroyed(){    
+            this.$electron.ipcRenderer.removeAllListeners()
+        },
         mounted: function(){
             this.$electron.ipcRenderer.on("surveyOps", (event,arg) => {//Wenn eine Meldung vom Host kommt was mit der Survey passiert
                 if(arg == "opened"){//wenn die Umfrage geöffnet wurde

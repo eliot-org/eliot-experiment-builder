@@ -463,6 +463,9 @@ export default {
             }
         })
     },
+    destroyed(){    
+        this.$electron.ipcRenderer.removeAllListeners()
+    },
     beforeDestroy () {
         /**
          * Clears the timer

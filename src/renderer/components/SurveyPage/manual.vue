@@ -146,6 +146,9 @@
                 })
             }
         },
+        destroyed(){    
+            this.$electron.ipcRenderer.removeAllListeners()
+        },
         mounted(){
             //Init page
             this.init()
