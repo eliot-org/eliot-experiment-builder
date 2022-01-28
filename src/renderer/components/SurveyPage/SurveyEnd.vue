@@ -45,9 +45,6 @@
                 document.execCommand("copy");
             }
         },
-        destroyed(){    
-            this.$electron.ipcRenderer.removeAllListeners()
-        },
         mounted(){
             //init page
             this.init()
