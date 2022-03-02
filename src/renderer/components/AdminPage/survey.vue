@@ -5,7 +5,7 @@
             <div class="steps-wrapper" v-if="!surveyRunning && !showingAnswers">
                 <div class="step-box">
                     <div class="step-header">
-                        <div class="step-header-text">Studien wählen</div>
+                        <div class="step-header-text">Choose Survey</div>
                     </div>
                     <div class="step-content">
                         <v-select label="name" :options="surveyOptions" v-model="surveyChoice" @input="updateSurveyChoice"></v-select>
@@ -16,29 +16,55 @@
                         <div class="step-box">
                             <div class="step-header">
                                 <div class="step-header-text">
-                                    Studieneinstellungen
+                                    Survey Settings
                                 </div>
                             </div>
                             <div class="step-content">
                                 <div>
-                                    <div>Gewählte Materialien: (Werden in dieser Reihenfolge abgefragt)</div>
+                                    <div>Objects:</div>
                                     <ul class="material-table">
-                                        <li class="material-table-element" v-for="(material,i) in materialsChosen" v-bind:key="i">
-                                            {{material.name}}  {{material.roboPos}}
+                                        <li class="material-table-element" v-for="(obj, i) in objectsChosen" v-bind:key="i">
+                                            {{obj.name}}
                                         </li>
                                     </ul>
 
-                                    <button class="btn-black btn-black-noMarginLeft" id="show-modal" @click="showModal = true">Materialien hinzufügen</button>
-                                    <modal :materialsChosen="materialsChosen" :materialsChosenExtraInformation="materialsChosenExtraInformation" :materials="materials" v-if="showModal" @close="showModal = false" @updateChecked="updateChecked($event)" @updateCheckedExtraInformation="updateCheckedExtraInfo($event)"></modal>
-                                    <button class="btn-black" @click="materialsChosen = shuffle(materialsChosen)">Randomisieren</button>
+                                    <button class="btn-black btn-black-noMarginLeft" id="show-modal" @click="showModal = true">Add Objects</button>
+                                    <modal :objects="objects" v-if="showModal" @close="showModal = false" @updateChecked="updateChecked($event)"></modal>
+                                    <button class="btn-black" @click="objectsChosen = shuffle(objectsChosen)">Randomize</button>
                                 </div>
                                 
                                 <br><hr><br>
 
                                 <div>
                                     <div class="mindChannels-head">
-                                        Fragebogenteile wählen: (Werden in dieser Reihenfolge abgefragt, außer Start und Endmodule wie POI etc.)
-                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Alle wählen</button>
+                                        Choose non-repeating modules that are before the loop
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Choose All</button>
+                                        <button class="btn-black" id="show-modal" @click="showPresetModal = true">Presets</button>
+                                        <presetModal :presets="presets" v-if="showPresetModal" @close="showPresetModal = false" @chooseModules="chooseModules(6, $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, modulesChosen)" ></presetModal>
+                                    </div>  
+                                    
+                                    <div class="mindChannels-checkbox">
+                                        <treeselect v-model="modulesChosen" :multiple="true" :options="modules" />
+                                    </div>
+                                </div>
+                                <br><hr>
+                                <div>
+                                    <div class="mindChannels-head">
+                                        Choose modules that are repeated per object
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Choose All</button>
+                                        <button class="btn-black" id="show-modal" @click="showPresetModal = true">Presets</button>
+                                        <presetModal :presets="presets" v-if="showPresetModal" @close="showPresetModal = false" @chooseModules="chooseModules(6, $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, modulesChosen)" ></presetModal>
+                                    </div>  
+                                    
+                                    <div class="mindChannels-checkbox">
+                                        <treeselect v-model="modulesChosen" :multiple="true" :options="modules" />
+                                    </div>
+                                </div>
+                                <br><hr>
+                                <div>
+                                    <div class="mindChannels-head">
+                                        Choose non-repeating modules that are after the loop
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Choose All</button>
                                         <button class="btn-black" id="show-modal" @click="showPresetModal = true">Presets</button>
                                         <presetModal :presets="presets" v-if="showPresetModal" @close="showPresetModal = false" @chooseModules="chooseModules(6, $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, modulesChosen)" ></presetModal>
                                     </div>  
@@ -55,19 +81,19 @@
                     <div v-if="surveyChoice!=null">
                         <div class="step-box">
                             <div class="step-header">
-                                <div class="step-header-text">Umfragespezifische Einstellungen</div>
+                                <div class="step-header-text">Specific Settings</div>
                             </div>
                             <div class="step-content">
                                 <div>
-                                    <div class="surveySettings-name">Versuchsleiter/in:</div>
+                                    <div class="surveySettings-name">Experimenter:</div>
                                     <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="versuchsleiter" v-model="versuchsleiter">
                                 </div>
                                 <div>
-                                    <div class="surveySettings-name">Assistenz:</div>
+                                    <div class="surveySettings-name">Assistant:</div>
                                     <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="assistenz" v-model="assistenz">
                                 </div>
                                 <div>
-                                    <div class="surveySettings-name">Studie:</div>
+                                    <div class="surveySettings-name">Studyname:</div>
                                     <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="studie" v-model="studie">
                                 </div>
                             </div>
@@ -75,32 +101,16 @@
 
                         <div class="step-box">
                             <div class="step-header">
-                                <div class="step-header-text">Sonstige Einstellungen</div>
+                                <div class="step-header-text">Miscellaneous Settings</div>
                             </div>
                             <div class="step-content">
                                 <div>
-                                    <div class="surveySettings-name">Bildschirm wählen:</div>
+                                    <div class="surveySettings-name">Choose Display:</div>
                                     <v-select label="name" :options="displays" v-model="externalDisplay" class="selector" @input="updateExternalDisplay" style="margin-left:25%"></v-select>
-                                </div>
-                                <div>
-                                    <div class="surveySettings-name">Arduino Port festlegen:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="port" v-model="port">
-                                </div>
-                                <div>
-                                    <div class="surveySettings-name">Materialanzahl zwischen Pausen</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="number" min="1" name="materialPauseNumber" v-model="materialPauseNumber">
-                                </div>
-                                <div>
-                                    <div class="surveySettings-name">Händigkeit:</div>
-                                    <v-select :options="handednessOptions" v-model="handedness" class="selector" style="margin-left:25%"></v-select>
-                                </div>
-                                <div>
-                                    <div class="surveySettings-name">Roboter verbunden:</div>
-                                    <div style="margin-left:25%">{{robotConnected}}</div>
                                 </div>
                             </div>
                         </div>
-                        <button @click="startSurvey()" v-if="!surveyRunning" class="btn-black btn-black-noMarginLeft">Umfrage starten</button>{{computeError}}
+                        <button @click="startSurvey()" v-if="!surveyRunning" class="btn-black btn-black-noMarginLeft">Start Survey</button>{{computeError}}
                     </div>
                 </transition>
             </div>
@@ -136,7 +146,7 @@
 </template>
 
 <script>
-    import materialModal from './AdminSurvey/materialModal'
+    import materialModal from './AdminSurvey/objectModal'
     import presetModal from './AdminSurvey/presetModal'
     const countrynames = require("countrynames")
     const fs = require('fs')
@@ -171,21 +181,15 @@
                 modulesChosen: [],
                 modules: [],
 
-                materialsChosen: [],
-                materialsChosenExtraInformation: [],
-                materials: [],
-                handedness: 0,//0 = nicht festgelegt, 1 = links, 2 = rechts
-                handednessOptions: [{"label":"K.A.", "id":0},{"label":"Links", "id":1},{"label":"Rechts", "id":2}],
+                objectsChosen: [],
+                objects: [],
 
                 surveyOptions: [],
                 surveyChoice: null,
 
                 versuchsleiter: "Leander",
                 assistenz: "",
-                anmerkungen: "",
                 studie: "",
-                port: "COM3",
-                materialPauseNumber: 6,
 
                 displays: [],
                 unprocessedDisplays: [],
@@ -536,24 +540,11 @@
 
                 return "success"
             }, 
-            updateChecked: function(option){
-                if(this.findInArray(option, this.materialsChosen) != null){
-                    this.materialsChosen = this.materialsChosen.filter(el => el != option)
-                    if(this.findInArray(option, this.materialsChosenExtraInformation) != null){//Damit andere Auswahl nicht bestehen bleibt
-                        this.materialsChosenExtraInformation = this.materialsChosenExtraInformation.filter(el => el != option)
-                    }
+            updateChecked: function(obj){
+                if(this.findInArray(obj, this.objectsChosen) != null){
+                    this.objectsChosen = this.objectsChosen.filter(el => el != obj)
                 }else{
-                    this.materialsChosen.push(option)
-                }
-            },
-            updateCheckedExtraInfo: function(option){
-                if(this.findInArray(option, this.materialsChosenExtraInformation) != null){
-                    this.materialsChosenExtraInformation = this.materialsChosenExtraInformation.filter(el => el != option)
-                }else{
-                    if(this.findInArray(option, this.materialsChosen) == null){//Damit ein Material auch wirklich gewählt ist bevor es doppelt abgefragt wird
-                        this.materialsChosen.push(option)
-                    }
-                    this.materialsChosenExtraInformation.push(option)
+                    this.objectsChosen.push(obj)
                 }
             },
             findInArray: function(obj, arr){
@@ -601,8 +592,8 @@
                     this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})
                 } 
             },
-            loadMaterials: function(){
-               
+            loadObjects: async function(){
+               this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
             },
             loadPresets: function(){
                 
@@ -726,7 +717,7 @@
 
             this.loadSurveys()
 
-            this.loadMaterials()
+            this.loadObjects()
 
             this.loadPresets()
         }
