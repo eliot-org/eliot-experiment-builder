@@ -121,7 +121,7 @@ ipcMain.handle('hardwareCommand', (event, arg) => {
 /*-----------------------------------------------------------*/
 
 ipcMain.handle('getStoreValue', (event, key) => {
-	return store.get(key)
+    return store.get(key)
 })
 
 ipcMain.handle('setStoreValue', (event, key, value) => {

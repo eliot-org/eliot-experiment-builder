@@ -23,7 +23,7 @@ const router =  new Router({
           path: '/measurements', name: 'measurements', component: require("@/components/AdminPage/measurements").default
         },
         {
-          path: '/materialsEdit', name: 'materialsEdit', component: require("@/components/AdminPage/materialsEdit").default
+          path: '/objectEdit', name: 'objectEdit', component: require("@/components/AdminPage/objectEdit").default
         },
         {
           path: '/expirementeesEdit', name: 'expirementeesEdit', component: require("@/components/AdminPage/expirementeesEdit").default

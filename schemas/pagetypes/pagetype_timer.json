@@ -5,34 +5,24 @@
     "type": "object",
     "properties": {
         "textBefore":{
-            "description": "The text shown on the Page while the timer is still running",
+            "description": "The text shown on the Page while the timer is still running. OR write _objectname.propertyname_ to access an objects property, like a text",
             "type": "string"
         },
         "textAfter":{
-            "description": "The text shown on the Page after the timer has expired",
+            "description": "The text shown on the Page after the timer has expired. OR write _objectname.propertyname_ to access an objects property, like a text",
             "type": "string"
         },
         "timer":{
-            "description": "The Amount of seconds the Timer will run",
+            "description": "The Amount of seconds the Timer will run. OR write _objectname.propertyname_ to access an objects property, like a number that will be the time duration",
             "type": "number"
         },
-        "eeg":{
-            "description":"Will send a trigger to the eeg if set to 'trigger'",
-            "type": "string",
-            "enum": ["trigger"]
-        },
         "imgBefore":{
-            "description":"Filename of the image thats shown while the timer is running. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "description":"Filename of the image thats shown while the timer is running. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write _objectname.propertyname_ to access an objects property, like a filepath",
             "type": "string"
         },
         "imgAfter":{
-            "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write _objectname.propertyname_ to access an objects property, like a filepath",
             "type": "string"
-        },
-        "light":{
-            "description":"Switches the light on",
-            "type": "string",
-            "enum": ["on"]
         }
     },
     "required": [

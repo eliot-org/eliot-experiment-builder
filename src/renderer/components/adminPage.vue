@@ -8,7 +8,7 @@
                 <div class="nav-link-wrapper">
                     <router-link :to="{ name: 'AdminSurvey'}" class="nav-element">Umfrage</router-link>
                     <router-link :to="{ name: 'expirementeesEdit'}" class="nav-element">Probanden</router-link>
-                    <router-link :to="{ name: 'materialsEdit'}" class="nav-element">Materialien</router-link>
+                    <router-link :to="{ name: 'objectEdit'}" class="nav-element">Objects</router-link>
                     <router-link :to="{ name: 'measurements'}" class="nav-element">Messungen</router-link>
                     <router-link :to="{ name: 'hardware'}" class="nav-element">Hardware</router-link>
                     <router-link :to="{ name: 'AdminConfig'}" class="nav-element">Einstellungen</router-link>
