@@ -49,9 +49,12 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="object-element">
-                        <div class="leftsidetext">Name:</div>
-                        <input type="text" v-model="object.name" @change="updateObject()">
+                    {{object}}
+                    <div v-for="(key, index2) in Object.keys(object)" v-bind:key="index2">
+                        <div class="object-element" v-if="key !== '_id'">
+                            <div class="leftsidetext">{{key}}: </div>
+                            <input type="text" v-model="object[key]" @change="updateObject()">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -153,7 +156,6 @@
         padding: 0.2rem 1rem;
         line-height: 1.5;
         background-color: white ;
-        border-radius:0.5rem;
         font-weight: 400;
         text-align: center;
         vertical-align: middle;
@@ -199,7 +201,6 @@
         padding: 0.2rem 1rem;
         line-height: 1.5;
         background-color: black ;
-        border-radius:0.5rem;
         font-weight: 400;
         text-align: center;
         vertical-align: middle;

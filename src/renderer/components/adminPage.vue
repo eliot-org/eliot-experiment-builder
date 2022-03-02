@@ -6,12 +6,12 @@
                     <img class="logo" src="~@/assets/eliot.png" alt="ELIOT Logo">
                 </div>
                 <div class="nav-link-wrapper">
-                    <router-link :to="{ name: 'AdminSurvey'}" class="nav-element">Umfrage</router-link>
-                    <router-link :to="{ name: 'expirementeesEdit'}" class="nav-element">Probanden</router-link>
-                    <router-link :to="{ name: 'objectEdit'}" class="nav-element">Objects</router-link>
-                    <router-link :to="{ name: 'measurements'}" class="nav-element">Messungen</router-link>
+                    <router-link :to="{ name: 'survey'}" class="nav-element">Survey</router-link>
+                    <router-link :to="{ name: 'subjects'}" class="nav-element">Subjects</router-link>
+                    <router-link :to="{ name: 'objects'}" class="nav-element">Objects</router-link>
+                    <router-link :to="{ name: 'measurements'}" class="nav-element">Measurements</router-link>
                     <router-link :to="{ name: 'hardware'}" class="nav-element">Hardware</router-link>
-                    <router-link :to="{ name: 'AdminConfig'}" class="nav-element">Einstellungen</router-link>
+                    <router-link :to="{ name: 'config'}" class="nav-element">Settings</router-link>
                 </div>
             </div>
         </div>

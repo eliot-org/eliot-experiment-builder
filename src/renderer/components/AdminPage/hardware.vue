@@ -136,7 +136,6 @@ export default {
         padding: 0.2rem 1rem;
         line-height: 1.5;
         background-color: black ;
-        border-radius:0.5rem;
         font-weight: 400;
         text-align: center;
         vertical-align: middle;
@@ -190,7 +189,6 @@ export default {
         padding: 0.2rem 1rem;
         line-height: 1.5;
         background-color: white ;
-        border-radius:0.5rem;
         font-weight: 400;
         text-align: center;
         vertical-align: middle;

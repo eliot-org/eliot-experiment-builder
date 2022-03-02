@@ -17,22 +17,22 @@ const router =  new Router({
       path: '/adminPage', name: 'AdminPage', component: require("@/components/AdminPage").default,
       children:[
         {
-          path: '/survey', name: 'AdminSurvey', component: require("@/components/AdminPage/AdminSurvey").default
+          path: '/survey', name: 'survey', component: require("@/components/AdminPage/survey").default
         },
         {
           path: '/measurements', name: 'measurements', component: require("@/components/AdminPage/measurements").default
         },
         {
-          path: '/objectEdit', name: 'objectEdit', component: require("@/components/AdminPage/objectEdit").default
+          path: '/objects', name: 'objects', component: require("@/components/AdminPage/objects").default
         },
         {
-          path: '/expirementeesEdit', name: 'expirementeesEdit', component: require("@/components/AdminPage/expirementeesEdit").default
+          path: '/subjects', name: 'subjects', component: require("@/components/AdminPage/subjects").default
         },
         {
           path: '/hardware', name: 'hardware', component: require("@/components/AdminPage/hardware").default
         },
         {
-          path: '/config', name: 'AdminConfig', component: require("@/components/AdminPage/adminConfig").default
+          path: '/config', name: 'config', component: require("@/components/AdminPage/config").default
         }
       ]
     },
