@@ -6,6 +6,7 @@ const store = new Store()
 const fs = require("fs")
 const path = require('path');
 import {PluginManager} from "live-plugin-manager";
+const crypto = require("crypto")
 const manager = new PluginManager();
 let electronScreen
 let displays
@@ -128,7 +129,6 @@ ipcMain.handle('setStoreValue', (event, key, value) => {
 	store.set(key, value)
 })
 
-
 ipcMain.handle('openHWDirDialog', async (event) => {
 	dialog.showOpenDialog({
         properties: ['openDirectory']
@@ -137,6 +137,35 @@ ipcMain.handle('openHWDirDialog', async (event) => {
             store.set("scriptLocation", res.filePaths[0])
             event.sender.send("reloadScriptLocation")
             installHWScripts()
+        }
+    })
+})
+
+ipcMain.handle('openSurveyFileDialog', async (event) => {
+	dialog.showOpenDialog({
+        properties: ['openFile']
+    }).then((res) => {
+        if(res.canceled == false){
+            fs.readFile(res.filePaths[0], "utf-8", async function(err, data){
+                if(err){
+                    console.log(err)
+                    return
+                }else{
+                    try {
+                        let surveys = await store.get("surveys")
+                        if(surveys === undefined){
+                            surveys = []
+                        }
+                        let importedSurvey = JSON.parse(data)
+                        importedSurvey._id = crypto.randomUUID()
+                        surveys.push(importedSurvey)
+                        store.set("surveys", surveys)
+                        event.sender.send("reloadSurveys")
+                    } catch (error) {
+                        console.log(error)
+                    }
+                }
+            })
         }
     })
 })

@@ -9,5 +9,6 @@ npm-debug.log.*
 thumbs.db
 !.gitkeep
 yarn.lock
+package-lock.json
 yarn-error.log
 plugin_packages/

@@ -148,8 +148,6 @@
 <script>
     import materialModal from './AdminSurvey/objectModal'
     import presetModal from './AdminSurvey/presetModal'
-    const countrynames = require("countrynames")
-    const fs = require('fs')
     export default {
         components: { 
             "modal": materialModal,
@@ -195,36 +193,7 @@
                 unprocessedDisplays: [],
                 externalDisplay: {},
 
-                surveyPresets: [{"id": 0, "name": "Umfrage Lang",
-                        "modules": [{"id": "Optik", "label":"Optik", "children": [{"id":"T1_Optik","label":"T1"}, {"id":"T2_Optik","label":"T2"},{"id":"T3_Optik","label":"T3"},{"id":"T4_Optik","label":"T4"}]},
-                                {"id":"Akustik","label":"Akustik","children":[{"id":"T1_Akustik","label":"T1"}]},
-                                {"id":"Olfaktorik","label":"Olfaktorik","children":[{"id":"T1_Olfaktorik","label":"T1"}]},
-                                {"id":"Haptik","label":"Haptik","children":[{"id":"T1_Haptik","label":"T1"}]}], 
-                        "survey":
-                        [{"module": "Akustik", "part": "T1_Akustik", "type": "question", "condition": "", "content": {"type": "yes-no", "text": "Hast du eine Assoziation zu dem Material?", "options":["JA","NEIN"]}},
-                        {"module": "Akustik", "part": "T1_Akustik", "type": "question", "condition": "0.true", "content": {"type": "checkbox","text": "Woher?", "options": ["Arbeit", "Nachrichten", "Internet", "Werbung"]}},
-                        {"module": "Akustik", "part": "T1_Akustik", "type": "summary", "condition": "", "content": {"text": "Hier haben sie eine Übersicht über ihre zuvor gegebenen Antworten"}},
-                        {"module": "Optik", "part": "T1_Optik", "type": "question", "condition": "", "content": {"type": "checkbox","text": "Welche der folgenden Automarken kennen Sie?", "options":["Tesla","VW","Audi","BMW","Ford","Fiat"]}},
-                        {"module": "Optik", "part": "T2_Optik", "type": "question", "condition": "", "content": {"type": "checkbox","text": "Welche der folgenden Namen haben Sie?", "options": ["Tom","Jan","Alfons","Brand","Fred","Fisto","Fisto","Fisto","Fisto","Fisto","Fisto","Fisto"]}},
-                        {"module": "Optik", "part": "T2_Optik", "type": "question", "condition": "", "content": {"type": "radio","text": "Wie alt sind sie?", "options":["17 Jahre oder Jünger", "18-20", "21-29", "30-39", "40-49", "50-59", "60+"]}},
-                        {"module": "Optik", "part": "T2_Optik", "type": "question", "condition": "", "content": {"type": "slider","text": "Wie würdest du deinen ersten visuellen Eindruck anhand der folgenden praktischen Eigenschaften beschreiben?", "options":["Haltbarkeit", "Attraktivität"]}},
-                        {"module": "Optik", "part": "T3_Optik", "type": "question", "condition": "", "content": {"type": "matrix", "text": "Beschreibe die erste Assoziation in Richtung der anziehenden Wirkung & Intensität", "options":["Attraktivität", "Intensität"]}},
-                        {"module": "Optik", "part": "T3_Optik", "type": "explanation", "condition": "", "content": {"text": "Hier wird mal ne Erklärung stehen. Dann auf ok klicken"}},
-                        {"module": "Optik", "part": "T4_Optik", "type": "timer", "condition": "", "content": {"text": "Bitte warten. Ein 5 Sekunden Timer läuft", "timer": 5}},
-                        {"module": "Optik", "part": "T4_Optik", "type": "manual", "condition": "", "content": {"text": "Hier wird mal was auf den Kopf gesetzt werden. Admin bitte auf weiter klicken", "channel": "eegOn"}},
-                        {"module": "Optik", "part": "T4_Optik", "type": "summary", "condition": "", "content": {"text": "Hier haben sie eine Übersicht über ihre zuvor gegebenen Antworten"}}
-                        ]
-                    },
-                    {"id": 1, "name": "Umfrage Kurz",
-                    "modules": [{"id":"Telepathie","label":"Telepathie","children":[{"id":"T1_Telepathie","label":"T1"}]}],
-                    "survey":
-                        [   {"module": "Telepathie", "part": "T1", "type": "question", "condition": "", "content": {"type": "slider","text": "Wie würdest du deinen ersten visuellen Eindruck anhand der folgenden praktischen Eigenschaften beschreiben?", "options":["Haltbarkeit","Haltbarkeit","Haltbarkeit", "Attraktivität"]}},
-                            {"module": "Telepathie", "part": "T1", "type": "question", "condition": "", "content": {"type": "polygonGraph", "text": "OKTAGON GOES 8", "options":["A","B","C","D","E","F","G","H","I","J","K","L","M","N"]}},
-                            {"module": "Telepathie", "part": "T1", "type": "question", "condition": "", "content": {"type": "yes-no", "text": "Hast du eine Assoziation zu dem Material?", "options":["JA","NEIN"]}},
-                            {"module": "Telepathie", "part": "T1", "type": "question", "condition": "0.true", "content": {"type": "checkbox","text": "Woher?", "options": ["Arbeit", "Nachrichten", "Internet", "Werbung"]}},
-                        ]
-                    }
-                ],
+                surveyPresets: [],
 
                 computedSurvey: [],
                 computeError: "",
@@ -274,14 +243,14 @@
                     this.modules = []
                     this.modulesChosen = []
                 }else{
-                    this.surveyChoice = this.getSurveyPreset(value.id)
+                    this.surveyChoice = this.getSurveyPreset(value._id)
                     this.modules = this.surveyChoice.modules
                     this.modulesChosen = []
                 }
             },
             getSurveyPreset: function(id){
                 for(var i=0; i<this.surveyPresets.length; i++){
-                    if(this.surveyPresets[i].id == id){
+                    if(this.surveyPresets[i]._id == id){
                         return this.surveyPresets[i]
                     }
                 }
@@ -577,19 +546,11 @@
                 }
                 this.manualChannel = null
             },
-            loadSurveys: function(){
-                try{
-                    let rawData = fs.readFileSync("src/renderer/assets/survey.json")
-                    let jsonData = JSON.parse(rawData)
-                    this.surveyPresets.push({"id":this.surveyPresets.length, "name": "Lokale Datei", "modules": jsonData.modules, "survey": jsonData.survey})
-                }catch(e){
-                    console.log(e)
-                }
-
-                //this.surveyPresets = tmp
+            loadSurveys: async function(){
+                this.surveyPresets = await this.$electron.ipcRenderer.invoke('getStoreValue', 'surveys')
 
                 for(let i=0; i<this.surveyPresets.length; i++){
-                    this.surveyOptions.push({"id": this.surveyPresets[i].id, "name": this.surveyPresets[i].name})
+                    this.surveyOptions.push({"_id": this.surveyPresets[i]._id, "name": this.surveyPresets[i].name})
                 } 
             },
             loadObjects: async function(){

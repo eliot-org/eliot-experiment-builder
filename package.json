@@ -68,7 +68,7 @@
   "dependencies": {
     "@riophae/vue-treeselect": "^0.4.0",
     "axios": "^0.24.0",
-    "babel-upgrade": "^1.0.1",
+    "babel-upgrade": "^0.0.8",
     "countrynames": "^0.1.1",
     "electron-store": "^8.0.1",
     "electron-window-manager": "^1.0.6",
@@ -128,7 +128,7 @@
     "multispinner": "^0.2.1",
     "node-abi": "^3.5.0",
     "node-loader": "^2.0.0",
-    "node-sass": "^6.0.1",
+    "node-sass": "^7.0.1",
     "prettier": "^2.5.0",
     "sass-loader": "^12.3.0",
     "style-loader": "^3.3.1",
