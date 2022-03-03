@@ -67,6 +67,7 @@ function installHWScripts(){
         setScriptLocation()
         hwScripts = {}
         hwScriptsDefinitions = []
+        if(scriptLocation !== "")
         fs.readdirSync(scriptLocation).forEach(async function(file){
             await manager.installFromPath(path.join(scriptLocation, file))
             hwScripts[file] = manager.require(file)

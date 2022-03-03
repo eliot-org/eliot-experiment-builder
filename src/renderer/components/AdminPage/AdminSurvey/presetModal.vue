@@ -3,16 +3,10 @@
         <div class="modal-mask">
             <div class="modal-wrapper">
                 <div class="modal-container">
-
                     <div class="modal-header">
-                        <!--<slot name="header">
-                        </slot>-->
                         <h3>Preset Optionen</h3>
                     </div>
-
                     <div class="modal-body">
-                        <!--<slot name="body">
-                        </slot>-->
                         <div class="mindChannels-head">
                             <div v-for="(preset,i) in presets" v-bind:key="i" >
                                 - {{preset.name}}:
@@ -20,9 +14,7 @@
                                 <button class="btn-black-small btn-black" id="chooseAllModules" @click="$emit('deletePreset', preset)">Löschen</button>
                             </div>
                         </div>
-
                         <br><hr><br>
-
                         <div>
                             <div>Aktuelle Modulauswahl als neues Template anlegen</div>
                             <div class="surveySettings-name">Name:</div>
@@ -30,7 +22,6 @@
                             <button class="btn-black " id="chooseAllModules" @click="$emit('addPreset', newPresetName)">Speichern</button>
                         </div>
                     </div>
-
                     <div class="modal-footer">
                         <slot name="footer">
                             <button class="modal-default-button btn-black btn" @click="$emit('close')">
@@ -49,7 +40,7 @@
         props:{
             presets:{//The survey presets that exist
                required:true
-            }
+            },
         },
         data: function( ){
             return{
@@ -57,8 +48,6 @@
                 newPresetName: "",
             }
         },
-        methods:{
-        }
     }
 </script>
 
