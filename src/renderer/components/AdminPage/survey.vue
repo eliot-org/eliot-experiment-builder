@@ -28,8 +28,8 @@
                                         </li>
                                     </ul>
 
-                                    <button class="btn-black btn-black-noMarginLeft" id="show-modal" @click="showModal = true">Add Objects</button>
-                                    <modal :objects="objects" v-if="showModal" @close="showModal = false" @updateChecked="updateChecked($event)"></modal>
+                                    <button class="btn-black btn-black-noMarginLeft" id="show-modal" @click="showObjectModal = true">Add Objects</button>
+                                    <modal :objects="objects" v-if="showObjectModal" @close="showObjectModal = false" @updateChecked="updateChecked($event)"></modal>
                                     <button class="btn-black" @click="objectsChosen = shuffle(objectsChosen)">Randomize</button>
                                 </div>
                                 
@@ -38,39 +38,39 @@
                                 <div>
                                     <div class="mindChannels-head">
                                         Choose non-repeating modules that are before the loop
-                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Choose All</button>
-                                        <button class="btn-black" id="show-modal" @click="showPresetModal = true">Presets</button>
-                                        <presetModal :presets="presets" v-if="showPresetModal" @close="showPresetModal = false" @chooseModules="chooseModules(6, $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, modulesChosen)" ></presetModal>
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseAllModules('pre')">Choose All</button>
+                                        <button class="btn-black" id="show-modal" @click="showPrePresetModal = true">Presets</button>
+                                        <presetModal :presets="presets" v-if="showPrePresetModal" @close="showPrePresetModal = false" @chooseModules="chooseModules('pre', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'pre')" ></presetModal>
                                     </div>  
                                     
                                     <div class="mindChannels-checkbox">
-                                        <treeselect v-model="modulesChosen" :multiple="true" :options="modules" />
+                                        <treeselect v-model="preModules" :multiple="true" :options="modules" />
                                     </div>
                                 </div>
                                 <br><hr>
                                 <div>
                                     <div class="mindChannels-head">
                                         Choose modules that are repeated per object
-                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Choose All</button>
-                                        <button class="btn-black" id="show-modal" @click="showPresetModal = true">Presets</button>
-                                        <presetModal :presets="presets" v-if="showPresetModal" @close="showPresetModal = false" @chooseModules="chooseModules(6, $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, modulesChosen)" ></presetModal>
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseAllModules('main')">Choose All</button>
+                                        <button class="btn-black" id="show-modal" @click="showMainPresetModal = true">Presets</button>
+                                        <presetModal :presets="presets" v-if="showMainPresetModal" @close="showMainPresetModal = false" @chooseModules="chooseModules('main', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'main')" ></presetModal>
                                     </div>  
                                     
                                     <div class="mindChannels-checkbox">
-                                        <treeselect v-model="modulesChosen" :multiple="true" :options="modules" />
+                                        <treeselect v-model="mainModules" :multiple="true" :options="modules" />
                                     </div>
                                 </div>
                                 <br><hr>
                                 <div>
                                     <div class="mindChannels-head">
                                         Choose non-repeating modules that are after the loop
-                                        <button class="btn-black" id="chooseAllModules" @click="chooseModules(0, [])">Choose All</button>
-                                        <button class="btn-black" id="show-modal" @click="showPresetModal = true">Presets</button>
-                                        <presetModal :presets="presets" v-if="showPresetModal" @close="showPresetModal = false" @chooseModules="chooseModules(6, $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, modulesChosen)" ></presetModal>
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseAllModules('post')">Choose All</button>
+                                        <button class="btn-black" id="show-modal" @click="showPostPresetModal = true">Presets</button>
+                                        <presetModal :presets="presets" v-if="showPostPresetModal" @close="showPostPresetModal = false" @chooseModules="chooseModules('post', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'post')" ></presetModal>
                                     </div>  
                                     
                                     <div class="mindChannels-checkbox">
-                                        <treeselect v-model="modulesChosen" :multiple="true" :options="modules" />
+                                        <treeselect v-model="postModules" :multiple="true" :options="modules" />
                                     </div>
                                 </div>
                             </div>
@@ -129,18 +129,6 @@
                    </div>
             <p>Zum Pausieren der Umfrage Strg+P drücken</p>
             <p>Zum Bestätigen eines manuellen Schrittes Strg+B drücken</p>
-            Roboter verbunden: {{robotConnected}}<br>
-            <div v-if="robotConnected">
-                Roboternachrichten: {{robotConsole}}<br>
-                Lade Programm: <input type="text" v-model="programm" class="input">
-                <button class="button" @click="loadProgram('load')">Lade</button><br>
-                <button class="button" @click="command('play')">Play</button><br>
-                <button class="button" @click="command('stop')">Stop</button><br>
-                <button class="button" @click="command('pause')">Pause</button><br>
-                <button class="button" @click="command('status')">Status</button><br>
-                <button class="button" @click="command('programState')">Programmzustand</button><br>
-                <button class="button" @click="command('running')">Läuft?</button><br>
-            </div>
         </div>
     </div>
 </template>
@@ -159,12 +147,7 @@
         data: function( ){
             return{
                 answersSent: false,
-                programm: "",
-
                 autosave: false,
-
-                robotConnected: false,
-                robotConsole: "",
 
                 answers: {},
                 answerSaveStatus: "",
@@ -175,8 +158,11 @@
 
                 manualChannel: null,
 
-                showModal: false,
-                modulesChosen: [],
+                showObjectModal: false,
+
+                preModules: [],
+                mainModules:[],
+                postModules:[],
                 modules: [],
 
                 objectsChosen: [],
@@ -185,7 +171,7 @@
                 surveyOptions: [],
                 surveyChoice: null,
 
-                versuchsleiter: "Leander",
+                versuchsleiter: "",
                 assistenz: "",
                 studie: "",
 
@@ -199,41 +185,55 @@
                 computeError: "",
                 
                 presets: [],
-                showPresetModal: false,
+                showPrePresetModal: false,
+                showMainPresetModal: false,
+                showPostPresetModal: false,
             }
         },
         methods:{
-            loadProgram(){
-                this.$electron.ipcRenderer.send("robotCommands", {command:"load", data: "/programs/"+ this.programm +".urp"})  
+            chooseAllModules: function(area){
+                if(area == "pre"){
+                    this.preModules = []
+                }else if(area == "main"){
+                    this.mainModules = []
+                }else if(area == "post"){
+                    this.postModules = []
+                }
+                for(let i = 0; i < this.modules.length; i++){
+                    if(area == "pre"){
+                        this.preModules.push(this.modules[i].id)
+                    }else if(area == "main"){
+                        this.mainModules.push(this.modules[i].id)
+                    }else if(area == "post"){
+                        this.postModules.push(this.modules[i].id)
+                    }
+                }
             },
-            command: function(command){
-                this.$electron.ipcRenderer.send("robotCommands", {command: command, data: ""})  
-            },
-            chooseModules: function(index, preset){
-                console.log(this.modules)
-                console.log(this.modulesChosen)
-                this.modulesChosen = []
-                switch(index){
-                    case 0:
-                        for(let i = 0; i< this.modules.length;i++){
-                            this.modulesChosen.push(this.modules[i].id)
-                        }
-                        break;
-                    case 6:
-                        for(let y = 0; y < preset.modules.length; y++){
-                            for(let i = 0; i< this.modules.length;i++){
-                                if(this.modules[i].id == preset.modules[y]){
-                                    this.modulesChosen.push(this.modules[i].id)
-                                }else if(Object.prototype.hasOwnProperty.call(this.modules[i],"children")){
-                                    for(let x = 0; x< this.modules[i].children.length;x++){
-                                        if(this.modules[i].children[x].id == preset.modules[y]){
-                                            this.modulesChosen.push(this.modules[i].children[x].id)
-                                        }
+            chooseModules: function(area, preset){
+                for(let y = 0; y < preset.modules.length; y++){
+                    for(let i = 0; i< this.modules.length;i++){
+                        if(this.modules[i].id == preset.modules[y]){
+                            if(area == "pre"){
+                                this.preModules.push(this.modules[i].id)
+                            }else if(area == "main"){
+                                this.mainModules.push(this.modules[i].id)
+                            }else if(area == "post"){
+                                this.postModules.push(this.modules[i].id)
+                            }
+                        }else if(Object.prototype.hasOwnProperty.call(this.modules[i],"children")){
+                            for(let x = 0; x< this.modules[i].children.length;x++){
+                                if(this.modules[i].children[x].id == preset.modules[y]){
+                                    if(area == "pre"){
+                                        this.preModules.push(this.modules[i].children[x].id)
+                                    }else if(area == "main"){
+                                        this.mainModules.push(this.modules[i].children[x].id)
+                                    }else if(area == "post"){
+                                        this.postModules.push(this.modules[i].children[x].id)
                                     }
                                 }
                             }
                         }
-                        break;
+                    }
                 }
             },
             updateSurveyChoice: function(value){
@@ -548,22 +548,46 @@
             },
             loadSurveys: async function(){
                 this.surveyPresets = await this.$electron.ipcRenderer.invoke('getStoreValue', 'surveys')
+                if(this.surveyPresets === undefined){
+                    this.surveyPresets = []
+                }
 
                 for(let i=0; i<this.surveyPresets.length; i++){
                     this.surveyOptions.push({"_id": this.surveyPresets[i]._id, "name": this.surveyPresets[i].name})
                 } 
             },
             loadObjects: async function(){
-               this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
+                this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
+                if(this.objects === undefined){
+                    this.objects = []
+                }
             },
-            loadPresets: function(){
-                
+            loadPresets: async function(){
+                this.presets = await this.$electron.ipcRenderer.invoke("getStoreValue", "presets") 
+                if(this.presets === undefined){
+                    this.presets = []
+                }
+                console.log(this.presets)
             },
-            addPreset: function(name, modules){
-                
+            addPreset: function(name, area){
+                if(name != ""){
+                    if(area == "pre" && this.preModules.length > 0){
+                        this.presets.push({"name": name, "modules": this.preModules, "id": crypto.randomUUID()})
+                    }else if(area == "main" && this.mainModules.length > 0){
+                        this.presets.push({"name": name, "modules": this.mainModules, "id": crypto.randomUUID()})
+                    }else if(area == "post" && this.postModules.length > 0){
+                        this.presets.push({"name": name, "modules": this.postModules, "id": crypto.randomUUID()})
+                    }
+                    this.$electron.ipcRenderer.invoke("setStoreValue", "presets", this.presets) 
+                }
             },
             deletePreset: function(toDelete){
-                
+                for(let i = 0; i < this.presets.length; i++){
+                    if(this.presets[i].id === toDelete.id){
+                        this.presets.splice(i,1)
+                        this.$electron.ipcRenderer.invoke("setStoreValue", "presets", this.presets) 
+                    }
+                }
             },
             saveAnswers: function(){
                 if(this.answersSent == false){
@@ -591,11 +615,9 @@
                     //array[randomIndex] = temporaryValue;
                     this.$set(array, randomIndex, temporaryValue)
                 }
-                console.log(array)
                 return array;
             },
             updateExternalDisplay(){
-                console.log(this.externalDisplay)
                 this.$electron.ipcRenderer.send("displays", {"arg": "setExternalDisplay","externalDisplay":this.unprocessedDisplays[this.externalDisplay.id]})
             }
         },
@@ -663,23 +685,10 @@
                     console.log(arg.externalDisplay)
                 }
             })
-            
-            /*this.$electron.ipcRenderer.on("robotConnected", (event,arg) => {
-                this.robotConnected = arg
-                console.log(arg)
-            }) 
-            this.$electron.ipcRenderer.on("robotConsole", (event,arg) => {
-                this.robotConsole = arg
-                console.log(arg)
-            }) 
-            this.$electron.ipcRenderer.send("robotCommands", {command:"status", data:""})  */
 
             this.$electron.ipcRenderer.send("displays", {"arg": "getDisplays"})
-
             this.loadSurveys()
-
             this.loadObjects()
-
             this.loadPresets()
         }
     }
