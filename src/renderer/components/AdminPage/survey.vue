@@ -548,7 +548,7 @@
             },
             loadSurveys: async function(){
                 this.surveyPresets = await this.$electron.ipcRenderer.invoke('getStoreValue', 'surveys')
-                if(this.surveyPresets === undefined){
+                if(this.surveyPresets === null || this.surveyPresets === undefined){
                     this.surveyPresets = []
                 }
 
@@ -558,13 +558,13 @@
             },
             loadObjects: async function(){
                 this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
-                if(this.objects === undefined){
+                if(this.objects === null || this.objects === undefined){
                     this.objects = []
                 }
             },
             loadPresets: async function(){
                 this.presets = await this.$electron.ipcRenderer.invoke("getStoreValue", "presets") 
-                if(this.presets === undefined){
+                if(this.presets === null || this.presets === undefined){
                     this.presets = []
                 }
                 console.log(this.presets)

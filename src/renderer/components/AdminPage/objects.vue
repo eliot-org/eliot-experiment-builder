@@ -49,7 +49,6 @@
                         </div>
                     </div>
                     <hr>
-                    {{object}}
                     <div v-for="(key, index2) in Object.keys(object)" v-bind:key="index2">
                         <div class="object-element" v-if="key !== '_id'">
                             <div class="leftsidetext">{{key}}: </div>
@@ -90,7 +89,7 @@
             loadData: async function(){
                 this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
                 //store returns null if objects doesnt exist
-                if(this.objects === undefined){
+                if(this.objects === null || this.objects === undefined){
                     this.objects = []
                 }
             },
