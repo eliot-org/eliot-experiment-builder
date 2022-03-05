@@ -5,30 +5,20 @@
     "type": "object",
     "properties": {
         "text":{
-            "description": "The text shown on the Page",
+            "description": "The text shown on the Page. OR write _objectname.propertyname_ to access an objects property, like a text",
             "type": "string"
         },
-        "eeg":{
-            "description":"Will send a trigger to the eeg if set to 'trigger'",
-            "type": "string",
-            "enum": ["trigger"]
-        },
         "img":{
-            "description":"Filename of the image. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "description":"Filename of the image. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write _objectname.propertyname_ to access an objects property, like a filepath",
             "type": "string"
         },
         "imagePosition":{
-            "description":"Sets the position of the image on the Page",
+            "description":"Sets the position of the image on the Page. OR write _objectname.propertyname_ to access an objects property, like a position",
             "type": "string",
             "enum": ["top", "left", "right", "bottom", "fullscreen"]
         },
-        "light":{
-            "description":"Switches the light on",
-            "type": "string",
-            "enum": ["on"]
-        },
         "continueDelay":{
-            "description": "The amount of seconds after which the Continue Button is shown",
+            "description": "The amount of seconds after which the Continue Button is shown. -1 for never(wait for Hardware). OR write _objectname.propertyname_ to access an objects property, like a number. Can also be accessed by hardware, via the 'showContinueButton' event",
             "type": "number"
         }
     },
