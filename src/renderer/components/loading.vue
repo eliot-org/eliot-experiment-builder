@@ -4,8 +4,8 @@
             <img class="logo" src="~@/assets/eliot.png" alt="ELIOT"> 
             <h1 style="font-size:3rem; margin-bottom:10px">ELIOT</h1>
             <p style="font-size: 0.9rem">
-                Version 0.1<br>
-                Blueberry<br>
+                Version 0.2<br>
+                Walnut<br>
             </p>
         </div>
 

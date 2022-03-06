@@ -1,36 +1,90 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Pagetype timer content",
-    "description": "Description of the content of the Pagetype 'timer '",
+    "description": "Description of the content of the Pagetype 'timer'",
     "type": "object",
     "properties": {
-        "textBefore":{
-            "description": "The text shown on the Page while the timer is still running. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+        "mainTimer":{
+            "description": "A timed showing of information. This defines how much time there is.",
+            "type": "object",
+            "properties":{
+                "time": {
+                    "description": "The Amount of seconds the Timer will run. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "type": "number"
+                },
+                "show": {
+                    "description": "Set to true if you want the countdown to be shown as 12, 11, 10,... False if you want to hide it. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "type": "boolean"
+                }
+            },
+            "required": ["time", "show"]
+        },
+        "mainText":{
+            "description": "The text shown on the Page while the timer is running. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
-        "textAfter":{
-            "description": "The text shown on the Page after the timer has expired. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
-            "type": "string"
-        },
-        "timer":{
-            "description": "The Amount of seconds the Timer will run. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
-            "type": "number"
-        },
-        "imgBefore":{
+        "mainImg":{
             "description":"Filename of the image thats shown while the timer is running. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
-        "imgAfter":{
+        "preTimer":{
+            "description": "If you want to have some time on the page before the timer starts use this. It defines how many seconds till the real timer starts.",
+            "type": "object",
+            "properties":{
+                "time": {
+                    "description": "The Amount of seconds the Timer will run. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "type": "number"
+                },
+                "show": {
+                    "description": "Set to true if you want the pre countdown to be shown as -2, -1, 0,... False if you want to hide it. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "type": "boolean"
+                }
+            },
+            "required": ["time", "show"]
+        },
+        "preText":{
+            "description": "The text shown on the Page before the timer starts = while the preTimer runs. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "preImg":{
+            "description":"Filename of the image thats shown before the timer starts = while the preTimer runs. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "postTimer":{
+            "description": "A timer thats started after the main timer ended. When this one ends the next page will be loaded",
+            "type": "object",
+            "properties":{
+                "time": {
+                    "description": "The Amount of seconds the Timer will run. -1 for instant load of next page. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "type": "number"
+                },
+                "show": {
+                    "description": "Set to true if you want the post countdown to be shown as 5, 4, 3... False if you want to hide it. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "type": "boolean"
+                }
+            },
+            "required": ["time", "show"]
+        },
+        "postText":{
+            "description": "The text shown on the Page after the timer has expired. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "postImt":{
             "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
+        },
+        "startIndicatorSound":{
+            "description": "Path to the file of the sound that is played when the mainTimer starts. Has to have the file ending included. Possible endings are 'wav' and 'mp3'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "endIndicatorSound":{
+            "description": "Path to the file of the sound that is played when the mainTimer ends. Has to have the file ending included. Possible endings are 'wav' and 'mp3'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "continueDelay":{
+            "description": "The amount of seconds after which the Continue Button is shown, after the end of the timer. -1 for never(wait for Hardware). OR {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties. Can also be accessed by hardware, via the 'showContinueButton' event",
+            "type": "number"
         }
     },
-    "required": [
-        "text",
-        "timer",
-        "textBefore",
-        "textAfter",
-        "imgBefore",
-        "imgAfter"
-    ]
+    "required": ["mainTimer"]
 }
