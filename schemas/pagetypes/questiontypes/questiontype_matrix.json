@@ -2,11 +2,29 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Questiontype matrix options",
     "description": "Description of the options of the Questiontype 'matrix'",
-    "type": "array",
-    "items": {
-        "description":"Item 0: Textleft, Item 1: Textright, Item 2: Textabove, Item 3: Textbelow, Item 4(Optional): Choose from[horizontal, vertikal, diagonal]. Sets the alignment of matrix. Default if empty or missing is 'diagonal'",
-        "type":"string",
-        "minimum": 4,
-        "maximum": 5
-    }
+    "type": "object",
+    "properties": {
+        "left":{
+            "description": "The Text that is shown left of the Matrix. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "right":{
+            "description": "The Text that is shown right of the Matrix. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "above":{
+            "description": "The Text that is shown above the Matrix. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "below":{
+            "description": "The Text that is shown below the Matrix. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "alignment":{
+            "description": "Choose one from ['horizontal', 'vertical', 'diagonal']. Sets the alignment of matrix. 'diagonal' is default if empty or missing. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string",
+            "enum": ["horizontal", "vertical", "diagonal"]
+        }
+    },
+    "required": ["left", "right", "above", "below"]
 }

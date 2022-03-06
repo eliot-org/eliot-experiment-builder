@@ -5,21 +5,11 @@
     "type": "object",
     "properties": {
         "text":{
-            "description": "The text shown on the Page",
+            "description": "The text shown on the Page. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
-        "eeg":{
-            "description":"Will send a trigger to the eeg if set to 'trigger'",
-            "type": "string",
-            "enum": ["trigger"]
-        },
-        "light":{
-            "description":"Switches the light on",
-            "type": "string",
-            "enum": ["on"]
-        },
         "name":{
-            "description": "The unique name of this question. This is be the identifier in the saved Data",
+            "description": "The unique name of this question. This is the identifier in the saved Data",
             "type": "string"
         },
         "type":{
@@ -29,11 +19,15 @@
         },
         "options":{
             "description": "Depends on the questiontype. See in the respective file",
-            "type": "array"
+            "type": "object"
         },
         "img":{
-            "description": "Filename of the image thats shown on the left side of the page. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "description": "Filename of the image thats shown on the left side of the page. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
+        },
+        "definesSubject":{
+            "description":"The Answer of this Question will be used to create a Subject. The specific property or properties(just do multiple entries in the array) that gets defined is specified by this property.",
+            "type": "array"
         }
     },
     "required": [

@@ -2,11 +2,16 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Questiontype yes-no options",
     "description": "Description of the options of the Questiontype 'yes-no'",
-    "type": "array",
-    "items": {
-        "description":"The two options that the user can choose from",
-        "type":"string",
-        "minimum": 2,
-        "maximum": 2
-    }
+    "type": "object",
+    "properties": {
+        "top":{
+            "description": "The upper option that the user can choose from. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        },
+        "bottom":{
+            "description": "The lower option that the user can choose from. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "type": "string"
+        }
+    },
+    "required": ["top", "bottom"]
 }

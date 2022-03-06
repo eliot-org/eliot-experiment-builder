@@ -4,7 +4,7 @@
     "description": "Description of the options of the Questiontype 'radio'",
     "type": "array",
     "items": {
-        "description":"Each is the text of an Option that the user can choose from",
+        "description":"Each is the text of an Option that the user can choose from. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
         "type":"string",
         "minimum": 1
     }

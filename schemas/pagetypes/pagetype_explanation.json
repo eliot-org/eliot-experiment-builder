@@ -5,21 +5,11 @@
     "type": "object",
     "properties": {
         "text":{
-            "description": "The text shown on the Page",
+            "description": "The text shown on the Page. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
-        "eeg":{
-            "description":"Will send a trigger to the eeg if set to 'trigger'",
-            "type": "string",
-            "enum": ["trigger"]
-        },
-        "light":{
-            "description":"Switches the light on",
-            "type": "string",
-            "enum": ["on"]
-        },
         "continueDelay":{
-            "description": "The amount of seconds after which the Continue Button is shown",
+            "description": "The amount of seconds after which the Continue Button is shown. -1 for never(wait for Hardware). OR {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties. Can also be accessed by hardware, via the 'showContinueButton' event",
             "type": "number"
         }
     },

@@ -2,53 +2,66 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Questiontype polygonGraph options",
     "description": "Description of the options of the Questiontype 'polygonGraph'",
-    "type": "array",
-    "items": {
-        "description":"The first element is optional and can be a string with the value 'average' or 'hide'. Average will make the graph show the average value over all sliders. Hide will hide the graph. The other objects are the settings for each shown slider",
-        "type":"object",
-        "properties":{
-            "name":{
-                "description": "The globally unique identifier of this slider. Each slider will be saved as a seperate Answer",
-                "type": "string"
-            },
-            "marks":{
-                "description": "The properties of this object can be freely chosen from the range 0-100(percentage). For each property there will be a mark on the slider exactly where the property name is. For example you have the properties 0, 50 and 100. Then there will be marks at 0%, 50% and 100%",
+    "type": "object",
+    "properties": {
+        "graph":{
+            "description": "Average will make the graph show the average value over all sliders. Hide/show will hide/show the graph ",
+            "type": "string",
+            "enum": ["average", "hide", "show"]
+        },
+        "sliders":{
+            "description": "Each object creates a slider with the set options",
+            "type": "array",
+            "minimum": 1,
+            "items": {
+                "description":"A Slider that is defined by these properties",
                 "type":"object",
                 "properties":{
-                    "your number here":{
-                        "description": "The text thats shown at the mark. Its recommended to make this only a short text or a single word.",
+                    "name":{
+                        "description": "The globally unique identifier of this slider. Each slider will be saved as a seperate Answer",
                         "type": "string"
-                    } 
-                }
-            },
-            "tooltip":{
-                "description":"If set it has to be 'false'. Then it will hode the tooltip that shows the current selected value on the slider.",
-                "type": "string"
-            },
-            "sliderStyle":{
-                "description":"Choose one from these options 'simple', 'quantity', 'quality'. Simple sets the coloring to default. Quantity coloring is from light grey(left) to dark grey(right). Quality coloring is a color Gradient from red(left) to green(right)",
-                "type": "string",
-                "enum": ["simple", "quantity", "quality"]
-            },
-            "text":{
-                "description": "The Text thats shown above this slider. HTML is possible",
-                "type": "string"
-            },
-            "sliderText":{
-                "description": "The Text thats shown on the polygon. Not required. But if you write HTML in the text tag then that would be shown on the polygon(when not average), so you can write your original text here so that its shown properly on the polygon.",
-                "type": "string"
-            },
-            "img":{
-                "description": "Each mark can have an accompanying picture. Each element in this array has to be a string with the full filename. The first array element will be shown at the left most marker, the second at the second mark from the left and so on. If you dont want an image at a particular mark then set the string to 'leer.png'",
-                "type": "array"
-            },
-            "defaultValue":{
-                "description": "Sets the starting/default value of this slider.",
-                "type": "number"
+                    },
+                    "marks":{
+                        "description": "The properties of this object can be freely chosen from the range 0-100(percentage). For each property there will be a mark on the slider exactly where the property name is. For example you have the properties 0, 50 and 100. Then there will be marks at 0%, 50% and 100%",
+                        "type":"object",
+                        "properties":{
+                            "your number here":{
+                                "description": "The text thats shown at the mark. Its recommended to make this only a short text or a single word. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                                "type": "string"
+                            } 
+                        }
+                    },
+                    "tooltip":{
+                        "description":"If set it has to be 'false'. Then it will hide the tooltip that shows the current selected value on the slider.",
+                        "type": "string"
+                    },
+                    "sliderStyle":{
+                        "description":"Choose one from these options 'simple', 'quantity', 'quality'. Simple sets the coloring to default. Quantity coloring is from light grey(left) to dark grey(right). Quality coloring is a color Gradient from red(left) to green(right)",
+                        "type": "string",
+                        "enum": ["simple", "quantity", "quality"]
+                    },
+                    "text":{
+                        "description": "The Text thats shown above this slider. HTML is possible. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                        "type": "string"
+                    },
+                    "sliderText":{
+                        "description": "The Text thats shown on the polygon. Not required. But if you write HTML in the text tag then that would be shown on the polygon(when not average), so you can write your original text here so that its shown properly on the polygon.Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                        "type": "string"
+                    },
+                    "img":{
+                        "description": "Each mark can have an accompanying picture. Each element in this array has to be a string with the full filename. The first array element will be shown at the left most marker, the second at the second mark from the left and so on. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties. If you want an no image between two marks then leave the array entry just as an empty string.",
+                        "type": "array"
+                    },
+                    "defaultValue":{
+                        "description": "Sets the starting/default value of this slider. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                        "type": "number"
+                    }
+                },
+                "required":[
+                    "name"
+                ]
             }
-        },
-        "required":[
-            "name"
-        ]
-    }
+        }
+    },
+    "required": ["sliders", "graph"]
 }

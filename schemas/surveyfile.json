@@ -79,7 +79,7 @@
                         "type": "object"
                     },
                     "hardware":{
-                        "description": "seitenabhängige fehlen noch",
+                        "description": "Send commands to the connected hardware by defining them here",
                         "type": "object",
                         "properties":{
                             "onPageLoad": {

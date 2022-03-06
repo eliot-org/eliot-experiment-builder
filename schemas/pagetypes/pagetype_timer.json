@@ -5,23 +5,23 @@
     "type": "object",
     "properties": {
         "textBefore":{
-            "description": "The text shown on the Page while the timer is still running. OR write _objectname.propertyname_ to access an objects property, like a text",
+            "description": "The text shown on the Page while the timer is still running. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "textAfter":{
-            "description": "The text shown on the Page after the timer has expired. OR write _objectname.propertyname_ to access an objects property, like a text",
+            "description": "The text shown on the Page after the timer has expired. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "timer":{
-            "description": "The Amount of seconds the Timer will run. OR write _objectname.propertyname_ to access an objects property, like a number that will be the time duration",
+            "description": "The Amount of seconds the Timer will run. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "number"
         },
         "imgBefore":{
-            "description":"Filename of the image thats shown while the timer is running. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write _objectname.propertyname_ to access an objects property, like a filepath",
+            "description":"Filename of the image thats shown while the timer is running. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "imgAfter":{
-            "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write _objectname.propertyname_ to access an objects property, like a filepath",
+            "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         }
     },

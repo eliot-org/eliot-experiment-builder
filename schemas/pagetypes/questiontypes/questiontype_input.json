@@ -2,12 +2,13 @@
     "$schema": "https://json-schema.org/draft/2020-12/schema",
     "title": "Questiontype input options",
     "description": "Description of the options of the Questiontype 'input '",
-    "type": "array",
-    "items": {
-        "description":"What the user can input. Either 'text' for text or 'num' for numbers(default if empty)",
-        "type":"string",
-        "minimum": 0,
-        "maximum": 1,
-        "enum": ["text", "num"]
-    }
+    "type": "object",
+    "properties": {
+        "type":{
+            "description":"What the user can input. Either 'text' for text or 'num' for numbers",
+            "type":"string",
+            "enum": ["text", "num"]
+        }
+    },
+    "required": ["type"]
 }

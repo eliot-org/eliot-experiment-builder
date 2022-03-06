@@ -5,31 +5,21 @@
     "type": "object",
     "properties": {
         "text":{
-            "description": "The text shown on the Page",
+            "description": "The text shown on the Page. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "channel":{
             "description": "Because the user cant continue to the next page on this pagetype, this property is the identifier thats shown in the continue Button on the Adminpage",
             "type": "string"
         },
-        "eeg":{
-            "description":"Will send a trigger to the eeg if set to 'trigger'",
-            "type": "string",
-            "enum": ["trigger"]
-        },
         "img":{
-            "description":"Filename of the image. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png'",
+            "description":"Filename of the image. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "imagePosition":{
-            "description":"Sets the position of the image on the Page",
+            "description":"Sets the position of the image on the Page. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string",
             "enum": ["top", "left", "right", "bottom", "fullscreen"]
-        },
-        "light":{
-            "description":"Switches the light on",
-            "type": "string",
-            "enum": ["on"]
         }
     },
     "required": [
