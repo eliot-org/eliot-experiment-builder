@@ -19,7 +19,7 @@
         "imagePosition":{
             "description":"Sets the position of the image on the Page. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string",
-            "enum": ["top", "left", "right", "bottom", "fullscreen"]
+            "enum": ["above", "left", "right", "below", "fullscreen"]
         }
     },
     "required": [
