@@ -67,7 +67,8 @@
                 //Answers picked by user
                 picked: [],
                 //Did the user already click on the continue button? To prevent skipping a page
-                alreadyClicked: false
+                alreadyClicked: false,
+                pictureLocation: "",
             }
         },
         computed: {
@@ -101,24 +102,20 @@
             },
             //Load local image for slider i
             getImg: function(i,pos){
-                try{
-                    if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"img")){
-                        if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"marks")){
-                            if(Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).includes(pos.toString())){
-                                return require('../../../assets/'+ this.options[(this.graphAverage() ? (i+1) : i)].img[Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).findIndex((e) => e === pos.toString())]) 
-                            }
-                        }else{
-                            if(pos == 0){
-                                return require('../../../assets/'+ this.options[(this.graphAverage() ? (i+1) : i)].img[0]) 
-                            }else if(pos == 100){
-                                return require('../../../assets/'+ this.options[(this.graphAverage() ? (i+1) : i)].img[1])
-                            }
+                if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"img")){
+                    if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"marks")){
+                        if(Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).includes(pos.toString())){
+                            return this.pictureLocation+"/"+ this.options[(this.graphAverage() ? (i+1) : i)].img[Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).findIndex((e) => e === pos.toString())]
+                        }
+                    }else{
+                        if(pos == 0){
+                            return this.pictureLocation+"/"+ this.options[(this.graphAverage() ? (i+1) : i)].img[0]
+                        }else if(pos == 100){
+                            return this.pictureLocation+"/"+ this.options[(this.graphAverage() ? (i+1) : i)].img[1]
                         }
                     }
-                    return require('../../../assets/leer.png') 
-                }catch(e){
-                    console.log(e)
                 }
+                return ""
             },
             //Do we want to load an image for slider i
             isImgTagThere: function(i,pos){
@@ -211,11 +208,15 @@
                 }else{
                     return false
                 }
-            }
+            },
+            getPicDir: async function(){
+                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+                this.init()
+            },
         },        
         mounted(){
             //init page
-            this.init()
+            this.igetPicDirnit()
         },
     }
 </script>

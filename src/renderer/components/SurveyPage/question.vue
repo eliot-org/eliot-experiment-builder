@@ -39,10 +39,15 @@
                 //image to show on the left side of screen
                 img: Object.prototype.hasOwnProperty.call(this.content,"img") ? this.getImg() : "",
                 //the type of image to show (mp4 or png or...)
-				dataType: Object.prototype.hasOwnProperty.call(this.content,"img") ? this.getDataType() : ""
+				dataType: Object.prototype.hasOwnProperty.call(this.content,"img") ? this.getDataType() : "",
+                pictureLocation: ""
 			}
         },
 		methods:{
+            getPicDir: async function(){
+                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+                this.init()
+            },
             //Reset variables
             init(){
                 this.img = Object.prototype.hasOwnProperty.call(this.content,"img") ? this.getImg() : ""
@@ -50,11 +55,7 @@
             },
             //Try to load a local image
 			getImg(){
-				try{
-					return require('../../assets/'+this.content.img)
-                }catch(e){
-					console.log(e)
-                }
+                return this.pictureLocation+"/"+this.content.img
 			},
             //get the type of the image
 			getDataType: function(){
@@ -73,8 +74,7 @@
 		},
 		mounted(){
             //Init page
-			console.log(this.content)
-			this.init()
+            this.getPicDir()
 		}
     }
 </script>

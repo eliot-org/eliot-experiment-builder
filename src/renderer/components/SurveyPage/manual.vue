@@ -1,10 +1,5 @@
 <template>
     <div class="explanationWrapper">
-        <!--<div class="question-logo-wrapper" v-if="content.hasOwnProperty('img')">
-            <img class="question-logo" v-bind:src="img" alt="" v-if="dataType=='img'">
-            <vid :src="img" v-if="dataType=='video'"></vid>
-        </div>
-        <div class="explanationText" v-html="content.text"></div>-->
         <div class="secondWrapper">
             <div v-if="getImgPos()=='left'" class="LR">
                  <div class="logo-wrapper-LR">
@@ -75,7 +70,7 @@
         components: { vid },
         props:{
             //Content of the Current Question
-           content:{               
+            content:{               
                required: true
             }
         },
@@ -92,23 +87,23 @@
                 //the type of image to show (mp4 or png or...)
                 dataType: Object.prototype.hasOwnProperty.call(this.content,("img")) ? this.getDataType() : "",
                 //If we have already received a message from the admin to continue. To not skip a page
-                alreadyReceived: false
+                alreadyReceived: false,
+                pictureLocation: ""
 			}
         },
 		methods:{
+            getPicDir: async function(){
+                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+                this.init()
+            },
             //Try to load a local image
             getImg(){
-                try{
-                    return require('../../assets/'+this.content.img)
-                }catch(e){
-					console.log(e)
-                }
+                return this.pictureLocation+"/"+this.content.img
             } ,
             //get the type of the image
             getDataType: function(){
                 if(this.content.img != null){
                     var tmp = this.content.img.split(".").pop().toLowerCase()
-                    console.log(tmp)
                     if(tmp == "mp4"){
                         return "video"
                     }else if((tmp == "png") || (tmp =="jpg") || (tmp == "jpeg") || (tmp == "gif")){
@@ -148,7 +143,7 @@
         },
         mounted(){
             //Init page
-            this.init()
+            this.getPicDir()
         }
     }    
 </script>

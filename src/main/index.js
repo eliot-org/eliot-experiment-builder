@@ -130,6 +130,11 @@ ipcMain.handle('setStoreValue', (event, key, value) => {
 	store.set(key, value)
 })
 
+ipcMain.handle('loadFile', async (event, data) => {
+	const base64 = fs.readFileSync(store.get("pictureLocation")+"/"+data).toString('base64')
+    return base64
+})
+
 ipcMain.handle('openHWDirDialog', async (event) => {
 	dialog.showOpenDialog({
         properties: ['openDirectory']
@@ -138,6 +143,18 @@ ipcMain.handle('openHWDirDialog', async (event) => {
             store.set("scriptLocation", res.filePaths[0])
             event.sender.send("reloadScriptLocation")
             installHWScripts()
+        }
+    })
+})
+
+ipcMain.handle('openPicDirDialog', async () => {
+	dialog.showOpenDialog({
+        properties: ['openDirectory']
+    }).then((res) => {
+        console.log("asasda")
+        if(res.canceled == false){
+            store.set("pictureLocation", res.filePaths[0])
+            console.log(store.get("pictureLocation"))
         }
     })
 })
@@ -304,6 +321,7 @@ var adminWindow = windowManager.createNew("adminWindow", "ELIOT", adminURL, "adm
         nodeIntegration: true,
         contextIsolation: false,
         enableRemoteModule: true,
+        webSecurity: false,
     }
 },false)
 var surveyWindow/* = windowManager.createNew("surveyWindow", "Survey", surveyURL, "survey", {

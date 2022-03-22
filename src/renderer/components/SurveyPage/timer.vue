@@ -53,10 +53,15 @@
                 //datatype of the first image
                 dataTypeBefore: (Object.prototype.hasOwnProperty.call(this.content, "imgBefore")) ? this.getDataType(0) : "",
                 //datatype of the second image
-                dataTypeAfter: (Object.prototype.hasOwnProperty.call(this.content, "imgAfter")) ? this.getDataType(1) : ""
+                dataTypeAfter: (Object.prototype.hasOwnProperty.call(this.content, "imgAfter")) ? this.getDataType(1) : "",
+                pictureLocation: ""
 			}
 		},
 		methods:{
+            getPicDir: async function(){
+                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+                this.init()
+            },
             //Reset all data
             init(){
                 this.imgBefore = (Object.prototype.hasOwnProperty.call(this.content, "imgBefore")) ? this.getImg(0) : ""
@@ -111,15 +116,11 @@
             },
             //Loads local or online image
             getImg(which){ 
-                try{
                     if(which == 0){
-                        return require('../../assets/'+this.content.imgBefore)
+                        return this.pictureLocation+"/"+this.content.imgBefore
                     }else if(which == 1){
-                        return require('../../assets/'+this.content.imgAfter)
+                        return this.pictureLocation+"/"+this.content.imgAfter
                     }
-                }catch(e){
-                    console.log(e)
-                }
             },
             //Gets image datatype
             getDataType: function(which){
@@ -144,7 +145,7 @@
             this.timeLeft = -4
             //this.$emit("toggleLight")
             this.preCountdown()
-            this.init()
+            this.getPicDir()
         }
     }
 </script>

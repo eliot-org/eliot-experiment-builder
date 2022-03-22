@@ -111,14 +111,19 @@
                 //Should we show the continue btn? Yes on images, no on videos
                 showBtn: null,
                 //Show Continue Button delay, has it expired?
-                delayOver: false
+                delayOver: false,
+                pictureLocation: ""
 			}
         },
         mounted(){
             //Init after small timeout so that all data is really loaded
-            setTimeout(()=>this.init(),10)
+            setTimeout(()=>this.getPicDir(),10)
         },
 		methods:{
+            getPicDir: async function(){
+                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+                this.init()
+            },
             //Init data
             init(){
                 this.img = this.getImg()
@@ -136,11 +141,7 @@
             //Find out if local image exists
             getImg(){
                 if(Object.prototype.hasOwnProperty.call(this.content,"img")){
-                    try{
-                        return require('../../assets/'+this.content.img)
-                    }catch(e){
-                        console.log(e)
-                    }
+                    return this.pictureLocation+"/"+this.content.img
                 }else{
                     return ""
                 }
@@ -150,11 +151,8 @@
                 if(Object.prototype.hasOwnProperty.call(this.content,"img")){
                     if(this.content.img !== null){
                         var tmp = this.content.img.split(".").pop().toLowerCase()
-                        console.log(tmp)
-                        console.log(this.showBtn)
                         if(tmp == "mp4"){
                             this.showBtn = false
-                            console.log(this.showBtn)
                             return "video"
                         }else if((tmp == "png") || (tmp =="jpg") || (tmp == "jpeg") || (tmp == "gif")){
                             this.showBtn = true

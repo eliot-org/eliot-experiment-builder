@@ -59,6 +59,7 @@
                 picked: [],
                 //Did the user already click on the continue button? To prevent skipping a page
                 alreadyClicked: false,
+                pictureLocation: "",
 			}
         },
 		methods:{
@@ -79,32 +80,28 @@
             },
             //Load the local images
             getImg: function(i,pos){
-                try{
-                    if(Object.prototype.hasOwnProperty.call(this.options[i],"img")){
-                        if(Object.prototype.hasOwnProperty.call(this.options[i],"marks")){
-                            /*if(pos == 0 && Object.prototype.hasOwnProperty.call(this.options[i],"min")){//Wenn es ein min < 0 gibt und dieses in den Marks ist und die pos gerade 0 ist(Minimale position)
-                                if(Object.keys(this.options[i].marks).includes(this.options[i].min.toString())){
-                                    return require('../../../assets/'+ this.options[i].img[0]) 
-                                }
-                            }else if(pos == 100 && Object.prototype.hasOwnProperty.call(this.options[i],"max")){
-                                if(Object.keys(this.options[i].marks).includes(this.options[i].max.toString())){
-                                    return require('../../../assets/'+ this.options[i].img[1])
-                                }
-                            }else*/ if(Object.keys(this.options[i].marks).includes(pos.toString())){
-                                return require('../../../assets/'+ this.options[i].img[Object.keys(this.options[i].marks).findIndex((e) => e === pos.toString())]) 
-                            }
-                        }else{
-                            if(pos == 0){
+                if(Object.prototype.hasOwnProperty.call(this.options[i],"img")){
+                    if(Object.prototype.hasOwnProperty.call(this.options[i],"marks")){
+                        /*if(pos == 0 && Object.prototype.hasOwnProperty.call(this.options[i],"min")){//Wenn es ein min < 0 gibt und dieses in den Marks ist und die pos gerade 0 ist(Minimale position)
+                            if(Object.keys(this.options[i].marks).includes(this.options[i].min.toString())){
                                 return require('../../../assets/'+ this.options[i].img[0]) 
-                            }else if(pos == 100){
+                            }
+                        }else if(pos == 100 && Object.prototype.hasOwnProperty.call(this.options[i],"max")){
+                            if(Object.keys(this.options[i].marks).includes(this.options[i].max.toString())){
                                 return require('../../../assets/'+ this.options[i].img[1])
                             }
+                        }else*/ if(Object.keys(this.options[i].marks).includes(pos.toString())){
+                            return this.pictureLocation+"/"+ this.options[i].img[Object.keys(this.options[i].marks).findIndex((e) => e === pos.toString())]
+                        }
+                    }else{
+                        if(pos == 0){
+                            return this.pictureLocation+"/"+ this.options[i].img[0]
+                        }else if(pos == 100){
+                            return this.pictureLocation+"/"+this.options[i].img[1]
                         }
                     }
-                    return require('../../../assets/leer.png') 
-                }catch(e){
-                    console.log(e)
                 }
+                return ""
             },
             //Does the surveyfile even have image paths?
             isImgTagThere: function(i,pos){
@@ -245,10 +242,14 @@
                     setTimeout(() => {this.alreadyClicked = false}, 250)
                 }
             },
+            getPicDir: async function(){
+                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+                this.init()
+            },
         },
         mounted(){
             //init page
-            this.init()
+            this.getPicDir()
         }
     }
 </script>

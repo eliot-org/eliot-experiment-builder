@@ -2,7 +2,7 @@
     <div class="admin-config-wrapper">
         <div class="config-overview-wrapper">            
             <div class="box-element">
-                <div class="box-header" >
+                <div class="box-header">
                     <div class="box-header-text">  
                         Hardware Scripts
                     </div>
@@ -17,7 +17,7 @@
                 </div>
             </div>
             <div class="box-element">
-                <div class="box-header" >
+                <div class="box-header">
                     <div class="box-header-text">  
                         Surveys
                     </div>
@@ -39,6 +39,21 @@
                     </div>
                 </div>
             </div>
+            <div class="box-element">
+                <div class="box-header">
+                    <div class="box-header-text">  
+                        Picture Folder
+                    </div>
+                </div>
+                <div class="box-body">
+                    <div style="margin-left: 10px">
+                        Current Location: {{pictureLocation}}
+                        <br>
+                        Select new Location: 
+                        <input type="file" id="picDir" @click="choosePicDir()" @click.prevent=""/>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -48,12 +63,19 @@ export default {
     data: function(){
         return{
             scriptLocation: "",
-            surveys: []
+            surveys: [],
+            pictureLocation: "",
         }
     },
     methods:{
         chooseDir: function(){
             this.$electron.ipcRenderer.invoke('openHWDirDialog')
+        },
+        choosePicDir: function(){
+            this.$electron.ipcRenderer.invoke('openPicDirDialog')
+        },
+        getPicDir: async function(){
+            this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
         },
         getHWScriptLocation: async function(){
             this.scriptLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'scriptLocation')
@@ -79,6 +101,7 @@ export default {
     mounted(){
         this.getHWScriptLocation()
         this.getSurveys()
+        this.getPicDir()
         this.$electron.ipcRenderer.on('reloadScriptLocation', () => {this.getHWScriptLocation()})
         this.$electron.ipcRenderer.on('reloadSurveys', () => {this.getSurveys()})
     }

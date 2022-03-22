@@ -86,15 +86,15 @@
                             <div class="step-content">
                                 <div>
                                     <div class="surveySettings-name">Experimenter:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="versuchsleiter" v-model="versuchsleiter">
+                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="experimenter" v-model="experimenter">
                                 </div>
                                 <div>
                                     <div class="surveySettings-name">Assistant:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="assistenz" v-model="assistenz">
+                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="assistant" v-model="assistant">
                                 </div>
                                 <div>
                                     <div class="surveySettings-name">Studyname:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="studie" v-model="studie">
+                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="studyname" v-model="studyname">
                                 </div>
                             </div>
                         </div>
@@ -158,8 +158,6 @@
 
                 manualChannel: null,
 
-                showObjectModal: false,
-
                 preModules: [],
                 mainModules:[],
                 postModules:[],
@@ -167,13 +165,14 @@
 
                 objectsChosen: [],
                 objects: [],
+                showObjectModal: false,
 
                 surveyOptions: [],
                 surveyChoice: null,
 
-                versuchsleiter: "",
-                assistenz: "",
-                studie: "",
+                experimenter: "",
+                assistant: "",
+                studyname: "",
 
                 displays: [],
                 unprocessedDisplays: [],
@@ -300,8 +299,8 @@
                 if(((this.materialsChosen.length<= 0) || (this.materialsChosen == null)) && (surveyChoiceLengthWithChosenModulesWithoutUnique != 0)){
                     return "Es muss mindestens ein Material gewählt werden "
                 }
-                if(this.versuchsleiter == ""){
-                    return "Versuchsleiter fehlt"
+                if(this.experimenter == ""){
+                    return "experimenter fehlt"
                 }
                 if(this.materialPauseNumber < 0){
                     return "Zu wenige Materialien zwischen Pausen"
@@ -593,9 +592,9 @@
                 if(this.answersSent == false){
                     this.answersSent = true
                     setTimeout(this.answersSent = false, 1000)
-                    this.answers.versuchsleiter = this.versuchsleiter
-                    this.answers.assistenz = (this.assistenz == "" ? "null" : this.assistenz)
-                    this.answers.studie = (this.studie == "" ? "null" : this.studie)
+                    this.answers.experimenter = this.experimenter
+                    this.answers.assistant = (this.assistant == "" ? "null" : this.assistant)
+                    this.answers.studyname = (this.studyname == "" ? "null" : this.studyname)
                     if(this.answers.proband == ""){
                         this.answers.proband = "Generic"
                     }
