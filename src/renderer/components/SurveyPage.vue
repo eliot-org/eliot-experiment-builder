@@ -13,7 +13,7 @@
         </div>
         
         <transition name="fade" mode="out-in" v-if="gotSurvey">
-            <router-view :material="(i>=survey.length) ? '': survey[i].material" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers" v-on:eegTrigger="triggerEEG()" v-on:toggleLight="toggleLight()" v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
+            <router-view ref="mainChildComponent" :object="(i>=survey.length) ? '': survey[i].object" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers"  v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
         </transition>
 
         <div class="countup">
@@ -35,16 +35,14 @@ export default {
             answers: {"answers": [], "proband": "", "date": (new Date().toJSON().slice(0,10).replace(/-/g,'/'))},
             //If the Page is paused
             paused: false,
-            //The status of the external lights
-            lightStatus: 0,
             //The Code that was generated for the test subject
             receivedCode: "",
             //If the surveydata has already arrived
             gotSurvey: false,
             //If the Subjects Data has been sent to the server for saving
-            sentProbandData: false,
+            sentsubjectData: false,
             //Fill with Subjects Data
-            probandData: {age: "", gender: "", education: "", profession: "", profession2: "", income: "", origin: "", residence: "", environment1: "", environment2: "", handedness: "", head: ""},
+            subjectData: {age: "", gender: "", education: "", profession: "", profession2: "", income: "", origin: "", residence: "", environment1: "", environment2: "", handedness: "", head: ""},
             //How far we are into the survey, in %
             progress: 0,  
             //the time already in the survey
@@ -94,15 +92,12 @@ export default {
             this.receivedCode = event           
 
             if(!this.paused){ //Kann nur passieren wenn nicht pausiert
-                
-                    if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
-                        this.nextPage()
-                    }
-
+                /*if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
+                    this.nextPage()
+                }*/
                 if (this.$route.path != this.getNextPage()) {
                     this.$router.push({ name: this.getNextPage(), params: { index: this.i}}) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
                 }
-                console.log(this.survey)
             }
         },
         /**
@@ -126,12 +121,12 @@ export default {
                     if (this.$router.currentRoute.name != this.getNextPage()) {
                         this.$router.push({ name: "SurveyEnd", params: { index: this.i}})
                     }
-                    console.log(this.probandData)
+                    console.log(this.subjectData)
                     //Erstelle neuen Probanden nur wenn die Fragen auch wirklich gestellt wurden, die Daten also gesetzt wurden 
-                    if(this.probandData.age != "" && this.probandData.gender != "" && this.probandData.education!= ""&& this.probandData.profession!= ""
-                    && this.probandData.income!= ""&& this.probandData.origin!= ""&& this.probandData.residence!=""&& this.probandData.environment1!==""
-                    && this.probandData.environment2!== ""&&this.probandData.handedness!=""&& this.probandData.head!= ""){
-                        this.sendProbandData()
+                    if(this.subjectData.age != "" && this.subjectData.gender != "" && this.subjectData.education!= ""&& this.subjectData.profession!= ""
+                    && this.subjectData.income!= ""&& this.subjectData.origin!= ""&& this.subjectData.residence!=""&& this.subjectData.environment1!==""
+                    && this.subjectData.environment2!== ""&&this.subjectData.handedness!=""&& this.subjectData.head!= ""){
+                        this.sendSubjectData()
                     }else if(this.receivedCode == ""){//Wenn kein neuer Proband erstellt wurde und auch keiner Angegeben wurde mache Generic
                         this.receivedCode = "Generic"
                         this.sendAnswers()
@@ -140,11 +135,47 @@ export default {
                     //if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
                         //this.nextPage()
                     //}
+                    this.addSubjectDataToContent()
                     if (this.$router.currentRoute.name != this.getNextPage()) {
-                        this.$router.push({ name: this.getNextPage(), params: { index: this.i}}) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
+                        setTimeout(this.$router.push({ name: this.getNextPage(), params: { index: this.i}}),10) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
                     }
                     window.scrollTo(0,0);
+                    //Hardware Command on Page Load
                     this.hardwareCommand("onPageLoad")
+                    //Start Timer for Delayed Hardware Command
+                    this.hardwareCommand('delayed')
+                    //Replace all {{subj.propertyname}} instances in content
+                }
+            }
+        }, 
+        /**
+         * 
+         */
+        addSubjectDataToContent: function(){
+            if(this.subjectData != null && this.subjectData != {}){
+                for(let contentProperty in this.survey[this.i].content){
+                    console.log(contentProperty)
+                    if(typeof contentProperty === "string" || contentProperty instanceof "string"){
+                        for(let subjectProperty in this.subjectData){
+                            if(subjectProperty != "_id"){
+                                if(contentProperty.includes("{{subj."+subjectProperty+"}}")){
+                                    contentProperty = contentProperty.replace("{{subj."+subjectProperty+"}}", this.subjectData[subjectProperty])
+                                }
+                            }
+                        }
+                    }else if(contentProperty == "options" && (contentProperty instanceof "object" || typeof contentProperty === "string")){
+                        for(let optionProperty in contentProperty){
+                            if(typeof optionProperty === "string" || optionProperty instanceof "string"){
+                                for(let subjectProperty in this.subjectData){
+                                    if(subjectProperty != "_id"){
+                                        if(optionProperty.includes("{{subj."+subjectProperty+"}}")){
+                                            optionProperty = optionProperty.replace("{{subj."+subjectProperty+"}}", this.subjectData[subjectProperty])
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -161,7 +192,7 @@ export default {
             if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, type)){
                 for(let i = 0; i < this.survey[i].hardware[type].length; i++){
                     if(type == "delayed"){
-                        setTimeout(() => this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds)  
+                        setTimeout(() => this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds * 1000)  
                     }else{
                         this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command})       
                     }
@@ -215,166 +246,166 @@ export default {
                     console.log(event)
                     switch(this.survey[this.i].content.name || event[0].name){
                         case "POI_Demographie_age":
-                            this.probandData.age = event[0]
+                            this.subjectData.age = event[0]
                             break;
                         case "POI_Demographie_gender":
                             if(event == "Weiblich"){
-                                this.probandData.gender = "0"
+                                this.subjectData.gender = "0"
                             }else if(event == "Anders"){
-                                this.probandData.gender = "1"
+                                this.subjectData.gender = "1"
                             }else if(event == "Männlich"){
-                                this.probandData.gender = "2"
+                                this.subjectData.gender = "2"
                             }
                             break;
                         case "POI_Demographie_education":
                             if(event=="Kein Schulabschluss"){
-                                this.probandData.education = "0"
+                                this.subjectData.education = "0"
                             }else if(event=="Grund-/Hauptschulabschluss"){
-                                this.probandData.education =  "1"
+                                this.subjectData.education =  "1"
                             }else if(event=="Mittlere Reife (Realschulabschluss)"){
-                                this.probandData.education =  "2"
+                                this.subjectData.education =  "2"
                             }else if(event=="Fachhochschulabschluss"){
-                                this.probandData.education =  "3"
+                                this.subjectData.education =  "3"
                             }else if(event=="Allgemeine Hochschulreife (Abitur)"){
-                                this.probandData.education =  "4"
+                                this.subjectData.education =  "4"
                             }else if(event=="Abgeschlossene Ausbildung"){
-                                this.probandData.education =  "5"
+                                this.subjectData.education =  "5"
                             }else if(event=="Bachelor"){
-                                this.probandData.education =  "6"
+                                this.subjectData.education =  "6"
                             }else if(event=="Master"){
-                                this.probandData.education =  "7"
+                                this.subjectData.education =  "7"
                             }else if(event=="Promotion"){
-                                this.probandData.education =  "8"
+                                this.subjectData.education =  "8"
                             }else if(event=="Sonstiges"){
-                                this.probandData.education =  "9"
+                                this.subjectData.education =  "9"
                             }else if(event=="Staatsexamen"){
-                                this.probandData.education =  "10"
+                                this.subjectData.education =  "10"
                             }else if(event=="Approbation"){
-                                this.probandData.education =  "11"
+                                this.subjectData.education =  "11"
                             }else if(event=="Diplom"){
-                                this.probandData.education =  "12"
+                                this.subjectData.education =  "12"
                             }else if(event=="Meister"){
-                                this.probandData.education =  "13"
+                                this.subjectData.education =  "13"
                             }
                             break;
                         case "POI_Demographie_profession":
                             if(event=="Schüler*in"){
-                                this.probandData.profession = "0"
+                                this.subjectData.profession = "0"
                             }else if(event=="Student*in"){
-                                this.probandData.profession =  "1"
+                                this.subjectData.profession =  "1"
                             }else if(event=="Akademischer Beruf"){
-                                this.probandData.profession =  "2"
+                                this.subjectData.profession =  "2"
                             }else if(event=="Techniker*in und gleichrangiger nichttechnischer Beruf"){
-                                this.probandData.profession =  "3"
+                                this.subjectData.profession =  "3"
                             }else if(event=="Führungskraft"){
-                                this.probandData.profession =  "4"
+                                this.subjectData.profession =  "4"
                             }else if(event=="Medizinischer und Pflegeberuf"){
-                                this.probandData.profession =  "5"
+                                this.subjectData.profession =  "5"
                             }else if(event=="Projektarbeits und Entwicklungskraft"){
-                                this.probandData.profession =  "6"
+                                this.subjectData.profession =  "6"
                             }else if(event=="Lehrkraft"){
-                                this.probandData.profession =  "7"
+                                this.subjectData.profession =  "7"
                             }else if(event=="Bürokraft und verwandter Beruf"){
-                                this.probandData.profession =  "8"
+                                this.subjectData.profession =  "8"
                             }else if(event=="Dienstleistungsberuf und Verkäufer*in"){
-                                this.probandData.profession =  "9"
+                                this.subjectData.profession =  "9"
                             }else if(event=="Fachkräfte in der Landwirtschaft und Fischerei"){
-                                this.probandData.profession =  "10"
+                                this.subjectData.profession =  "10"
                             }else if(event=="Handwerks- und verwandter Beruf"){
-                                this.probandData.profession =  "11"
+                                this.subjectData.profession =  "11"
                             }else if(event=="Anlagen- und Maschinenbediener*in und Montageberuf"){
-                                this.probandData.profession =  "12"
+                                this.subjectData.profession =  "12"
                             }else if(event=="Hilfsarbeitskraft"){
-                                this.probandData.profession =  "13"
+                                this.subjectData.profession =  "13"
                             }else if(event=="Militärischer Beruf"){
-                                this.probandData.profession =  "14"
+                                this.subjectData.profession =  "14"
                             }else if(event=="Arbeitssuchend"){
-                                this.probandData.profession =  "15"
+                                this.subjectData.profession =  "15"
                             }else if(event=="Selbständigkeit & Freiberuflichkeit"){
-                                this.probandData.profession =  "16"
+                                this.subjectData.profession =  "16"
                             }else if(event=="Sonstiges"){
-                                this.probandData.profession =  "17"
+                                this.subjectData.profession =  "17"
                             }
                             break;
                         case "POI_Demographie_profession2":
                             if(event=="keine Ausbildung / kein Studium"){
-                                this.probandData.profession2 = "0"
+                                this.subjectData.profession2 = "0"
                             }else if(event=="Agrar- und Forst­wissenschaften"){
-                                this.probandData.profession2 = "1"
+                                this.subjectData.profession2 = "1"
                             }else if(event=="Gesellschafts- und Sozial­wissenschaften"){
-                                this.probandData.profession2 =  "2"
+                                this.subjectData.profession2 =  "2"
                             }else if(event=="Ingenieur­wissenschaften"){
-                                this.probandData.profession2 =  "3"
+                                this.subjectData.profession2 =  "3"
                             }else if(event=="Kunst"){
-                                this.probandData.profession2 =  "4"
+                                this.subjectData.profession2 =  "4"
                             }else if(event=="Musik"){
-                                this.probandData.profession2 =  "5"
+                                this.subjectData.profession2 =  "5"
                             }else if(event=="Design"){
-                                this.probandData.profession2 =  "6"
+                                this.subjectData.profession2 =  "6"
                             }else if(event=="Mathematik"){
-                                this.probandData.profession2 =  "7"
+                                this.subjectData.profession2 =  "7"
                             }else if(event=="Naturwissenschaften"){
-                                this.probandData.profession2 =  "8"
+                                this.subjectData.profession2 =  "8"
                             }else if(event=="Medizin"){
-                                this.probandData.profession2 =  "9"
+                                this.subjectData.profession2 =  "9"
                             }else if(event=="Gesund­heitswissen­schaften und -wirtschaft"){
-                                this.probandData.profession2 =  "10"
+                                this.subjectData.profession2 =  "10"
                             }else if(event=="Sprach- und Kulturwissen­schaften"){
-                                this.probandData.profession2 =  "11"
+                                this.subjectData.profession2 =  "11"
                             }else if(event=="Wirtschafts- und Rechts­wissenschaften"){
-                                this.probandData.profession2 =  "12"
+                                this.subjectData.profession2 =  "12"
                             }else if(event=="Lehramt"){
-                                this.probandData.profession2 =  "13"
+                                this.subjectData.profession2 =  "13"
                             }else if(event=="Öffentliche Verwaltung"){
-                                this.probandData.profession2 =  "14"
+                                this.subjectData.profession2 =  "14"
                             }else if(event=="Sonstiges"){
-                                this.probandData.profession2 =  "15"
+                                this.subjectData.profession2 =  "15"
                             }
                             break;
                         case "POI_Demographie_income":
                             if(event=="Unter 400"){
-                                this.probandData.income = "0"
+                                this.subjectData.income = "0"
                             }else if(event=="400 - 1000"){
-                                this.probandData.income =  "1"
+                                this.subjectData.income =  "1"
                             }else if(event=="1000 - 1500"){
-                                this.probandData.income =  "2"
+                                this.subjectData.income =  "2"
                             }else if(event=="1500 - 2500"){
-                                this.probandData.income =  "3"
+                                this.subjectData.income =  "3"
                             }else if(event=="2500 - 4000"){
-                                this.probandData.income =  "4"
+                                this.subjectData.income =  "4"
                             }else if(event=="4000 - 6000"){
-                                this.probandData.income =  "5"
+                                this.subjectData.income =  "5"
                             }else if(event=="Über 6000"){
-                                this.probandData.income =  "6"
+                                this.subjectData.income =  "6"
                             }else if(event=="Keine Angabe"){
-                                this.probandData.income =  "7"
+                                this.subjectData.income =  "7"
                             }
                             break;
                         case "POI_Demographie_origin":
                             console.log(event)
-                            this.probandData.origin = countrynames.getCode(event[0])
+                            this.subjectData.origin = countrynames.getCode(event[0])
                             break;
                         case "POI_Demographie_residence":
-                            this.probandData.residence = countrynames.getCode(event[0])
+                            this.subjectData.residence = countrynames.getCode(event[0])
                             break;
                         case "POI_Demographie_ländlich_städtisch1":
-                            this.probandData.environment1 = event[0].value
+                            this.subjectData.environment1 = event[0].value
                             break;
                         case "POI_Demographie_ländlich_städtisch2":
-                            this.probandData.environment2 = event[0].value
+                            this.subjectData.environment2 = event[0].value
                             break;
                         case "POI_Demographie_handedness":
                             if(event == "Links"){
-                                this.probandData.handedness = "0"
+                                this.subjectData.handedness = "0"
                             }else if(event == "Rechts"){
-                                this.probandData.handedness = "1"
+                                this.subjectData.handedness = "1"
                             }
                             break;
                         case "POI_Demographie_head":
-                            this.probandData.head = event[0]
+                            this.subjectData.head = event[0]
                             break;
                     }
-                    console.log(this.probandData)
+                    console.log(this.subjectData)
                 }
             }
         },
@@ -394,30 +425,32 @@ export default {
         /**
          * Uploads the subjects data and expects a code from the server 
          */
-        sendProbandData: function(){
-            if(this.sentProbandData == false){
-                this.sentProbandData = true
+        sendSubjectData: function(){
+            if(this.sentsubjectData == false){
+                this.sentsubjectData = true
                 ///Removed Axios
             }
         },
     },
     created(){ 
         /**
-         * 
+         * Called when a Device emits an event. Then its compared to the given reactions in the surveyfile, which will then be executed (if there are any)
          */
         this.$electron.ipcRenderer.on("hardwareEvent", (event,arg) => {
             if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, "input")){
                 for(let i = 0; i < this.survey[this.i].hardware.input.length; i++){
                     if((this.survey[this.i].hardware.input[i].device == arg.arg.device || this.survey[this.i].hardware.input[i].device == "*") && this.survey[this.i].hardware.input[i].on == arg.arg.event){
+                        //Executes actions on shown pages
                         if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "page")){
                             if(this.survey[this.i].hardware.input[i].page == "nextPage"){
                                 this.nextPage()
-                            }/*else if(){
-                                //Seitenabhänige events hier
-                            }*/
+                            }else if(this.survey[this.i].hardware.input[i].page == "showContinueButton" && this.survey[this.i].type == 'explanationPic'){
+                                this.$refs.mainChildComponent.showContinueButton()
+                            }
+                        //Sends commands back to Hardware
                         }else if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "do")){
                             if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware.input[i], "delay")){
-                                setTimeout(() => this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command}), this.survey[this.i].hardware.input[i].delay)
+                                setTimeout(() => this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command}), this.survey[this.i].hardware.input[i].delay * 1000)
                             }else{
                                 this.$electron.ipcRenderer.invoke("hardwareCommand", {"device": this.survey[this.i].hardware.input[i].do.device, "command": this.survey[this.i].hardware.input[i].do.command})       
                             }

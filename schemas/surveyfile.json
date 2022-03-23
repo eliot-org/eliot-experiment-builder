@@ -229,7 +229,7 @@
                                         "page":{
                                             "description": "What the Surveypage should do. nextPage loads the next page. showContinueButton shows the continue button on explanationPic, ",
                                             "type": "string",
-                                            "enum":["nextPage", "showContinueButton", "Es fehlen die seitenabhängigen"]
+                                            "enum":["nextPage", "showContinueButton"]
                                         }
                                     },
                                     "required":[

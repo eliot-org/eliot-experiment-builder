@@ -238,7 +238,7 @@ function robotConsole(device, data){
 		}else if(device.objectTransportStage == 4){//Object has now been brought
 			device.objectTransportStage = 1
 			device.currentCommand = ""
-			device.currentObjectData = currentPage.nextMaterial
+			device.currentObjectData = currentPage.nextObject
 			output("event", {"device": device.name, "event":"finished"})
 		}
 	}

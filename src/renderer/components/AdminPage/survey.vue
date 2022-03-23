@@ -141,9 +141,6 @@
             "modal": materialModal,
             "presetModal": presetModal,
         },
-        props:{
-
-        },
         data: function( ){
             return{
                 answersSent: false,
@@ -264,222 +261,90 @@
                     this.computeError = returnVal
                 }
             },
+            addObjectDataToContent: function(content, object){
+                for(let contentProperty in content){
+                    //Check for every property of the object if it is mentioned in the content of the question, If yes then insert the right value
+                    if(typeof contentProperty === "string" || contentProperty instanceof "string"){
+                        for(let objectProperty in object){
+                            if(objectProperty != "_id"){
+                                if(content[contentProperty].includes("{{obj."+objectProperty+"}}")){
+                                    content[contentProperty] = content[contentProperty].replace("{{obj."+objectProperty+"}}", object[objectProperty])
+                                }
+                            }
+                        }
+                    //Look one step deeper. Only needed if type is question and has options
+                    }else if(contentProperty == "options" && (contentProperty instanceof "object" || typeof contentProperty === "string")){
+                        for(let optionProperty in content[contentProperty]){
+                            if(typeof optionProperty === "string" || optionProperty instanceof "string"){
+                                for(let objectProperty in object){
+                                    if(objectProperty != "_id"){
+                                        if(content[contentProperty][optionProperty].includes("{{obj."+objectProperty+"}}")){
+                                            content[contentProperty][optionProperty] = content[contentProperty][optionProperty].replace("{{obj."+objectProperty+"}}", object[objectProperty])
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return content
+            },
             computeSurvey: function(){
-                /*
-                    BRauchen auch aktuelles und nächstes material in jedem arrobject für roboter
-
-
-                */
-                console.log(this.materialsChosen)
-                //Für die Roboterfahrten um zu wissen wie lang die Survey sein wird und wie viele Fragen nicht einzigartig sind (wie z.b. Poi, Outro,usw)
-                //let surveyChoiceLengthWithChosenModules = 0
-                let surveyChoiceLengthWithChosenModulesWithoutUnique = 0
-                let modulesWithoutUnique = []
-                let uniqueModules = ["POI", "Intro", "Einleitung", "Training", "Prä_Stimmungsabfrage", "Post_Stimmungsabfrage", "Outro",
-                "POI Intro","POI Einleitung","POI Forschungsgegenstand", "POI Einverständniserklärung", "Start", "Demographie", "Milieu Identifikation", "Normative Grundorientierung",
-                "Allgemeines Konsumverhalten", "Markenvertrauen", "Markenvertrauen_VW", "Markenvertrauen_Audi", "Markenvertrauen_Fiat", "Markenvertrauen_H&M",
-                "Markenvertrauen_Patagonia" ,"Markenvertrauen_Vaude", "NPIS: Need for product information seeking", "SFOC: Slow fashion orientation construct",
-                "NEP: New Ecological Paradigm Scale", "BFI-10: 10 Item Big Five Inventory", " (Tavassoli et al., 2014)", "POI Outro", "Information Messsequenz",
-                "Datenanonymisierung", "Einverständniserklärung", "Information Sicherheit", "Information Trainingsrunde", "Trainingsrunde", "Prä Stimmung",
-                "Post_Stimmung", "Labor Verabschiedung"]
-                for(let y = 0; y < this.surveyChoice.survey.length; y++){
-                    if((this.modulesChosen.includes(this.surveyChoice.survey[y].module) == true) || this.modulesChosen.includes(this.surveyChoice.survey[y].part) == true){
-                        //surveyChoiceLengthWithChosenModules++
-                        if(uniqueModules.includes(this.surveyChoice.survey[y].module) == false){
-                            surveyChoiceLengthWithChosenModulesWithoutUnique++
-                            
-                        }
-                    }
+                if((this.preModules == null || this.preModules.length <= 0) && (this.mainModules == null || this.mainModules.length <= 0) && (this.postModules == null || this.postModules.length <= 0)){
+                    return "Not enough questions selected"
                 }
-                console.log(surveyChoiceLengthWithChosenModulesWithoutUnique)
-
-                if((this.modulesChosen == null) || (this.modulesChosen.length <= 0)){
-                    return "Nicht genug Fragebogenteile gewählt"
+                if(this.objectsChosen.length <= 0 || this.objectsChosen == null){
+                    return "Atleast one object has to be selected"
                 }
-                if(((this.materialsChosen.length<= 0) || (this.materialsChosen == null)) && (surveyChoiceLengthWithChosenModulesWithoutUnique != 0)){
-                    return "Es muss mindestens ein Material gewählt werden "
-                }
-                if(this.experimenter == ""){
-                    return "experimenter fehlt"
-                }
-                if(this.materialPauseNumber < 0){
-                    return "Zu wenige Materialien zwischen Pausen"
-                }
-
-                if((this.handedness.id == 0 || this.handedness == 0) && this.robotConnected){
-                    for(let i = 0; i < this.materialsChosen.length; i++){
-                        if(this.materialsChosen[i].roboPos != ""){
-                            return "Es wurden Roboterfahrten angefordert aber keine Händigkeit festgelegt"
-                        }
-                    }
-                }
-
-                modulesWithoutUnique = this.modulesChosen.filter(module => uniqueModules.includes(module) == false)//Filter Alle Unique wie POI raus
-
                 this.computedSurvey = []
-                console.log(this.surveyChoice)
-                console.log(this.modulesChosen)
-                console.log(modulesWithoutUnique)
-
-
-                //Geht einmal durch die Survey durch in fügt anfangsmodule wie POI die einmalig gefragt werden hinzu
+                //Adds Pre Modules
                 for(let y = 0; y < this.surveyChoice.survey.length; y++){
-                    //console.log(this.surveyChoice.survey[y])
-                    if((this.modulesChosen.includes(this.surveyChoice.survey[y].module) == true) || this.modulesChosen.includes(this.surveyChoice.survey[y].part) == true){
-                        //Wenn Teil  POI, Intro POI, Outro POI, Intro Labor, Labor sicherheit ist
-                        if(this.surveyChoice.survey[y].module == "POI" || this.surveyChoice.survey[y].module == "Intro" || this.surveyChoice.survey[y].module == "Einleitung" 
-                        || this.surveyChoice.survey[y].module == "Training" || this.surveyChoice.survey[y].module == "Prä_Stimmungsabfrage"){
-                            //Für Ländercodes
-                            if(this.surveyChoice.survey[y].module == "POI" && this.surveyChoice.survey[y].part == "Demographie" && this.surveyChoice.survey[y].content.options == "LOAD" && (this.surveyChoice.survey[y].content.name == "POI_Demographie_origin"|| this.surveyChoice.survey[y].content.name == "POI_Demographie_residence")){
-                                this.computedSurvey.push({"material": "", "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                    "content": {"name": this.surveyChoice.survey[y].content.name, "type": this.surveyChoice.survey[y].content.type, "text": this.surveyChoice.survey[y].content.text, "options": countrynames.getAllNames()}
-                                })
-                            }else{
-                                this.computedSurvey.push({"material": "", "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                    "content": this.surveyChoice.survey[y].content
+                    if(this.preModules.includes(this.surveyChoice.survey[y].module) || this.preModules.includes(this.surveyChoice.survey[y].part)){
+                        this.computedSurvey.push({
+                            "object": "", 
+                            "nextObject": "", 
+                            "hardware": this.surveyChoice.survey[y].hardware, 
+                            "module": this.surveyChoice.survey[y].module, 
+                            "part": this.surveyChoice.survey[y].part,
+                            "type": this.surveyChoice.survey[y].type,
+                            "content": this.surveyChoice.survey[y].content
+                        })//Subject Data at runtime!
+                    }
+                }
+                //Loop through selected Objects
+                for(let x = 0; x < this.objectsChosen.length; x++){
+                    //Loop through selected Survey
+                    for(let z = 0; z < this.mainModules.length; z++){
+                        //Check if Module or part were selected
+                        for(let y = 0; y < this.surveyChoice.survey.length; y++){
+                            if((this.mainModules[z] == this.surveyChoice.survey[y].module) || this.mainModules[z] == this.surveyChoice.survey[y].part){
+                                this.surveyChoice.survey[y].content.text = "{{obj.name}}"
+                                this.computedSurvey.push({
+                                    "object": JSON.parse(JSON.stringify(this.objectsChosen[x])), 
+                                    "nextObject": (x < this.objectsChosen.length-1) ? JSON.parse(JSON.stringify(this.objectsChosen[x+1])) : "",  
+                                    "hardware": this.surveyChoice.survey[y].hardware,
+                                    "module": this.surveyChoice.survey[y].module, 
+                                    "part": this.surveyChoice.survey[y].part,
+                                    "type": this.surveyChoice.survey[y].type, 
+                                    "content": this.addObjectDataToContent(this.surveyChoice.survey[y].content, this.objectsChosen[x])
                                 })
                                 console.log(this.computedSurvey)
                             }
                         }
                     }
                 }
-                if(surveyChoiceLengthWithChosenModulesWithoutUnique>0){
-                    this.computedSurvey.push({"module":"Roboterfahrt", "part":"Fahrt", "type":"manual", "content":{"text":"Bitte warten Sie bis das Material zum Testen bereit ist.", "img":"ur3.gif", "channel":"Roboterfahrt"}})
-                }
-                //geht durch alle mehrfach gefragten module durch
-                //Loop through selected Materials
-                for(let x = 0; x < this.materialsChosen.length; x++){
-                    //Loop through selected Survey
-                    for(let z = 0; z < modulesWithoutUnique.length; z++){
-                        //Check if Module or part were selected
-                        for(let y = 0; y < this.surveyChoice.survey.length; y++){
-                            if((modulesWithoutUnique[z] == this.surveyChoice.survey[y].module) || modulesWithoutUnique[z] == this.surveyChoice.survey[y].part){
-                                //Wenn Teil nicht POI, Intro POI, Outro POI, Intro Labor, Outro Labor, Labor sicherheit ist
-                                if(uniqueModules.includes(this.surveyChoice.survey[y].module) == false){
-                                    //Für Materialinformationen
-                                    console.log(this.materialsChosenExtraInformation)
-                                    console.log(this.surveyChoice.survey[y].module == "T0 MN")
-                                    if(this.surveyChoice.survey[y].module == "T0 MN"){
-                                        console.log(this.materialsChosenExtraInformation)
-                                        if(this.materialsChosenExtraInformation.includes(this.materialsChosen[x]) == false && this.materialsChosen[x].information !== null){//Wenn die Informationen nicht erst später gezeigt werden sollen//Nur wenn Material auch Informationen besitzt
-                                            if(/*this.surveyChoice.survey[y].part == "Material Narrativ" &&*/ this.surveyChoice.survey[y].content.text == "LOAD"){
-                                                let tmpImg = (this.materialsChosen[x].image != "" ? this.materialsChosen[x].image : "leer.png")
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
-                                                    "content": {"text": this.materialsChosen[x].information, "img": tmpImg}
-                                                })
-                                            }else{
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                                    "content": this.surveyChoice.survey[y].content
-                                                })
-                                            }
-                                        }
-                                    //Zeigt Materialspezifisches Bild/Video bei Wahrnehmungstimer. Wenn nicht das zweite Häckchen gesetzt wurde, dann werden die Infos erst später gezeigt
-                                    }else if((this.surveyChoice.survey[y].module == "OPTIK T1 IME" /*|| this.surveyChoice.survey[y].module == "HAPTIK T1 IME"*/)
-                                    && (this.surveyChoice.survey[y].part == "OPTIK T1 IME Präsentation" /*|| this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation"*/) && this.surveyChoice.survey[y].type == "timer" && this.materialsChosen[x].showExtraImg == true){
-                                        let tmpImg = (this.materialsChosen[x].extraImg != "" ? this.materialsChosen[x].extraImg : "leer.png")
-                                        let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
-                                        tmpContent.imgBefore = tmpImg //Zeigt nur bei der Präsentation das Materialspezifische Bild. Das eigentliche wird überschrieben
-                                        this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
-                                            "content": tmpContent
-                                        })
-                                    }else{
-                                        if(((this.surveyChoice.survey[y].module == "OPTIK T1 IME") && (this.surveyChoice.survey[y].part == "OPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))
-                                        /*|| ((this.surveyChoice.survey[y].module == "HAPTIK T1 IME") && (this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))*/){//Für automatischen EEG Trigger
-                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                                "content": this.surveyChoice.survey[y].content
-                                            })
-                                        }else{
-                                            this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                                "content": this.surveyChoice.survey[y].content
-                                            })
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    //Wenn das zweite Häckchen bei der Materialauswahl gesetzt wurde dann füge alles erneut hinzu. Dieses mal mit den Zusatzinformationen bei der Präsentation, falls diese existieren
-                    if(this.materialsChosen[x].showExtraImg == true && this.materialsChosenExtraInformation.includes(this.materialsChosen[x]) == true){//Wenn die Informationen erst später gezeigt werden sollen. Also JETZT
-                        
-                        modulesWithoutUnique = modulesWithoutUnique.filter(module => module != "T0 MN")
-                        console.log(modulesWithoutUnique)
-                        modulesWithoutUnique.unshift("T0 MN")
-                        console.log(modulesWithoutUnique)
-                        for(let z = 0; z < modulesWithoutUnique.length; z++){
-                            for(let y = 0; y < this.surveyChoice.survey.length; y++){
-                                if((modulesWithoutUnique[z] == this.surveyChoice.survey[y].module) || modulesWithoutUnique[z] == this.surveyChoice.survey[y].part){
-                                    //Check if Module or part were selected
-                                    if((this.modulesChosen.includes(this.surveyChoice.survey[y].module) == true) || this.modulesChosen.includes(this.surveyChoice.survey[y].part) == true){
-                                        //Wenn Teil nicht POI, Intro POI, Outro POI, Intro Labor, Outro Labor, Labor sicherheit ist
-                                        if(uniqueModules.includes(this.surveyChoice.survey[y].module) == false){
-                                            //Für Materialinformationen
-                                            if(this.surveyChoice.survey[y].module == "T0 MN" /*&& this.surveyChoice.survey[y].part == "Material Narrativ"*/ && this.surveyChoice.survey[y].content.text == "LOAD"){
-                                                if(this.materialsChosen[x].information !== null){ //Nur wenn Material auch Informationen besitzt
-                                                    let tmpImg = (this.materialsChosen[x].image != "" ? this.materialsChosen[x].image : "leer.png")
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "explanationPic",
-                                                        "content": {"text": this.materialsChosen[x].information, "img": tmpImg}
-                                                    })
-                                                }
-                                            //Zeigt Materialspezifisches Bild/Video bei Wahrnehmungstimer. Zeigt diese jetzt wirklich
-                                            }else if((this.surveyChoice.survey[y].module == "OPTIK T1 IME" /*|| this.surveyChoice.survey[y].module == "HAPTIK T1 IME"*/)
-                                            && (this.surveyChoice.survey[y].part == "OPTIK T1 IME Präsentation" /*|| this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation"*/) && this.surveyChoice.survey[y].type == "timer" && this.materialsChosen[x].showExtraImg == true){
-                                                let tmpImg = (this.materialsChosen[x].extraImg != "" ? this.materialsChosen[x].extraImg : "leer.png")
-                                                let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
-                                                Object.prototype.hasOwnProperty.call(tmpContent,"name") ? tmpContent.name = tmpContent.name +"_secondPresentation" : ""
-                                                tmpContent.imgBefore = tmpImg //Zeigt nur bei der Präsentation das Materialspezifische Bild. Das eigentliche wird überschrieben
-                                                this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": "timer",
-                                                    "content": tmpContent
-                                                })
-                                            }else{
-                                                let tmpContent = JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
-                                                Object.prototype.hasOwnProperty.call(tmpContent,"name") ? tmpContent.name = tmpContent.name +"_secondPresentation" : ""
-                                                if(((this.surveyChoice.survey[y].module == "OPTIK T1 IME") && (this.surveyChoice.survey[y].part == "T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))
-                                                /*|| ((this.surveyChoice.survey[y].module == "HAPTIK T1 IME") && (this.surveyChoice.survey[y].part == "HAPTIK T1 IME Präsentation") && (this.surveyChoice.survey[y].type == "timer"))*/){//Für automatischen EEG Trigger
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "eeg":"trigger", "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                                        "content": tmpContent
-                                                    })
-                                                }else{
-                                                    this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "hardware": this.surveyChoice.survey[y].hardware, "module": this.surveyChoice.survey[y].module, "part": this.surveyChoice.survey[y].part,"type": this.surveyChoice.survey[y].type,
-                                                        "content": tmpContent
-                                                    })
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }         
-                        }
-                    }
-
-                    if((((x+1)%this.materialPauseNumber) == 0) && x>0 && x<(this.materialsChosen.length-1)){//Bei jedem dritten(custom einstellbar) Material
-                        this.computedSurvey.push({"material": JSON.parse(JSON.stringify(this.materialsChosen[x])), "module": this.surveyChoice.survey[this.surveyChoice.survey.length-1].module, "part": this.surveyChoice.survey[this.surveyChoice.survey.length-1].part,"type": "manual",
-                            "content": {"text": "", "img": "mug.mp4", "channel": "Pause", "imagePosition":"behind"}
-                        })
-                        console.log(this.computedSurvey.length)
-                    }
-
-                    //Roboterfahrt
-                    if(surveyChoiceLengthWithChosenModulesWithoutUnique>0 && x<(this.materialsChosen.length-1)){
-                        this.computedSurvey.push({"module":"Roboterfahrt", "part":"Fahrt", "type":"manual", "content":{"text":"Bitte warten Sie bis das Material zum Testen bereit ist.", "img":"ur3.gif", "channel":"Roboterfahrt"}})
-                    }
-                }
-                this.computedSurvey.push({"module":"Roboterfahrt", "part":"Fahrt", "type":"manual", "content":{"text":"Bitte warten Sie bis das Material zum Testen bereit ist.", "img":"ur3.gif", "channel":"Roboterfahrt"}})
-                
-                //Geht einmal durch die Survey durch in fügt Endmodule wie POI die einmalig gefragt werden hinzu
+                //Adds Post Modules
                 for(let y = 0; y < this.surveyChoice.survey.length; y++){
                     if((this.modulesChosen.includes(this.surveyChoice.survey[y].module) == true) || this.modulesChosen.includes(this.surveyChoice.survey[y].part) == true){
-                        //Wenn Teil  Outro Labor ist
-                        if(this.surveyChoice.survey[y].module == "Outro" || this.surveyChoice.survey[y].module == "Post_Stimmungsabfrage"){
-                            //Push into computed Array
-                            this.computedSurvey.push({
-                                "material": ""/*this.materialsChosen[this.materialsChosen.length-1]*/,
-                                "hardware": this.surveyChoice.survey[y].hardware,
-                                "module": this.surveyChoice.survey[y].module,
-                                "part": this.surveyChoice.survey[y].part,
-                                "type": this.surveyChoice.survey[y].type,
-                                "content": this.surveyChoice.survey[y].content
-                            })
-                        }
+                        this.computedSurvey.push({
+                            "object": "",
+                            "nextObject": "",
+                            "hardware": this.surveyChoice.survey[y].hardware,
+                            "module": this.surveyChoice.survey[y].module,
+                            "part": this.surveyChoice.survey[y].part,
+                            "type": this.surveyChoice.survey[y].type,
+                            "content": this.surveyChoice.survey[y].content
+                        })
                     }
                 }
                     
@@ -490,22 +355,6 @@
                     "type": "SurveyEnd",
                     "content": ""
                 })
-
-                for(let i = 0; i < this.computedSurvey.length; i++){
-                    if(this.computedSurvey[i].material != "" && this.computedSurvey[i].material != null){
-                        if(Object.prototype.hasOwnProperty.call(this.computedSurvey[i].material,"roboPos")){
-                            if(this.computedSurvey[i].material.roboPos != ""){
-                                if(this.handedness.id == 1){
-                                    this.computedSurvey[i].material.roboPos = "L"+JSON.parse(JSON.stringify(this.computedSurvey[i].material.roboPos))
-                                }else if(this.handedness.id == 2){
-                                    this.computedSurvey[i].material.roboPos = "R"+JSON.parse(JSON.stringify(this.computedSurvey[i].material.roboPos))
-                                }
-                            }
-                        }
-                    }
-                }
-                //console.log(this.materialsChosen)
-
                 return "success"
             }, 
             updateChecked: function(obj){

@@ -120,6 +120,9 @@
             setTimeout(()=>this.getPicDir(),10)
         },
 		methods:{
+            showContinueButton: function(){
+                this.delayOver = true
+            },
             getPicDir: async function(){
                 this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
                 this.init()
@@ -129,7 +132,9 @@
                 this.img = this.getImg()
                 this.dataType = this.getDataType()
                 if(Object.prototype.hasOwnProperty.call(this.content, "continueDelay")){
-                    setTimeout(() => {this.delayOver = true}, this.content.continueDelay * 1000)
+                    if(this.content.continueDelay != "-1" && this.content.continueDelay != -1){
+                        setTimeout(() => {this.delayOver = true}, this.content.continueDelay * 1000)
+                    }
                 }else{
                     this.delayOver = true
                 }

@@ -22,13 +22,18 @@
 			}
 		},
 		methods:{
+            showContinueButton: function(){
+                this.delayOver = true
+            },
             nextPage: function(){
                 this.$emit("nextPage")
             },
             //Init data
             init(){
                 if(Object.prototype.hasOwnProperty.call(this.content, "continueDelay")){
-                    setTimeout(() => {this.delayOver = true}, this.content.continueDelay * 1000)
+                    if(this.content.continueDelay != "-1" && this.content.continueDelay != -1){
+                        setTimeout(() => {this.delayOver = true}, this.content.continueDelay * 1000)
+                    }
                 }else{
                     this.delayOver = true
                 }

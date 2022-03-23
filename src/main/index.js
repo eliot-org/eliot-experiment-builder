@@ -21,11 +21,17 @@ let hwScripts = {}
 var hwScriptsDefinitions = []
 let scriptLocation
 
-function setScriptLocation(){
+/**
+ * Gets the Location where the Scripts are saved
+ */
+function getScriptLocation(){
     scriptLocation = store.get("scriptLocation") === undefined ?  (process.env.NODE_ENV !== 'development' ? path.join(__dirname, "./scripts") : "") : store.get("scriptLocation")
 }
-setScriptLocation()
+getScriptLocation()
 
+/**
+ * Necessary for the Scripts. This is their way to communicate with the program
+ */
 let parentGlue = {
     /**
      * 
@@ -62,9 +68,12 @@ let parentGlue = {
     }
 }
 
+/**
+ * 'Installes' the scripts. Meaning they get the parentGlue and we their definitions after the manager plugin added them as real plugins/scripts.
+ */
 function installHWScripts(){
     try {
-        setScriptLocation()
+        getScriptLocation()
         hwScripts = {}
         hwScriptsDefinitions = []
         if(scriptLocation !== "")
@@ -81,12 +90,19 @@ function installHWScripts(){
 }
 installHWScripts()
 
-
-ipcMain.handle('hardwareGetScripts', () => { //To: Adminpage, From: Adminpage
+/**
+ * To: Adminpage, From: Adminpage
+ * Returns the loaded Hardware Scripts
+ */
+ipcMain.handle('hardwareGetScripts', () => { 
     adminWindow.object.webContents.send("hardwareReturnScripts", hwScriptsDefinitions)
 })
 
-ipcMain.handle('hardwareCreateDevice', (event, arg) => { //To: HW Scripts, From: Adminpage
+/**
+ * To: HW Scripts, From: Adminpage
+ * A Command from the Adminpage. Creates a device of a specific Script
+ */
+ipcMain.handle('hardwareCreateDevice', (event, arg) => {
     for (let key of Object.keys(hwScripts)) {
         if(hwScripts[key].definitions.scriptName == arg.scriptName){
             hwScripts[key].addDevice(arg.deviceName, arg.parameters)
@@ -95,11 +111,19 @@ ipcMain.handle('hardwareCreateDevice', (event, arg) => { //To: HW Scripts, From:
     }
 })
 
-ipcMain.handle('hardwareGetDevices', () => { //To: AdminPage, From: Adminpage
+/**
+ * To: AdminPage, From: Adminpage
+ * Returns all created Devices
+ */
+ipcMain.handle('hardwareGetDevices', () => {
     adminWindow.object.webContents.send("hardwareReturnDevices", devices)
 })
 
-ipcMain.handle('hardwareRemoveDevice', (event, arg) => { //To: HW Scripts, From: Adminpage
+/**
+ * To: HW Scripts, From: Adminpage
+ * A Command from the Adminpage. Deletes/ Disconnects a Device of a script
+ */
+ipcMain.handle('hardwareRemoveDevice', (event, arg) => {
     for (let key of Object.keys(hwScripts)) {
         if(hwScripts[key].definitions.scriptName == arg.scriptName){
             hwScripts[key].removeDevice(arg.deviceName)
@@ -108,12 +132,20 @@ ipcMain.handle('hardwareRemoveDevice', (event, arg) => { //To: HW Scripts, From:
     }
 })
 
-ipcMain.handle('hardwareSendSurveyData', (event, arg) => { //To: HW Scripts, From: Surveypage
+/**
+ * To: HW Script, From: Surveypage
+ * Sends Surveydata from the Surveypage to the Scripts and their devices
+ */
+ipcMain.handle('hardwareSendSurveyData', (event, arg) => {
     for (let key of Object.keys(hwScripts)) {
         hwScripts[key].surveyData(arg.arg)
     }
 })
 
+/**
+ * To: HW Script, From: Surveypage
+ * Sends a Command from the Surveypage to the Scripts and a device
+ */
 ipcMain.handle('hardwareCommand', (event, arg) => {
     for (let key of Object.keys(hwScripts)) {
         hwScripts[key].command(arg.device, arg.command)
@@ -122,19 +154,23 @@ ipcMain.handle('hardwareCommand', (event, arg) => {
 
 /*-----------------------------------------------------------*/
 
+/**
+ * Returns a stored Value
+ */
 ipcMain.handle('getStoreValue', (event, key) => {
     return store.get(key)
 })
 
+/**
+ * Sets/creates a value in storage
+ */
 ipcMain.handle('setStoreValue', (event, key, value) => {
 	store.set(key, value)
 })
 
-ipcMain.handle('loadFile', async (event, data) => {
-	const base64 = fs.readFileSync(store.get("pictureLocation")+"/"+data).toString('base64')
-    return base64
-})
-
+/**
+ * Opens a Dialog to choose the directory where the HW Scripts are located
+ */
 ipcMain.handle('openHWDirDialog', async (event) => {
 	dialog.showOpenDialog({
         properties: ['openDirectory']
@@ -147,18 +183,22 @@ ipcMain.handle('openHWDirDialog', async (event) => {
     })
 })
 
+/**
+ * Opens a Dialog to choose the directory where the images are stored
+ */
 ipcMain.handle('openPicDirDialog', async () => {
 	dialog.showOpenDialog({
         properties: ['openDirectory']
     }).then((res) => {
-        console.log("asasda")
         if(res.canceled == false){
             store.set("pictureLocation", res.filePaths[0])
-            console.log(store.get("pictureLocation"))
         }
     })
 })
 
+/**
+ * Opens a Dialog to choose and load a Surveyfile
+ */
 ipcMain.handle('openSurveyFileDialog', async (event) => {
 	dialog.showOpenDialog({
         properties: ['openFile']
