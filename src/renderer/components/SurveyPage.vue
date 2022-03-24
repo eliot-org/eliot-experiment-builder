@@ -13,7 +13,7 @@
         </div>
         
         <transition name="fade" mode="out-in" v-if="gotSurvey">
-            <router-view ref="mainChildComponent" :object="(i>=survey.length) ? '': survey[i].object" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers"  v-on:startSurvey="startSurvey($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
+            <router-view ref="mainChildComponent" :object="(i>=survey.length) ? '': survey[i].object" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers"  v-on:subjectCode="setSubjectCode($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
         </transition>
 
         <div class="countup">
@@ -23,7 +23,6 @@
 </template>
 
 <script>
-const countrynames = require("countrynames")
 export default {
     data: function(){
         return{
@@ -42,7 +41,7 @@ export default {
             //If the Subjects Data has been sent to the server for saving
             sentsubjectData: false,
             //Fill with Subjects Data
-            subjectData: {age: "", gender: "", education: "", profession: "", profession2: "", income: "", origin: "", residence: "", environment1: "", environment2: "", handedness: "", head: ""},
+            subjectData: {},
             //How far we are into the survey, in %
             progress: 0,  
             //the time already in the survey
@@ -53,7 +52,7 @@ export default {
         /**
          * On survey start start the timer, set the light, call the robot. like next page. If next page is in demographie and we already have a subject code then skip that
          */
-        startSurvey: function(event){
+        startSurvey: function(){
             this.timer = setInterval(() => {//Ungenauer Timer für Anzeige
                 let countuphour = document.getElementById('countuphour').innerHTML
                 let countupminute = document.getElementById('countupminute').innerHTML
@@ -87,14 +86,9 @@ export default {
                 document.getElementById('countuphour').innerHTML = countuphour
                 document.getElementById('countupminute').innerHTML = countupminute
                 document.getElementById('countupsecond').innerHTML = countupsecond
-            }, 1000)
-
-            this.receivedCode = event           
+            }, 1000)         
 
             if(!this.paused){ //Kann nur passieren wenn nicht pausiert
-                /*if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
-                    this.nextPage()
-                }*/
                 if (this.$route.path != this.getNextPage()) {
                     this.$router.push({ name: this.getNextPage(), params: { index: this.i}}) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
                 }
@@ -121,40 +115,48 @@ export default {
                     if (this.$router.currentRoute.name != this.getNextPage()) {
                         this.$router.push({ name: "SurveyEnd", params: { index: this.i}})
                     }
-                    console.log(this.subjectData)
-                    //Erstelle neuen Probanden nur wenn die Fragen auch wirklich gestellt wurden, die Daten also gesetzt wurden 
-                    if(this.subjectData.age != "" && this.subjectData.gender != "" && this.subjectData.education!= ""&& this.subjectData.profession!= ""
-                    && this.subjectData.income!= ""&& this.subjectData.origin!= ""&& this.subjectData.residence!=""&& this.subjectData.environment1!==""
-                    && this.subjectData.environment2!== ""&&this.subjectData.handedness!=""&& this.subjectData.head!= ""){
-                        this.sendSubjectData()
-                    }else if(this.receivedCode == ""){//Wenn kein neuer Proband erstellt wurde und auch keiner Angegeben wurde mache Generic
-                        this.receivedCode = "Generic"
+
+                    if(this.receivedCode != ""){
                         this.sendAnswers()
-                    }                    
+                    }else{
+                        this.sendSubjectAndAnswersData()
+                    }            
                 }else{
-                    //if(this.survey[this.i].part == "Demographie" && this.receivedCode != ""){
-                        //this.nextPage()
-                    //}
+                    //Replace all {{subj.propertyname}} instances in content
                     this.addSubjectDataToContent()
+                    //Load next Page
                     if (this.$router.currentRoute.name != this.getNextPage()) {
-                        setTimeout(this.$router.push({ name: this.getNextPage(), params: { index: this.i}}),10) //Ruft die nächste Seite auf und übergibt die aktuellen Arrayindex als parameter
+                        setTimeout(this.$router.push({ name: this.getNextPage(), params: { index: this.i}}),10)
                     }
                     window.scrollTo(0,0);
                     //Hardware Command on Page Load
                     this.hardwareCommand("onPageLoad")
                     //Start Timer for Delayed Hardware Command
                     this.hardwareCommand('delayed')
-                    //Replace all {{subj.propertyname}} instances in content
                 }
             }
         }, 
+        setSubjectCode: async function(code){
+            this.receivedCode = code
+            //Set SubjectData to the properties of this subject
+            let allSubjects = await this.$electron.ipcRenderer.invoke("getStoreValue", "subjects") 
+            //store returns null if subjects dont exist
+            if(allSubjects !== null || allSubjects !== undefined){
+                for(let i = 0; i < allSubjects.length; i++){
+                    if(allSubjects[i].code == this.receivedCode){
+                        for(let key in allSubjects[i]){
+                            this.subjectData[key] = allSubjects[key]
+                        }
+                    }
+                }
+            } 
+        },
         /**
          * 
          */
         addSubjectDataToContent: function(){
             if(this.subjectData != null && this.subjectData != {}){
                 for(let contentProperty in this.survey[this.i].content){
-                    console.log(contentProperty)
                     if(typeof contentProperty === "string" || contentProperty instanceof "string"){
                         for(let subjectProperty in this.subjectData){
                             if(subjectProperty != "_id"){
@@ -217,9 +219,9 @@ export default {
         updateAnswers: function(event){
             console.log(event)
             console.log(this.answers)
-            //Aufteilung von mehreren Slidern in einer Frage in mehrere Antworten
+            //If question was a slider or polygraph then split up the answer into seperate ones for each slider
             if(this.survey[this.i].content.type == "slider" || this.survey[this.i].content.type == "polygonGraph"){
-                for(var i= 0; i< event.length; i++){
+                for(let i= 0; i< event.length; i++){
                     this.answers.answers.push({
                     'questionText': this.survey[this.i].content.text,
                     'questionType': this.survey[this.i].content.type,
@@ -229,7 +231,7 @@ export default {
                     "material": this.survey[this.i].material,
                     "name": event[i].name})
                 }
-            }else{
+            }else{//Just add the answer 
                 this.answers.answers.push({
                 'questionText': this.survey[this.i].content.text,
                 'questionType': this.survey[this.i].content.type,
@@ -239,173 +241,41 @@ export default {
                 "material": this.survey[this.i].material,
                 "name": this.survey[this.i].content.name})
             }
-            if(this.survey[this.i].part == "Demographie" && this.survey[this.i].module == "POI" && this.survey[this.i].type == "question" && this.survey[this.i].part != "Einverständniserklärung"){
-                if(this.survey[this.i].part !=
-                 "Trainingsrunde"){
-                    console.log(this.survey[this.i].content.name)
-                    console.log(event)
-                    switch(this.survey[this.i].content.name || event[0].name){
-                        case "POI_Demographie_age":
-                            this.subjectData.age = event[0]
-                            break;
-                        case "POI_Demographie_gender":
-                            if(event == "Weiblich"){
-                                this.subjectData.gender = "0"
-                            }else if(event == "Anders"){
-                                this.subjectData.gender = "1"
-                            }else if(event == "Männlich"){
-                                this.subjectData.gender = "2"
+            //If the answer defines the subject then add its answer to the subjectdata
+            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content, "definesSubject")){
+                if(this.survey[this.i].content.definesSubject.length > 0){
+                    for(let i = 0; i < this.survey[this.i].content.definesSubject.length; i++){
+                        if(this.survey[this.i].content.type == "slider" || this.survey[this.i].content.type == "polygonGraph"){
+                            this.subjectData[this.survey[this.i].content.definesSubject[i]] = []
+                            for(let o= 0; o< event.length; o++){
+                                this.subjectData[this.survey[this.i].content.definesSubject[i]].push(event[o].value)
                             }
-                            break;
-                        case "POI_Demographie_education":
-                            if(event=="Kein Schulabschluss"){
-                                this.subjectData.education = "0"
-                            }else if(event=="Grund-/Hauptschulabschluss"){
-                                this.subjectData.education =  "1"
-                            }else if(event=="Mittlere Reife (Realschulabschluss)"){
-                                this.subjectData.education =  "2"
-                            }else if(event=="Fachhochschulabschluss"){
-                                this.subjectData.education =  "3"
-                            }else if(event=="Allgemeine Hochschulreife (Abitur)"){
-                                this.subjectData.education =  "4"
-                            }else if(event=="Abgeschlossene Ausbildung"){
-                                this.subjectData.education =  "5"
-                            }else if(event=="Bachelor"){
-                                this.subjectData.education =  "6"
-                            }else if(event=="Master"){
-                                this.subjectData.education =  "7"
-                            }else if(event=="Promotion"){
-                                this.subjectData.education =  "8"
-                            }else if(event=="Sonstiges"){
-                                this.subjectData.education =  "9"
-                            }else if(event=="Staatsexamen"){
-                                this.subjectData.education =  "10"
-                            }else if(event=="Approbation"){
-                                this.subjectData.education =  "11"
-                            }else if(event=="Diplom"){
-                                this.subjectData.education =  "12"
-                            }else if(event=="Meister"){
-                                this.subjectData.education =  "13"
-                            }
-                            break;
-                        case "POI_Demographie_profession":
-                            if(event=="Schüler*in"){
-                                this.subjectData.profession = "0"
-                            }else if(event=="Student*in"){
-                                this.subjectData.profession =  "1"
-                            }else if(event=="Akademischer Beruf"){
-                                this.subjectData.profession =  "2"
-                            }else if(event=="Techniker*in und gleichrangiger nichttechnischer Beruf"){
-                                this.subjectData.profession =  "3"
-                            }else if(event=="Führungskraft"){
-                                this.subjectData.profession =  "4"
-                            }else if(event=="Medizinischer und Pflegeberuf"){
-                                this.subjectData.profession =  "5"
-                            }else if(event=="Projektarbeits und Entwicklungskraft"){
-                                this.subjectData.profession =  "6"
-                            }else if(event=="Lehrkraft"){
-                                this.subjectData.profession =  "7"
-                            }else if(event=="Bürokraft und verwandter Beruf"){
-                                this.subjectData.profession =  "8"
-                            }else if(event=="Dienstleistungsberuf und Verkäufer*in"){
-                                this.subjectData.profession =  "9"
-                            }else if(event=="Fachkräfte in der Landwirtschaft und Fischerei"){
-                                this.subjectData.profession =  "10"
-                            }else if(event=="Handwerks- und verwandter Beruf"){
-                                this.subjectData.profession =  "11"
-                            }else if(event=="Anlagen- und Maschinenbediener*in und Montageberuf"){
-                                this.subjectData.profession =  "12"
-                            }else if(event=="Hilfsarbeitskraft"){
-                                this.subjectData.profession =  "13"
-                            }else if(event=="Militärischer Beruf"){
-                                this.subjectData.profession =  "14"
-                            }else if(event=="Arbeitssuchend"){
-                                this.subjectData.profession =  "15"
-                            }else if(event=="Selbständigkeit & Freiberuflichkeit"){
-                                this.subjectData.profession =  "16"
-                            }else if(event=="Sonstiges"){
-                                this.subjectData.profession =  "17"
-                            }
-                            break;
-                        case "POI_Demographie_profession2":
-                            if(event=="keine Ausbildung / kein Studium"){
-                                this.subjectData.profession2 = "0"
-                            }else if(event=="Agrar- und Forst­wissenschaften"){
-                                this.subjectData.profession2 = "1"
-                            }else if(event=="Gesellschafts- und Sozial­wissenschaften"){
-                                this.subjectData.profession2 =  "2"
-                            }else if(event=="Ingenieur­wissenschaften"){
-                                this.subjectData.profession2 =  "3"
-                            }else if(event=="Kunst"){
-                                this.subjectData.profession2 =  "4"
-                            }else if(event=="Musik"){
-                                this.subjectData.profession2 =  "5"
-                            }else if(event=="Design"){
-                                this.subjectData.profession2 =  "6"
-                            }else if(event=="Mathematik"){
-                                this.subjectData.profession2 =  "7"
-                            }else if(event=="Naturwissenschaften"){
-                                this.subjectData.profession2 =  "8"
-                            }else if(event=="Medizin"){
-                                this.subjectData.profession2 =  "9"
-                            }else if(event=="Gesund­heitswissen­schaften und -wirtschaft"){
-                                this.subjectData.profession2 =  "10"
-                            }else if(event=="Sprach- und Kulturwissen­schaften"){
-                                this.subjectData.profession2 =  "11"
-                            }else if(event=="Wirtschafts- und Rechts­wissenschaften"){
-                                this.subjectData.profession2 =  "12"
-                            }else if(event=="Lehramt"){
-                                this.subjectData.profession2 =  "13"
-                            }else if(event=="Öffentliche Verwaltung"){
-                                this.subjectData.profession2 =  "14"
-                            }else if(event=="Sonstiges"){
-                                this.subjectData.profession2 =  "15"
-                            }
-                            break;
-                        case "POI_Demographie_income":
-                            if(event=="Unter 400"){
-                                this.subjectData.income = "0"
-                            }else if(event=="400 - 1000"){
-                                this.subjectData.income =  "1"
-                            }else if(event=="1000 - 1500"){
-                                this.subjectData.income =  "2"
-                            }else if(event=="1500 - 2500"){
-                                this.subjectData.income =  "3"
-                            }else if(event=="2500 - 4000"){
-                                this.subjectData.income =  "4"
-                            }else if(event=="4000 - 6000"){
-                                this.subjectData.income =  "5"
-                            }else if(event=="Über 6000"){
-                                this.subjectData.income =  "6"
-                            }else if(event=="Keine Angabe"){
-                                this.subjectData.income =  "7"
-                            }
-                            break;
-                        case "POI_Demographie_origin":
-                            console.log(event)
-                            this.subjectData.origin = countrynames.getCode(event[0])
-                            break;
-                        case "POI_Demographie_residence":
-                            this.subjectData.residence = countrynames.getCode(event[0])
-                            break;
-                        case "POI_Demographie_ländlich_städtisch1":
-                            this.subjectData.environment1 = event[0].value
-                            break;
-                        case "POI_Demographie_ländlich_städtisch2":
-                            this.subjectData.environment2 = event[0].value
-                            break;
-                        case "POI_Demographie_handedness":
-                            if(event == "Links"){
-                                this.subjectData.handedness = "0"
-                            }else if(event == "Rechts"){
-                                this.subjectData.handedness = "1"
-                            }
-                            break;
-                        case "POI_Demographie_head":
-                            this.subjectData.head = event[0]
-                            break;
+                        }else{
+                            this.subjectData[this.survey[this.i].content.definesSubject[i]] = event
+                        }
                     }
-                    console.log(this.subjectData)
+                }
+            }
+            //Sliders and Polygraphs can have seperate definitions in their sliders, check those here
+            if(this.survey[this.i].content.type == "slider"){
+                for(let i = 0; i < this.survey[this.i].content.options.length; i++){
+                    if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content.options[i], "definesSubject")){
+                        if(this.survey[this.i].content.options[i].definesSubject.length > 0){
+                            for(let o = 0; o < this.survey[this.i].content.options[i].definesSubject.length; o++){
+                                this.subjectData[this.survey[this.i].content.options[i].definesSubject[o]] = event[i]
+                            }
+                        }
+                    }
+                }
+            }else if(this.survey[this.i].content.type == "polygonGraph"){
+                for(let i = 0; i < this.survey[this.i].content.options.sliders.length; i++){
+                    if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content.options[i].sliders, "definesSubject")){
+                        if(this.survey[this.i].content.options[i].sliders.definesSubject.length > 0){
+                            for(let o = 0; o < this.survey[this.i].content.options[i].sliders.definesSubject.length; o++){
+                                this.subjectData[this.survey[this.i].content.options[i].sliders.definesSubject[o]] = event[i]
+                            }
+                        }
+                    }
                 }
             }
         },
@@ -413,22 +283,38 @@ export default {
          * Send the answers to the adminpage
          */
         sendAnswers: function(){
-            this.answers.proband = this.receivedCode
+            this.answers.subject = this.receivedCode
             
             let countuphour = document.getElementById('countuphour').innerHTML
             let countupminute = document.getElementById('countupminute').innerHTML 
             let countupsecond = document.getElementById('countupsecond').innerHTML
 
             this.answers.länge = countuphour+":"+countupminute+":"+countupsecond
-            this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendAnswers", "answers": this.answers}) 
+            this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendAnswers", "answers": this.answers})
+        },
+        //Generates Subject Code
+        generateCode: function(length) {
+            let result           = '';
+            let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let charactersLength = characters.length;
+            for ( let i = 0; i < length; i++ ) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
         },
         /**
          * Uploads the subjects data and expects a code from the server 
          */
-        sendSubjectData: function(){
+        sendSubjectAndAnswersData: function(){
             if(this.sentsubjectData == false){
                 this.sentsubjectData = true
-                ///Removed Axios
+                if(this.receivedCode == ""){
+                    this.subjectData._id = crypto.randomUUID()
+                    this.subjectData.code = this.generateCode(6)
+                    this.receivedCode = this.subjectData.code
+                    this.sendAnswers()
+                    this.$electron.ipcRenderer.invoke("pushToStoredArray", "subjects", this.subjectData) 
+                }
             }
         },
     },
@@ -481,9 +367,10 @@ export default {
                 console.log(arg.survey)
                 this.survey = arg.survey
                 this.gotSurvey = true
+                this.startSurvey()
             }else if(arg == "Beenden"){
                 console.log("Will end soon. Sending Answers now")
-                this.answers.proband = this.receivedCode
+                this.answers.subject = this.receivedCode
                 
                 let countuphour = document.getElementById('countuphour').innerHTML
                 let countupminute = document.getElementById('countupminute').innerHTML 

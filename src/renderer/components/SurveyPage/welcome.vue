@@ -1,21 +1,13 @@
 <template>
     <div class="wrapper">
         <title>ELIOT Survey</title>
-        <!--<div class="logo-wrapper">
-            <img class="logo" src="~@/assets/eliot.png" alt="ELIOT Logo">
-        </div>-->
         <div class="welcome-wrapper">
-            <p><b>Herzlich willkommen zur heutigen Messung </b></p>
-            <br>
-            <p>Wenn Sie bereits früher an der Umfrage teilgenommen haben, geben Sie bitte hier Ihren persönlichen Code ein:</p>
-            <input type="text" min="0"  v-model="probandCode" class="input">
-            <br>
-            <span class="error">{{error}}</span>
-            <br>
+            <div v-html="content.text"></div>
+            <input type="text" min="0" v-model="subjectCode" class="input">
         </div>
         <div class="start-wrapper">
-            <button @click="checkCode()" class="btn-black" type="button">
-                <span class="btn-text">MESSUNG STARTEN</span>
+            <button @click="nextPage()" class="btn-black" type="button">
+                <span class="btn-text">Start</span>
             </button>
         </div>
     </div>
@@ -23,27 +15,33 @@
 
 <script>
     export default {
+        props:{
+            //Content of the Current Question
+            content:{               
+               required: true
+            }
+        },
+        watch: {
+            //To reinit the page once the data changes, which it does on question change
+            content: function() { // watch it
+                this.init()
+            }
+        },
         data: function(){
             return{
                 //The code of the subject
-                probandCode: "",
+                subjectCode: "",
                 //error message
                 error: ""
             }
         },
         methods:{
-            /**
-             * Checks if the probands code really exists
-             */
-            checkCode: function(){
-                if(this.probandCode == ""){
-                    this.$emit('startSurvey', "")
-                }else{
-                    
-                            this.$emit('startSurvey', this.probandCode)
-                        
+            nextPage: function(){
+                if(this.subjectCode != ""){
+                    this.$emit(this.subjectCode)
                 }
-            }
+                this.$emit("nextPage")
+            },
         }
     }
 </script>

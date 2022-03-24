@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "Questiontype polygonGraph options",
-    "description": "Description of the options of the Questiontype 'polygonGraph'",
+    "title": "Questiontype slider options",
+    "description": "Description of the options of the Questiontype 'slider'",
     "type": "array",
     "items": {
         "description":"Each object creates a slider with the set options",
@@ -53,6 +53,10 @@
             "defaultValue":{
                 "description": "Sets the starting/default value of this slider. Normally a number, it can be a string if you have the data property set. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
                 "type": "number"
+            },
+            "definesSubject":{
+                "description":"The Answer of this Question will be used to create a Subject. The specific property or properties(just do multiple entries in the array) that gets defined is specified by this property.",
+                "type": "array"
             }
         },
         "required":[

@@ -89,6 +89,7 @@ function installHWScripts(){
     }
 }
 installHWScripts()
+initStore()
 
 /**
  * To: Adminpage, From: Adminpage
@@ -155,6 +156,13 @@ ipcMain.handle('hardwareCommand', (event, arg) => {
 /*-----------------------------------------------------------*/
 
 /**
+ * Initializes all important stored values if they werent before
+ */
+function initStore(){
+
+}
+
+/**
  * Returns a stored Value
  */
 ipcMain.handle('getStoreValue', (event, key) => {
@@ -164,8 +172,19 @@ ipcMain.handle('getStoreValue', (event, key) => {
 /**
  * Sets/creates a value in storage
  */
-ipcMain.handle('setStoreValue', (event, key, value) => {
+ ipcMain.handle('setStoreValue', (event, key, value) => {
 	store.set(key, value)
+})
+
+/**
+ * Pushes a value to a stored array
+ */
+ipcMain.handle('pushToStoredArray', (event, key, value) => {
+	let arr = store.get(key)
+    if(Array.isArray(arr)){
+        arr.push(value)
+        store.set(key, arr)
+    }
 })
 
 /**
@@ -364,13 +383,7 @@ var adminWindow = windowManager.createNew("adminWindow", "ELIOT", adminURL, "adm
         webSecurity: false,
     }
 },false)
-var surveyWindow/* = windowManager.createNew("surveyWindow", "Survey", surveyURL, "survey", {
-    webPreferences: {
-        nodeIntegration: true,
-        contextIsolation: false,
-        enableRemoteModule: true,
-    }
-},false)*/
+var surveyWindow
 
 function createWindow () {
   adminWindow.open()
@@ -434,30 +447,6 @@ app.on('activate', () => {
   }
 })
 
-/**
- * Set `__static` path to static files in production
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-static-assets.html
- */
 if (process.env.NODE_ENV !== 'development') {
   global.__static = require('path').join(__dirname, '/static').replace(/\\/g, '\\\\')
 }
-
-/**
- * Auto Updater
- *
- * Uncomment the following code below and install `electron-updater` to
- * support auto updating. Code Signing with a valid certificate is required.
- * https://simulatedgreg.gitbooks.io/electron-vue/content/en/using-electron-builder.html#auto-updating
- */
-
-/*
-import { autoUpdater } from 'electron-updater'
-
-autoUpdater.on('update-downloaded', () => {
-  autoUpdater.quitAndInstall()
-})
-
-app.on('ready', () => {
-  if (process.env.NODE_ENV === 'production') autoUpdater.checkForUpdates()
-})
- */

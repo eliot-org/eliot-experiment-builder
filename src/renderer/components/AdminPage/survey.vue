@@ -347,14 +347,6 @@
                         })
                     }
                 }
-                    
-                this.computedSurvey.push({
-                    "material": "",
-                    "module": "SurveyEnd",
-                    "part": "End",
-                    "type": "SurveyEnd",
-                    "content": ""
-                })
                 return "success"
             }, 
             updateChecked: function(obj){
@@ -441,15 +433,17 @@
                 if(this.answersSent == false){
                     this.answersSent = true
                     setTimeout(this.answersSent = false, 1000)
-                    this.answers.experimenter = this.experimenter
-                    this.answers.assistant = (this.assistant == "" ? "null" : this.assistant)
-                    this.answers.studyname = (this.studyname == "" ? "null" : this.studyname)
-                    if(this.answers.proband == ""){
-                        this.answers.proband = "Generic"
+                    if(this.experimenter != ""){
+                        this.answers.experimenter = this.experimenter
                     }
-                    this.answers.online = false
-                   
-                   //removed axios
+                    if(this.assistant != ""){
+                        this.answers.assistant = this.assistant
+                    }
+                    if(this.studyname != ""){
+                        this.answers.studyname = this.studyname
+                    }
+                    
+                    this.$electron.ipcRenderer.invoke("pushToStoredArray", "measurements", this.answers) 
                 }
             },
             shuffle(array){//Fisher-Yates Shuffle

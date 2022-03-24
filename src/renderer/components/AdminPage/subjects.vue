@@ -55,22 +55,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-            <!--<div>
-                Number of Subjects: {{subject.length}}
-                Add new Subject:<br>
-                Alter:
-                <input type="text" id="newProbandAge" name="newProbandAge" v-model="newProband.age"><br>
-                Geschlecht:
-                <v-select label="name" :options="probandOptions.gender" v-model="newProband.gender" class="selector" style="margin-left:180px;margin-top:-19px;width:30%"></v-select><br>
-                <button @click="addProband(newProband)">
-                    Hinzufügen
-                </button>
-                {{newProbandCode}}
-            </div>    -->
         </div>
     </div>
 </template>
@@ -85,8 +69,6 @@
                 newSubject: {},
                 //which probands data to show
                 showSubject: [],
-                //the code of a subject that was created on this page
-                newProbandCode: "",
                 //
                 subjectProperties: [],
                 newProperty: "",

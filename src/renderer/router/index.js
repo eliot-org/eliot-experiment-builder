@@ -84,10 +84,10 @@ const router =  new Router({
           path:"/manual", name:"manual", component: require("@/components/SurveyPage/manual").default
         },
         {
-          path: "/SurveyWelcome", name: "SurveyWelcome", component: require("@/components/SurveyPage/SurveyWelcome").default
+          path: "/welcome", name: "welcome", component: require("@/components/SurveyPage/welcome").default
         },
         {
-          path: "/SurveyEnd", name: "SurveyEnd", component: require("@/components/SurveyPage/SurveyEnd").default
+          path: "/end", name: "end", component: require("@/components/SurveyPage/end").default
         },
       ]
     },

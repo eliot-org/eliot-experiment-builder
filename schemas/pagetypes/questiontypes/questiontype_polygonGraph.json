@@ -55,6 +55,10 @@
                     "defaultValue":{
                         "description": "Sets the starting/default value of this slider. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
                         "type": "number"
+                    },
+                    "definesSubject":{
+                        "description":"The Answer of this Question will be used to create a Subject. The specific property or properties(just do multiple entries in the array) that gets defined is specified by this property.",
+                        "type": "array"
                     }
                 },
                 "required":[

@@ -33,8 +33,8 @@ export default {
         this.$electron.ipcRenderer.on("WindowManagement", (event,arg) => {
             console.log(arg)
             if(arg == "SurveyPage"){
-                if (this.$router.currentRoute.name != "SurveyWelcome") {
-                    this.$router.push({ name: "SurveyWelcome"})
+                if (this.$router.currentRoute.name != "SurveyPage") {
+                    this.$router.push({ name: "SurveyPage"})
                 }
             }else if(arg == "AdminPage"){
                 if (this.$router.currentRoute.name != "SurveyWelcome") {
