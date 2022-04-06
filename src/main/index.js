@@ -159,7 +159,13 @@ ipcMain.handle('hardwareCommand', (event, arg) => {
  * Initializes all important stored values if they werent before
  */
 function initStore(){
-
+    if(store.get("subjects", undefined) == undefined) store.set("subjects", []);
+    if(store.get("objects", undefined) == undefined) store.set("objects", []);
+    if(store.get("measurements", undefined) == undefined) store.set("measurements", []);
+    if(store.get("assetLocation", undefined) == undefined) store.set("assetLocation", "");
+    if(store.get("scriptLocation", undefined) == undefined) store.set("scriptLocation", "");
+    if(store.get("surveys", undefined) == undefined) store.set("surveys", []);
+    if(store.get("presets", undefined) == undefined) store.set("presets", []);    
 }
 
 /**
