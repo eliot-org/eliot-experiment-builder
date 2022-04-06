@@ -266,9 +266,6 @@
                         for(let objectProperty in object){
                             if(objectProperty != "_id"){
                                 if(content[contentProperty].includes("{{obj."+objectProperty+"}}")){
-                                    console.log(content[contentProperty])
-                                    console.log(content.text)
-                                    console.log("should this happen?")
                                     content[contentProperty] = content[contentProperty].replace("{{obj."+objectProperty+"}}", object[objectProperty])
                                 }
                             }
@@ -442,6 +439,7 @@
                     if(this.studyname != ""){
                         this.answers.studyname = this.studyname
                     }
+                    this.answers._id = crypto.randomUUID()
                     
                     this.$electron.ipcRenderer.invoke("pushToStoredArray", "measurements", this.answers) 
                 }

@@ -94,10 +94,6 @@
             //loads all subjects
             loadData: async function(){
                 this.subjects = await this.$electron.ipcRenderer.invoke("getStoreValue", "subjects") 
-                //store returns null if subjects doesnt exist
-                if(this.subjects === null || this.subjects === undefined){
-                    this.subjects = []
-                }
                 console.log(this.subjects)
             },
             //deletes a subject

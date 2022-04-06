@@ -32,7 +32,7 @@ export default {
             //The current Page index
             i: 0, 
             //The answers the user already gave
-            answers: {"answers": [], "proband": "", "date": (new Date().toJSON().slice(0,10).replace(/-/g,'/'))},
+            answers: {"answers": [], "date": (new Date().toJSON().slice(0,10).replace(/-/g,'/'))},
             //If the Page is paused
             paused: false,
             //The Code that was generated for the test subject
@@ -96,13 +96,7 @@ export default {
             }
         },
         /**
-         * All the continue to next page logic. Does:
-         * Increase index and progress
-         * Call the light for the next page
-         * Call the eeg trigger for the next page
-         * Call the robot for the next page
-         * If the next page is demographie and we already have a subject code skip that
-         * On finish clear timer, maybe send subject data. send answers
+         * 
          */
         nextPage: function() {
             if(!this.paused && this.i < this.survey.length-1){ //Kann nur passieren wenn nicht pausiert
@@ -111,6 +105,7 @@ export default {
                 this.sendSurveyDataToHW()
                 this.progress = parseInt((this.i/(this.survey.length-1))*100)
                 if(this.i==(this.survey.length-1)){ 
+                    this.$electron.ipcRenderer.send("surveyOps","readyToEnd")
                     clearInterval (this.timer)
 
                     if(this.receivedCode != ""){

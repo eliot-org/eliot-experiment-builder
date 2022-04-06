@@ -88,10 +88,6 @@
             //Loads all objects 
             loadData: async function(){
                 this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
-                //store returns null if objects doesnt exist
-                if(this.objects === null || this.objects === undefined){
-                    this.objects = []
-                }
             },
             //deletes an object
             deleteObject: function(id){

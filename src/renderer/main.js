@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import axios from 'axios'
 
 import App from './App'
 import router from './router'
@@ -18,8 +17,11 @@ import vSelect from 'vue-select'
 Vue.component('v-select', vSelect)
 import 'vue-select/dist/vue-select.css';
 
+import VueJsonPretty from 'vue-json-pretty';
+Vue.component('VueJsonPretty', VueJsonPretty)
+import 'vue-json-pretty/lib/styles.css';
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
-Vue.http = Vue.prototype.$http = axios
 //Vue.config.productionTip = false
 
 /* eslint-disable no-new */
