@@ -34,7 +34,7 @@ export default {
             console.log(arg)
             if(arg == "SurveyPage"){
                 if (this.$router.currentRoute.name != "SurveyPage") {
-                    this.$router.push({ name: "SurveyPage"})
+                    this.$router.push({ name: "SurveyPage", params: { index: 0}})
                 }
             }else if(arg == "AdminPage"){
                 if (this.$router.currentRoute.name != "SurveyWelcome") {

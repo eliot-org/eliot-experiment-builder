@@ -205,12 +205,12 @@ ipcMain.handle('openHWDirDialog', async (event) => {
 /**
  * Opens a Dialog to choose the directory where the images are stored
  */
-ipcMain.handle('openPicDirDialog', async () => {
+ipcMain.handle('openAssetDirDialog', async () => {
 	dialog.showOpenDialog({
         properties: ['openDirectory']
     }).then((res) => {
         if(res.canceled == false){
-            store.set("pictureLocation", res.filePaths[0])
+            store.set("assetLocation", res.filePaths[0])
         }
     })
 })
@@ -292,6 +292,7 @@ ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the su
             nodeIntegration: true,
             contextIsolation: false,
             enableRemoteModule: true,
+            webSecurity: false
         }
     },false)
     surveyWindow.open()

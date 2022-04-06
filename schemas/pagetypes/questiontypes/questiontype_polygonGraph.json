@@ -32,8 +32,8 @@
                         }
                     },
                     "tooltip":{
-                        "description":"If set it has to be 'false'. Then it will hide the tooltip that shows the current selected value on the slider.",
-                        "type": "string"
+                        "description":"If false it will hide the tooltip that shows the current selected value on the slider.",
+                        "type": "boolean"
                     },
                     "sliderStyle":{
                         "description":"Choose one from these options 'simple', 'quantity', 'quality'. Simple sets the coloring to default. Quantity coloring is from light grey(left) to dark grey(right). Quality coloring is a color Gradient from red(left) to green(right)",

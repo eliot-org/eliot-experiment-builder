@@ -9,9 +9,9 @@
                     </div>
                     <span>{{radiusCalc}}</span>
                 </div>
-                <div class="option-y">{{options[0].oben}}</div>
+                <div class="option-y">{{options.above}}</div>
                 <div class="answer-row">
-                    <div class="option-x">{{options[0].links}}</div>
+                    <div class="option-x">{{options.left}}</div>
                     <div class="matrix" @touchmove="moveDot()" @mousemove="moveDot()" @touchstart="captureOn()" @mousedown="captureOn()" @touchend="captureOff()" @touchcancel="captureOff()" @mouseup="captureOff()">
                         <div class="" id="matrix" ref="matrix" v-bind:class="getMatrixClass()">
 
@@ -21,14 +21,14 @@
                             
                         </div>
                     </div>
-                    <div class="option-x">{{options[0].rechts}}</div>
+                    <div class="option-x">{{options.right}}</div>
                 </div>
-                <div class="option-y">{{options[0].unten}}</div>
+                <div class="option-y">{{options.below}}</div>
             </div>
         </div>
         <div class="ok-btn">
             <button @click="sendData()" class="btn-black" type="button">
-                <span class="btn-text">Weiter</span>
+                <span class="btn-text">Next</span>
             </button>
         </div>
     </div>
@@ -85,10 +85,10 @@
             },
             //Which type of matrix to show
             getMatrixClass: function(){
-                if(Object.prototype.hasOwnProperty.call(this.options[0],"ausrichtung")){
-                    if(this.options[0].ausrichtung == "horizontal"){ //Wenn explizit horizontal gefordert ist
+                if(Object.prototype.hasOwnProperty.call(this.options,"alignment")){
+                    if(this.options.alignment == "horizontal"){ //Wenn explizit horizontal gefordert ist
                         return "matrix-background-horizontal"
-                    }else if(this.options[0].ausrichtung == "vertikal"){
+                    }else if(this.options.alignment == "vertical"){
                         return "matrix-background-vertikal"
                     }else{ //Ansonsten automatisch
                         return "matrix-background-diagonal"
@@ -99,8 +99,8 @@
             },
             //Should the third dimension data be shown
             get3D: function(){
-                if(Object.prototype.hasOwnProperty.call(this.options[0],"dritteDimension")){
-                    return this.options[0].dritteDimension
+                if(Object.prototype.hasOwnProperty.call(this.options,"thirdDimension")){
+                    return this.options.thirdDimension
                 }else{
                     return ""
                 }
@@ -108,7 +108,7 @@
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
                     this.alreadyClicked = true
-                    this.$emit("updateAnswers", [this.x,this.y,this.radiusCalc])
+                    this.$emit("updateAnswers", [Math.round((this.x + Number.EPSILON) * 100) / 100, Math.round((this.y + Number.EPSILON) * 100) / 100, Math.round((this.radiusCalc + Number.EPSILON) * 100) / 100])
                     this.dotTop = 0
                     this.dotLeft = 0
                     this.x = 0
@@ -192,7 +192,7 @@
                 this.dotTop = (this.$refs["matrix"].clientHeight/2)
                 this.x = 50
                 this.y = 50
-                this.maxRadius = (Object.prototype.hasOwnProperty.call(this.options[0],"kreisgröße") ? this.options[0].kreisgröße : 40)
+                this.maxRadius = (Object.prototype.hasOwnProperty.call(this.options,"circleSize") ? this.options.circleSize : 40)
             },
         },
         mounted(){

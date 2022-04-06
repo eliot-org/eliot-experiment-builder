@@ -1,22 +1,29 @@
 <template>
   <div class="explanationWrapper">
         <div class="explanationText">
-            Wir bedanken uns für Ihre Teilnahme<br>
-            Ihr persönlicher Identifikationscode lautet:<br>
+            <div v-html="content.text"></div>
             <div @click="copyCodeToClipboard()" class="tooltip">
                 <span class="tooltiptext" id="myTooltip">Kopieren</span>
                 {{code}}
-            </div><br>
-            Bitte notieren Sie sich diesen Code für die Messung im Labor<br>
-            Ihre Eingaben wurden gespeichert<br>
-            Sie können die Seite jetzt schließen<br>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
     export default {
-        props:{},
+        props:{
+            //Content of the Current Question
+            content:{               
+               required: true
+            }
+        },
+        watch: {
+            //To reinit the page once the data changes, which it does on question change
+            content: function() { // watch it
+                this.init()
+            }
+        },
 		data: function(){	
 			return{
                 //Generated Code for the subject

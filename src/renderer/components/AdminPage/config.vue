@@ -42,15 +42,15 @@
             <div class="box-element">
                 <div class="box-header">
                     <div class="box-header-text">  
-                        Picture Folder
+                        Asset Folder
                     </div>
                 </div>
                 <div class="box-body">
                     <div style="margin-left: 10px">
-                        Current Location: {{pictureLocation}}
+                        Current Location: {{assetLocation}}
                         <br>
                         Select new Location: 
-                        <input type="file" id="picDir" @click="choosePicDir()" @click.prevent=""/>
+                        <input type="file" id="picDir" @click="chooseAssetDir()" @click.prevent=""/>
                     </div>
                 </div>
             </div>
@@ -64,18 +64,19 @@ export default {
         return{
             scriptLocation: "",
             surveys: [],
-            pictureLocation: "",
+            assetLocation: "",
         }
     },
     methods:{
         chooseDir: function(){
             this.$electron.ipcRenderer.invoke('openHWDirDialog')
         },
-        choosePicDir: function(){
-            this.$electron.ipcRenderer.invoke('openPicDirDialog')
+        chooseAssetDir: function(){
+            this.$electron.ipcRenderer.invoke('openAssetDirDialog')
+            this.getAssetDir()
         },
-        getPicDir: async function(){
-            this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+        getAssetDir: async function(){
+            this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
         },
         getHWScriptLocation: async function(){
             this.scriptLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'scriptLocation')
@@ -101,7 +102,7 @@ export default {
     mounted(){
         this.getHWScriptLocation()
         this.getSurveys()
-        this.getPicDir()
+        this.getAssetDir()
         this.$electron.ipcRenderer.on('reloadScriptLocation', () => {this.getHWScriptLocation()})
         this.$electron.ipcRenderer.on('reloadSurveys', () => {this.getSurveys()})
     }

@@ -2,9 +2,9 @@
     <div class="right-side-parent">
         <div class="answer-matrix-wrapper">
             <div class="answer-column">
-                <div class="option-y">{{options[3]}}</div>
+                <div class="option-y">{{options.above}}</div>
                 <div class="answer-row">
-                    <div class="option-x">{{options[0]}}</div>
+                    <div class="option-x">{{options.left}}</div>
                     <div class="matrix" @touchmove="moveDot()" @mousemove="moveDot()" @touchstart="captureOn()" @mousedown="captureOn()" @touchend="captureOff()" @touchcancel="captureOff()" @mouseup="captureOff()">
                         <div class="" id="matrix" ref="matrix" v-bind:class="getMatrixClass()">
 
@@ -13,14 +13,14 @@
                             
                         </div>
                     </div>
-                    <div class="option-x">{{options[1]}}</div>
+                    <div class="option-x">{{options.right}}</div>
                 </div>
-                <div class="option-y">{{options[2]}}</div>
+                <div class="option-y">{{options.below}}</div>
             </div>
         </div>
         <div class="ok-btn">
             <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Weiter</span>
+                <span class="btn-text">Next</span>
             </button>
         </div>
     </div>
@@ -59,10 +59,14 @@
 		methods:{
             //Which type of matrix to show
             getMatrixClass: function(){
-                if(this.options[4] == "horizontal"){ //Wenn explizit horizontal gefordert ist
-                    return "matrix-background-horizontal"
-                }else if(this.options[4] == "vertikal"){
-                    return "matrix-background-vertikal"
+                if(Object.prototype.hasOwnProperty.call(this.options,"alignment")){
+                    if(this.options.alignment == "horizontal"){ //Wenn explizit horizontal gefordert ist
+                        return "matrix-background-horizontal"
+                    }else if(this.options.alignment == "vertical"){
+                        return "matrix-background-vertikal"
+                    }else{ //Ansonsten automatisch
+                        return "matrix-background-diagonal"
+                    }
                 }else{ //Ansonsten automatisch
                     return "matrix-background-diagonal"
                 }
@@ -70,7 +74,7 @@
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
                     this.alreadyClicked = true
-                    this.$emit("updateAnswers", [this.x,this.y])
+                    this.$emit("updateAnswers", [Math.round((this.x + Number.EPSILON) * 100) / 100, Math.round((this.y + Number.EPSILON) * 100) / 100])
                     this.dotTop = 0
                     this.dotLeft = 0
                     this.x = 0

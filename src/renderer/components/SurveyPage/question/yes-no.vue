@@ -1,10 +1,10 @@
 <template>
 	<div class="answer-btn-wrapper">
-		<button  @click="sendData(options[0])" type="button" class="btn-black answer-btn answer-yes">
-			<span class="btn-text" v-html="options[0]"></span>
+		<button  @click="sendData(options.top)" type="button" class="btn-black answer-btn answer-yes">
+			<span class="btn-text" v-html="options.top"></span>
 		</button>
-		<button  @click="sendData(options[1])" type="button" class="btn-black answer-btn answer-no">
-			<span class="btn-text" v-html="options[1]"></span>
+		<button  @click="sendData(options.bottom)" type="button" class="btn-black answer-btn answer-no">
+			<span class="btn-text" v-html="options.bottom"></span>
 		</button>
 	</div>
 </template>
@@ -27,13 +27,7 @@
             sendData(chosen){//Sends Data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
 					this.alreadyClicked = true
-					if(chosen.toLowerCase() == "ja"){
-						this.$emit("updateAnswers", [1])
-					}else if(chosen.toLowerCase() == "nein"){
-						this.$emit("updateAnswers", [0])
-					}else{
-						this.$emit("updateAnswers", [chosen])
-					}
+                    this.$emit("updateAnswers", [chosen])
 					this.$emit("nextPage")
                     setTimeout(() => {this.alreadyClicked = false}, 250)
 				}

@@ -13,12 +13,13 @@
         </div>
         
         <transition name="fade" mode="out-in" v-if="gotSurvey">
-            <router-view ref="mainChildComponent" :object="(i>=survey.length) ? '': survey[i].object" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers"  v-on:subjectCode="setSubjectCode($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
+            <router-view ref="mainChildComponent" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers"  v-on:subjectCode="setSubjectCode($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
         </transition>
 
         <div class="countup">
             <div id="countuphour">00</div>:<div id="countupminute">00</div>:<div id="countupsecond">00</div>
         </div>
+        {{i}}
     </div>
 </template>
 
@@ -104,17 +105,13 @@ export default {
          * On finish clear timer, maybe send subject data. send answers
          */
         nextPage: function() {
-            if(!this.paused){ //Kann nur passieren wenn nicht pausiert
+            if(!this.paused && this.i < this.survey.length-1){ //Kann nur passieren wenn nicht pausiert
                 this.hardwareCommand("onPageEnd")
                 this.i++
                 this.sendSurveyDataToHW()
                 this.progress = parseInt((this.i/(this.survey.length-1))*100)
-                if(this.i==(this.survey.length-1)){ //Fürs beenden
+                if(this.i==(this.survey.length-1)){ 
                     clearInterval (this.timer)
-
-                    if (this.$router.currentRoute.name != this.getNextPage()) {
-                        this.$router.push({ name: "SurveyEnd", params: { index: this.i}})
-                    }
 
                     if(this.receivedCode != ""){
                         this.sendAnswers()
@@ -126,7 +123,7 @@ export default {
                     this.addSubjectDataToContent()
                     //Load next Page
                     if (this.$router.currentRoute.name != this.getNextPage()) {
-                        setTimeout(this.$router.push({ name: this.getNextPage(), params: { index: this.i}}),10)
+                        setTimeout(() => {this.$router.push({ name: this.getNextPage(), params: { index: this.i}})},10)
                     }
                     window.scrollTo(0,0);
                     //Hardware Command on Page Load
@@ -157,21 +154,21 @@ export default {
         addSubjectDataToContent: function(){
             if(this.subjectData != null && this.subjectData != {}){
                 for(let contentProperty in this.survey[this.i].content){
-                    if(typeof contentProperty === "string" || contentProperty instanceof "string"){
+                    if(typeof this.survey[this.i].content[contentProperty] === "string" || this.survey[this.i].content[contentProperty] instanceof String){
                         for(let subjectProperty in this.subjectData){
                             if(subjectProperty != "_id"){
-                                if(contentProperty.includes("{{subj."+subjectProperty+"}}")){
-                                    contentProperty = contentProperty.replace("{{subj."+subjectProperty+"}}", this.subjectData[subjectProperty])
+                                if(this.survey[this.i].content[contentProperty].includes("{{subj."+subjectProperty+"}}")){
+                                    this.survey[this.i].content[contentProperty] = this.survey[this.i].content[contentProperty].replace("{{subj."+subjectProperty+"}}", this.subjectData[subjectProperty])
                                 }
                             }
                         }
-                    }else if(contentProperty == "options" && (contentProperty instanceof "object" || typeof contentProperty === "string")){
+                    }else if(this.survey[this.i].content[contentProperty] == "options" && (this.survey[this.i].content[contentProperty] instanceof Object || typeof this.survey[this.i].content[contentProperty] === "string")){
                         for(let optionProperty in contentProperty){
-                            if(typeof optionProperty === "string" || optionProperty instanceof "string"){
+                            if(typeof this.survey[this.i].content[contentProperty][optionProperty] === "string" || this.survey[this.i].content[contentProperty][optionProperty] instanceof String){
                                 for(let subjectProperty in this.subjectData){
                                     if(subjectProperty != "_id"){
-                                        if(optionProperty.includes("{{subj."+subjectProperty+"}}")){
-                                            optionProperty = optionProperty.replace("{{subj."+subjectProperty+"}}", this.subjectData[subjectProperty])
+                                        if(this.survey[this.i].content[contentProperty][optionProperty].includes("{{subj."+subjectProperty+"}}")){
+                                            this.survey[this.i].content[contentProperty][optionProperty] = this.survey[this.i].content[contentProperty][optionProperty].replace("{{subj."+subjectProperty+"}}", this.subjectData[subjectProperty])
                                         }
                                     }
                                 }
@@ -191,15 +188,17 @@ export default {
          * 
          */    
         hardwareCommand: function(type){
-            if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, type)){
-                for(let i = 0; i < this.survey[i].hardware[type].length; i++){
-                    if(type == "delayed"){
-                        setTimeout(() => this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds * 1000)  
-                    }else{
-                        this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command})       
+            if(Object.prototype.hasOwnProperty.call(this.survey[this.i], "hardware") && this.survey[this.i].hardware != undefined && this.survey[this.i].hardware != ""){
+                if(Object.prototype.hasOwnProperty.call(this.survey[this.i].hardware, type)){
+                    for(let i = 0; i < this.survey[i].hardware[type].length; i++){
+                        if(type == "delayed"){
+                            setTimeout(() => this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command}) , this.survey[this.i].hardware[type][i].seconds * 1000)  
+                        }else{
+                            this.$electron.ipcRenderer.send("hardware", {"type": "command", "device": this.survey[this.i].hardware[type][i].device, "command": this.survey[this.i].hardware[type][i].command})       
+                        }
                     }
-                }
-            } 
+                } 
+            }
         },  
         /**
          * Gets the type of the next page

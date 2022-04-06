@@ -264,18 +264,21 @@
             addObjectDataToContent: function(content, object){
                 for(let contentProperty in content){
                     //Check for every property of the object if it is mentioned in the content of the question, If yes then insert the right value
-                    if(typeof contentProperty === "string" || contentProperty instanceof "string"){
+                    if(typeof content[contentProperty] === "string" || content[contentProperty] instanceof String){
                         for(let objectProperty in object){
                             if(objectProperty != "_id"){
                                 if(content[contentProperty].includes("{{obj."+objectProperty+"}}")){
+                                    console.log(content[contentProperty])
+                                    console.log(content.text)
+                                    console.log("should this happen?")
                                     content[contentProperty] = content[contentProperty].replace("{{obj."+objectProperty+"}}", object[objectProperty])
                                 }
                             }
                         }
                     //Look one step deeper. Only needed if type is question and has options
-                    }else if(contentProperty == "options" && (contentProperty instanceof "object" || typeof contentProperty === "string")){
+                    }else if(contentProperty == "options" && (content[contentProperty] instanceof Object || typeof content[contentProperty] === "string")){
                         for(let optionProperty in content[contentProperty]){
-                            if(typeof optionProperty === "string" || optionProperty instanceof "string"){
+                            if(typeof content[contentProperty][optionProperty] === "string" || content[contentProperty][optionProperty] instanceof String){
                                 for(let objectProperty in object){
                                     if(objectProperty != "_id"){
                                         if(content[contentProperty][optionProperty].includes("{{obj."+objectProperty+"}}")){
@@ -303,11 +306,11 @@
                         this.computedSurvey.push({
                             "object": "", 
                             "nextObject": "", 
-                            "hardware": this.surveyChoice.survey[y].hardware, 
+                            "hardware": Object.prototype.hasOwnProperty.call(this.surveyChoice.survey[y], "hardware") ? JSON.parse(JSON.stringify(this.surveyChoice.survey[y].hardware)) : {}, 
                             "module": this.surveyChoice.survey[y].module, 
                             "part": this.surveyChoice.survey[y].part,
                             "type": this.surveyChoice.survey[y].type,
-                            "content": this.surveyChoice.survey[y].content
+                            "content": JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content))
                         })//Subject Data at runtime!
                     }
                 }
@@ -318,24 +321,22 @@
                         //Check if Module or part were selected
                         for(let y = 0; y < this.surveyChoice.survey.length; y++){
                             if((this.mainModules[z] == this.surveyChoice.survey[y].module) || this.mainModules[z] == this.surveyChoice.survey[y].part){
-                                this.surveyChoice.survey[y].content.text = "{{obj.name}}"
                                 this.computedSurvey.push({
                                     "object": JSON.parse(JSON.stringify(this.objectsChosen[x])), 
                                     "nextObject": (x < this.objectsChosen.length-1) ? JSON.parse(JSON.stringify(this.objectsChosen[x+1])) : "",  
-                                    "hardware": this.surveyChoice.survey[y].hardware,
+                                    "hardware": Object.prototype.hasOwnProperty.call(this.surveyChoice.survey[y], "hardware") ? JSON.parse(JSON.stringify(this.surveyChoice.survey[y].hardware)) : {},
                                     "module": this.surveyChoice.survey[y].module, 
                                     "part": this.surveyChoice.survey[y].part,
                                     "type": this.surveyChoice.survey[y].type, 
-                                    "content": this.addObjectDataToContent(this.surveyChoice.survey[y].content, this.objectsChosen[x])
+                                    "content": this.addObjectDataToContent(JSON.parse(JSON.stringify(this.surveyChoice.survey[y].content)), this.objectsChosen[x])
                                 })
-                                console.log(this.computedSurvey)
                             }
                         }
                     }
                 }
                 //Adds Post Modules
                 for(let y = 0; y < this.surveyChoice.survey.length; y++){
-                    if((this.modulesChosen.includes(this.surveyChoice.survey[y].module) == true) || this.modulesChosen.includes(this.surveyChoice.survey[y].part) == true){
+                    if((this.postModules.includes(this.surveyChoice.survey[y].module) == true) || this.postModules.includes(this.surveyChoice.survey[y].part) == true){
                         this.computedSurvey.push({
                             "object": "",
                             "nextObject": "",
@@ -347,6 +348,7 @@
                         })
                     }
                 }
+                console.log(this.computedSurvey)
                 return "success"
             }, 
             updateChecked: function(obj){

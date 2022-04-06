@@ -5,6 +5,7 @@
             <div v-html="content.text"></div>
             <input type="text" min="0" v-model="subjectCode" class="input">
         </div>
+        <br>
         <div class="start-wrapper">
             <button @click="nextPage()" class="btn-black" type="button">
                 <span class="btn-text">Start</span>
@@ -24,7 +25,6 @@
         watch: {
             //To reinit the page once the data changes, which it does on question change
             content: function() { // watch it
-                this.init()
             }
         },
         data: function(){
@@ -38,7 +38,7 @@
         methods:{
             nextPage: function(){
                 if(this.subjectCode != ""){
-                    this.$emit(this.subjectCode)
+                    this.$emit("subjectCode", this.subjectCode)
                 }
                 this.$emit("nextPage")
             },

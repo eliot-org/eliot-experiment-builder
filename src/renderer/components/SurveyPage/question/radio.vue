@@ -13,7 +13,7 @@
         </div>
         <div class="ok-btn" v-if="picked">
             <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
             </button>
         </div>
     </div>

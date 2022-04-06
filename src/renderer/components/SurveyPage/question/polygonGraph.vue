@@ -3,9 +3,9 @@
         <div class="answer-polygraph-wrapper">
             <div class="svg-wrapper">
                 <svg width="300" height="300" class="svg">
-                    <polygraph :stats="graphAverage() ? (options[0] != 'hide' ? [average]: picked) : picked"></polygraph>
+                    <polygraph :stats="graphAverage() ? (options.graph != 'hide' ? [average]: picked) : picked"></polygraph>
                 </svg>
-                <div v-if="options[0]!= 'hide'" class="average">Durchschnitt: {{average.value}}</div><br>
+                <div v-if="options.graph!= 'hide'" class="average">Durchschnitt: {{average.value}}</div><br>
             </div>
             <div class="answers" ref="answers" id="answers">
                 <div class="slider-wrapper" v-for="(option,index) in picked" v-bind:key="index">
@@ -37,7 +37,7 @@
             
                 <div class="ok-btn">
                     <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 picked: [],
                 //Did the user already click on the continue button? To prevent skipping a page
                 alreadyClicked: false,
-                pictureLocation: "",
+                assetLocation: "",
             }
         },
         computed: {
@@ -102,16 +102,11 @@
             },
             //Load local image for slider i
             getImg: function(i,pos){
-                if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"img")){
-                    if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"marks")){
-                        if(Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).includes(pos.toString())){
-                            return this.pictureLocation+"/"+ this.options[(this.graphAverage() ? (i+1) : i)].img[Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).findIndex((e) => e === pos.toString())]
-                        }
-                    }else{
-                        if(pos == 0){
-                            return this.pictureLocation+"/"+ this.options[(this.graphAverage() ? (i+1) : i)].img[0]
-                        }else if(pos == 100){
-                            return this.pictureLocation+"/"+ this.options[(this.graphAverage() ? (i+1) : i)].img[1]
+                if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"img")){
+                    if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"marks")){
+                        if(Object.keys(this.options.sliders[i].marks).includes(pos.toString())){
+                            //What about an img arr entry thats just an empty string?
+                            return this.assetLocation+"/"+ this.options.sliders[i].img[Object.keys(this.options.sliders[i].marks).findIndex((e) => e === pos.toString())]
                         }
                     }
                 }
@@ -119,15 +114,11 @@
             },
             //Do we want to load an image for slider i
             isImgTagThere: function(i,pos){
-                if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"img")){
-                    if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"marks")){
-                        if(Object.keys(this.options[(this.graphAverage() ? (i+1) : i)].marks).includes(pos.toString())){
+                if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"img")){
+                    if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"marks")){
+                        if(Object.keys(this.options.sliders[i].marks).includes(pos.toString())){
                             return true 
                         }
-                    }else{
-                        if(pos == 0 || pos == 100){
-                            return true
-                        }   
                     }
                 }
                 return false
@@ -141,24 +132,24 @@
                     silent:true,
                 }
                 
-                if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"sliderStyle")){
-                    if(this.options[(this.graphAverage() ? (i+1) : i)].sliderStyle == "neutral1"){
+                if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"sliderStyle")){
+                    if(this.options.sliders[i].sliderStyle == "neutral1"){
                         sliderOptions.processStyle = {backgroundColor: '#e6e6e6',opacity: "1"}
                         sliderOptions.railStyle = {backgroundColor: '#e6e6e6'}
-                    }else if(this.options[(this.graphAverage() ? (i+1) : i)].sliderStyle == "neutral2"){
+                    }else if(this.options.sliders[i].sliderStyle == "neutral2"){
                         sliderOptions.processStyle = {backgroundColor: '#ccc',opacity: "1"}
                         sliderOptions.railStyle = {backgroundColor: '#e6e6e6'}
-                    }else if(this.options[(this.graphAverage() ? (i+1) : i)].sliderStyle == "quantity"){
+                    }else if(this.options.sliders[i].sliderStyle == "quantity"){
                         sliderOptions.railStyle = {backgroundImage: 'linear-gradient(to right, #c8c8c8 0%,#7f7f7f 40%,#7f7f7f 60%, #373737 100%)'}
                         sliderOptions.processStyle = {opacity: "0"}
-                    }else if(this.options[(this.graphAverage() ? (i+1) : i)].sliderStyle == "quality"){
+                    }else if(this.options.sliders[i].sliderStyle == "quality"){
                         sliderOptions.railStyle = {backgroundImage: 'linear-gradient(to left, #00B050 0%,#FFD966 40%,#FFD966 60%, #FF0000 100%)'}
                         sliderOptions.processStyle = {opacity: "0"}
                     }
                 }
 
-                if(Object.prototype.hasOwnProperty.call(this.options[(this.graphAverage() ? (i+1) : i)],"marks")){
-                    sliderOptions.marks = this.options[(this.graphAverage() ? (i+1) : i)].marks//für eigene Marks
+                if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"marks")){
+                    sliderOptions.marks = this.options.sliders[i].marks//für eigene Marks
                     for(var key in sliderOptions.marks){
                         if(sliderOptions.marks[key] == null){
                             sliderOptions.marks[key] = ""
@@ -172,10 +163,7 @@
             },
             //Should the tooltip in this slider i be shown
             tooltip: function(i){
-                if(this.graphAverage()){//Wegen Verschiebung durch start bei 1 oder 0
-                    i++
-                }
-                if(Object.prototype.hasOwnProperty.call(this.options[i],"tooltip")){
+                if(Object.prototype.hasOwnProperty.call(this.options.sliders[i],"tooltip")){
                     if(this.options[i].tooltip == "false"){
                         return false
                     }else{
@@ -186,8 +174,12 @@
             },
             //Reset data
             init(){
-                for (var i= (this.graphAverage() ? 1 : 0);i<this.options.length;i++){
-                    this.picked.push({name:this.options[i].name, label: {"name":this.options[i].name, "text":this.options[i].text,"sliderText":Object.prototype.hasOwnProperty.call(this.options[i],"sliderText") ? this.options[i].sliderText : this.options[i].text}, value:Object.prototype.hasOwnProperty.call(this.options[i], "defaultValue") ? this.options[i].defaultValue :50})//Für Skala von 0-100   
+                for (var i= 0;i<this.options.sliders.length;i++){
+                    this.picked.push({name:this.options.sliders[i].name, label: {
+                        "name":this.options.sliders[i].name, 
+                        "text":this.options.sliders[i].text,
+                        "sliderText": Object.prototype.hasOwnProperty.call(this.options.sliders[i],"sliderText") ? this.options.sliders[i].sliderText : this.options.sliders[i].text
+                    }, value:Object.prototype.hasOwnProperty.call(this.options.sliders[i], "defaultValue") ? this.options.sliders[i].defaultValue :50})//Für Skala von 0-100   
                 }
                 setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
@@ -203,20 +195,20 @@
             },
             //should the average be shown
             graphAverage: function(){
-                if(this.options[0] == "average" || this.options[0]== "hide"){
+                if(this.options.graph == "average" || this.options.graph== "hide"){
                     return true
                 }else{
                     return false
                 }
             },
-            getPicDir: async function(){
-                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+            getAssetDir: async function(){
+                this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
                 this.init()
             },
         },        
         mounted(){
             //init page
-            this.igetPicDirnit()
+            this.getAssetDir()
         },
     }
 </script>

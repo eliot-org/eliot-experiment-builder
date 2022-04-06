@@ -40,12 +40,12 @@
                 img: Object.prototype.hasOwnProperty.call(this.content,"img") ? this.getImg() : "",
                 //the type of image to show (mp4 or png or...)
 				dataType: Object.prototype.hasOwnProperty.call(this.content,"img") ? this.getDataType() : "",
-                pictureLocation: ""
+                assetLocation: ""
 			}
         },
 		methods:{
-            getPicDir: async function(){
-                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+            getAssetDir: async function(){
+                this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
                 this.init()
             },
             //Reset variables
@@ -55,7 +55,7 @@
             },
             //Try to load a local image
 			getImg(){
-                return this.pictureLocation+"/"+this.content.img
+                return this.assetLocation+"/"+this.content.img
 			},
             //get the type of the image
 			getDataType: function(){
@@ -74,7 +74,7 @@
 		},
 		mounted(){
             //Init page
-            this.getPicDir()
+            this.getAssetDir()
 		}
     }
 </script>

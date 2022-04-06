@@ -9,7 +9,7 @@
                 <div class="explanationText-LR">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="explanationText-LR">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button> 
                 </div>
                 <div class="logo-wrapper-LR">
@@ -27,7 +27,7 @@
                 </div>
             </div>
 
-            <div v-if="getImgPos()=='top'" class="TB">
+            <div v-if="getImgPos()=='above'" class="TB">
                  <div class="logo-wrapper">
                     <img class="logo" :src="img" alt="" v-if="dataType=='img'">
                     <vid  :src="getImg()" class="logo" v-if="dataType=='video'" style="display:block !important;" v-on:videoEnd="/*showBtn = true*/nextPage()"></vid>
@@ -35,16 +35,16 @@
                 <div class="explanationText">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button> 
                 </div>
             </div>
 
-            <div v-if="getImgPos()=='bottom'" class="TB">
+            <div v-if="getImgPos()=='below'" class="TB">
                 <div class="explanationText">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button> 
                 </div>
                 <div class="logo-wrapper">
@@ -61,7 +61,7 @@
                 <div class="explanationText-fullscreen">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button> 
                 </div>
             </div>
@@ -74,13 +74,13 @@
                 <div class="explanationText-behind">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button> 
                 </div>
             </div>
 
             <!--<button @click="nextPage()" type="button" class="btn-black" v-if="showBtn">
-                <span class="btn-text">Weiter</span>
+                <span class="btn-text">Next</span>
             </button> -->
         </div>
     </div>
@@ -112,23 +112,24 @@
                 showBtn: null,
                 //Show Continue Button delay, has it expired?
                 delayOver: false,
-                pictureLocation: ""
+                assetLocation: ""
 			}
         },
         mounted(){
             //Init after small timeout so that all data is really loaded
-            setTimeout(()=>this.getPicDir(),10)
+            setTimeout(()=>{this.getAssetDir()},10)
         },
 		methods:{
             showContinueButton: function(){
                 this.delayOver = true
             },
-            getPicDir: async function(){
-                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+            getAssetDir: async function(){
+                this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
                 this.init()
             },
             //Init data
             init(){
+                console.log("init")
                 this.img = this.getImg()
                 this.dataType = this.getDataType()
                 if(Object.prototype.hasOwnProperty.call(this.content, "continueDelay")){
@@ -146,7 +147,7 @@
             //Find out if local image exists
             getImg(){
                 if(Object.prototype.hasOwnProperty.call(this.content,"img")){
-                    return this.pictureLocation+"/"+this.content.img
+                    return this.assetLocation+"/"+this.content.img
                 }else{
                     return ""
                 }

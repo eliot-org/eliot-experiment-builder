@@ -21,7 +21,7 @@
                 </div>
             </div>
 
-            <div v-if="getImgPos()=='top'" class="TB">
+            <div v-if="getImgPos()=='above'" class="TB">
                  <div class="logo-wrapper">
                     <img class="logo" :src="img" alt="" v-if="dataType=='img'">
                     <vid  :src="getImg()" class="logo" v-if="dataType=='video'" style="display:block !important;" v-on:videoEnd="/*showBtn = true*/$emit('nextPage')"></vid>
@@ -31,7 +31,7 @@
                 </div>
             </div>
 
-            <div v-if="getImgPos()=='bottom'" class="TB">
+            <div v-if="getImgPos()=='below'" class="TB">
                 <div class="explanationText">
                     <div v-html="content.text" class="explanationHTML"></div>
                 </div>
@@ -88,17 +88,17 @@
                 dataType: Object.prototype.hasOwnProperty.call(this.content,("img")) ? this.getDataType() : "",
                 //If we have already received a message from the admin to continue. To not skip a page
                 alreadyReceived: false,
-                pictureLocation: ""
+                assetLocation: ""
 			}
         },
 		methods:{
-            getPicDir: async function(){
-                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+            getAssetDir: async function(){
+                this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
                 this.init()
             },
             //Try to load a local image
             getImg(){
-                return this.pictureLocation+"/"+this.content.img
+                return this.assetLocation+"/"+this.content.img
             } ,
             //get the type of the image
             getDataType: function(){
@@ -143,7 +143,7 @@
         },
         mounted(){
             //Init page
-            this.getPicDir()
+            this.getAssetDir()
         }
     }    
 </script>

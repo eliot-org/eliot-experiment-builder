@@ -2,7 +2,7 @@
     <div class="explanationWrapper">
         <div class="explanationText" v-html="content.text"></div>
         <button @click="nextPage()" type="button" class="btn-black" v-if="delayOver">
-            <span class="btn-text">Weiter</span>
+            <span class="btn-text">Next</span>
         </button>
     </div>
 </template>
@@ -41,7 +41,7 @@
         },
         mounted(){
             //Init after small timeout so that all data is really loaded
-            setTimeout(()=>this.init(),10)
+            setTimeout(()=>{this.init()},10)
         },
     }
 </script>

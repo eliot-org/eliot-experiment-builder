@@ -31,7 +31,7 @@
             
                 <div class="ok-btn">
                     <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Weiter</span>
+                        <span class="btn-text">Next</span>
                     </button>
                 </div>     
             </div>  
@@ -59,7 +59,7 @@
                 picked: [],
                 //Did the user already click on the continue button? To prevent skipping a page
                 alreadyClicked: false,
-                pictureLocation: "",
+                assetLocation: "",
 			}
         },
 		methods:{
@@ -91,13 +91,13 @@
                                 return require('../../../assets/'+ this.options[i].img[1])
                             }
                         }else*/ if(Object.keys(this.options[i].marks).includes(pos.toString())){
-                            return this.pictureLocation+"/"+ this.options[i].img[Object.keys(this.options[i].marks).findIndex((e) => e === pos.toString())]
+                            return this.assetLocation+"/"+ this.options[i].img[Object.keys(this.options[i].marks).findIndex((e) => e === pos.toString())]
                         }
                     }else{
                         if(pos == 0){
-                            return this.pictureLocation+"/"+ this.options[i].img[0]
+                            return this.assetLocation+"/"+ this.options[i].img[0]
                         }else if(pos == 100){
-                            return this.pictureLocation+"/"+this.options[i].img[1]
+                            return this.assetLocation+"/"+this.options[i].img[1]
                         }
                     }
                 }
@@ -202,7 +202,6 @@
                         }
                     }
                 } 
-                console.log(sliderOptions)
                 return sliderOptions
             },
             //reset data
@@ -227,7 +226,6 @@
                             this.picked.push({name:this.options[i].name, text: this.options[i].text, value:50})//Für Skala von 0-100
                         }
                     } 
-                console.log(this.picked[i])
                 }
                 setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
@@ -242,14 +240,14 @@
                     setTimeout(() => {this.alreadyClicked = false}, 250)
                 }
             },
-            getPicDir: async function(){
-                this.pictureLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'pictureLocation')
+            getAssetDir: async function(){
+                this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
                 this.init()
             },
         },
         mounted(){
             //init page
-            this.getPicDir()
+            this.getAssetDir()
         }
     }
 </script>

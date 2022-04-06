@@ -32,7 +32,7 @@
             "type": "object",
             "properties":{
                 "time": {
-                    "description": "The Amount of seconds the Timer will run. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "description": "The Amount of seconds the Timer will run. 0 for skipping this step and going straight to the main timer. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
                     "type": "number"
                 },
                 "show": {
@@ -55,7 +55,7 @@
             "type": "object",
             "properties":{
                 "time": {
-                    "description": "The Amount of seconds the Timer will run. -1 for instant load of next page. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+                    "description": "The Amount of seconds the Timer will run. 0 for instant load of next page, -1 to never load next page. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
                     "type": "number"
                 },
                 "show": {
@@ -69,21 +69,17 @@
             "description": "The text shown on the Page after the timer has expired. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
-        "postImt":{
+        "postImg":{
             "description":"Filename of the image thats shown after the timer has expired. Has to have the file ending included. Possible endings are 'mp4', 'jpg', 'jpeg', 'png', 'gif'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "startIndicatorSound":{
-            "description": "Path to the file of the sound that is played when the mainTimer starts. Has to have the file ending included. Possible endings are 'wav' and 'mp3'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "description": "Path to the file of the sound that is played when the mainTimer starts. Has to have the file ending included. Possible endings are 'wav'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
         },
         "endIndicatorSound":{
-            "description": "Path to the file of the sound that is played when the mainTimer ends. Has to have the file ending included. Possible endings are 'wav' and 'mp3'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
+            "description": "Path to the file of the sound that is played when the mainTimer ends. Has to have the file ending included. Possible endings are 'wav'. OR write {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
-        },
-        "continueDelay":{
-            "description": "The amount of seconds after which the Continue Button is shown, after the end of the timer. -1 for never(wait for Hardware). OR {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties. Can also be accessed by hardware, via the 'showContinueButton' event",
-            "type": "number"
         }
     },
     "required": ["mainTimer"]

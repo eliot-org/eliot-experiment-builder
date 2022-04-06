@@ -76,6 +76,7 @@
     "johnny-five": "^2.1.0",
     "live-plugin-manager": "^0.17.1",
     "serialport": "^9.2.7",
+    "sound-play": "^1.1.0",
     "vue": "^2.6.14",
     "vue-electron": "^1.0.6",
     "vue-router": "^3.5.3",
