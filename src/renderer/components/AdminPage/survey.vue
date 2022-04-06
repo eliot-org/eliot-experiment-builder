@@ -116,19 +116,18 @@
             </div>
             <div v-if="showingAnswers">
                 {{answers}}
-                <br><button class="btn-black" @click="saveAnswers()">Antworten speichern</button><br>
-                Status: {{answerSaveStatus}}
-                <br>("Status: Created" ist gewünscht)
+                <br><button class="btn-black" @click="saveAnswers()">Save Answers again</button><br>
+                Answers Saved
             </div>
         </transition>
         <div class="surveyControl" v-if="surveyRunning">
-            <button class="btn-black" @click="abortSurvey()">Umfrage abbrechen</button>
-            <button class="btn-black" @click="pauseSurvey()">Umfrage {{surveyPaused ? "fortsetzen" : "pausieren"}}</button>
-            <button class="btn-black" v-if="manualChannel != null" @click="confirmManualStep()">Manuellen Schritt {{manualChannel}} bestätigen</button>
+            <button class="btn-black" @click="abortSurvey()">Abort Survey</button>
+            <button class="btn-black" @click="pauseSurvey()">{{surveyPaused ? "Continue" : "Pause"}} Survey</button>
+            <button class="btn-black" v-if="manualChannel != null" @click="confirmManualStep()">Confirm Manual Step {{manualChannel}}</button>
             <div>
                    </div>
-            <p>Zum Pausieren der Umfrage Strg+P drücken</p>
-            <p>Zum Bestätigen eines manuellen Schrittes Strg+B drücken</p>
+            <p>Press Ctrl+P to pause</p>
+            <p>Press Ctrl+B to confirm a manual step</p>
         </div>
     </div>
 </template>
@@ -147,7 +146,6 @@
                 autosave: false,
 
                 answers: {},
-                answerSaveStatus: "",
                 showingAnswers: false,
 
                 surveyRunning: false,
