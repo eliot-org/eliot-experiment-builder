@@ -177,7 +177,7 @@ export default {
          * 
          */    
         sendSurveyDataToHW: function(){
-            this.$electron.ipcRenderer.send("hardware", {"type": "sendSurveyData", "arg": this.survey[this.i]})           
+            this.$electron.ipcRenderer.send("hardware", {"type": "hardwareSendSurveyData", "arg": this.survey[this.i]})           
         },
         /**
          * 
