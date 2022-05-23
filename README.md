@@ -10,10 +10,10 @@ Features
 - Modern UI - a simple and beautiful graphical interface
 - Hardware/Devices - use EEG Equipment, scales, lights, arduinos and robots with our scripts or use the full power of Javascript in your own scripts
 - OpenSource - Released under [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/legalcode.de)
-- JSON - build surveys using JSON files or the Survey Builder - to be implemented
-- Conditions/Loops -  
+- JSON - build surveys using JSON files <!-- or the Survey Builder - to be implemented-->
+<!-- - Conditions/Loops -  
 - HTML - dont like the default theme? Change pages to your liking - to be implemented
-- Stimuli - use a variety of stimuli. Including ...
+- Stimuli - use a variety of stimuli. Including ... -->
 
 
 Versions
