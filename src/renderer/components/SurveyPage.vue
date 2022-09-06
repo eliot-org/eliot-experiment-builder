@@ -47,6 +47,8 @@ export default {
             progress: 0,  
             //the time already in the survey
             timer: "",
+            //Records how much time has passed since a question has been opened
+            questionTimerStart: null,
         }
     },
     methods:{
@@ -104,7 +106,7 @@ export default {
                 this.i++
                 this.sendSurveyDataToHW()
                 this.progress = parseInt((this.i/(this.survey.length-1))*100)
-                if(this.i==(this.survey.length-1)){ 
+                if(this.i==(this.survey.length-1)){ //On end of survey
                     this.$electron.ipcRenderer.send("surveyOps","readyToEnd")
                     clearInterval (this.timer)
 
@@ -125,6 +127,10 @@ export default {
                     this.hardwareCommand("onPageLoad")
                     //Start Timer for Delayed Hardware Command
                     this.hardwareCommand('delayed')
+
+                    if(this.survey[this.i].type == "question"){
+                        this.questionTimerStart = new Date()
+                    }
                 }
             }
         }, 
@@ -213,6 +219,7 @@ export default {
         updateAnswers: function(event){
             console.log(event)
             console.log(this.answers)
+
             //If question was a slider or polygraph then split up the answer into seperate ones for each slider
             if(this.survey[this.i].content.type == "slider" || this.survey[this.i].content.type == "polygonGraph"){
                 for(let i= 0; i< event.length; i++){
@@ -223,7 +230,8 @@ export default {
                     'module': this.survey[this.i].module,
                     'part': this.survey[this.i].part,
                     "material": this.survey[this.i].material,
-                    "name": event[i].name})
+                    "name": event[i].name,
+                    "speed": (new Date() - this.questionTimerStart)/1000})
                 }
             }else{//Just add the answer 
                 this.answers.answers.push({
@@ -233,7 +241,8 @@ export default {
                 'module': this.survey[this.i].module,
                 'part': this.survey[this.i].part,
                 "material": this.survey[this.i].material,
-                "name": this.survey[this.i].content.name})
+                "name": this.survey[this.i].content.name,
+                "speed": (new Date() - this.questionTimerStart)/1000})
             }
             //If the answer defines the subject then add its answer to the subjectdata
             if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content, "definesSubject")){
@@ -376,6 +385,10 @@ export default {
                 this.$electron.ipcRenderer.send("surveyOps", "ended")
             }
         })
+
+        if(this.survey[this.i].type == "question"){
+            this.questionTimerStart = new Date()
+        }
     },
     destroyed(){    
         this.$electron.ipcRenderer.removeAllListeners()
