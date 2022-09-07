@@ -114,11 +114,6 @@
                     </div>
                 </transition>
             </div>
-            <div v-if="showingAnswers">
-                {{answers}}
-                <br><button class="btn-black" @click="saveAnswers()">Save Answers again</button><br>
-                Answers Saved
-            </div>
         </transition>
         <div class="surveyControl" v-if="surveyRunning">
             <button class="btn-black" @click="abortSurvey()">Abort Survey</button>
@@ -128,6 +123,12 @@
                    </div>
             <p>Press Ctrl+P to pause</p>
             <p>Press Ctrl+B to confirm a manual step</p>
+            <div v-if="showingAnswers" class="answers-div">
+                <br><hr style="width:100%"><br>
+                <vue-json-pretty :path="'res'" :data="answers"> </vue-json-pretty>
+                <br><button class="btn-black" @click="saveAnswers()">Save Answers again</button><br>
+                Answers Saved
+            </div>
         </div>
     </div>
 </template>
@@ -535,6 +536,12 @@
 </script>
 
 <style scoped>
+    .answers-div{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
     .nav-blocker{
         width:100%;
         height:63px;
@@ -691,7 +698,11 @@
 
     .surveyControl{
         margin: 0 auto;
-        width: 345px;
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
     }
     
     .material-table-element{
