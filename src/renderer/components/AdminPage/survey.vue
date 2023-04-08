@@ -37,7 +37,7 @@
 
                                 <div>
                                     <div class="mindChannels-head">
-                                        Choose non-repeating modules that are before the loop
+                                        Phase 1: Premodules
                                         <button class="btn-black" id="chooseAllModules" @click="chooseAllModules('pre')">Choose All</button>
                                         <button class="btn-black" id="show-modal" @click="showPrePresetModal = true">Presets</button>
                                         <presetModal :presets="presets" v-if="showPrePresetModal" @close="showPrePresetModal = false" @chooseModules="chooseModules('pre', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'pre')" ></presetModal>
@@ -50,7 +50,7 @@
                                 <br><hr>
                                 <div>
                                     <div class="mindChannels-head">
-                                        Choose modules that are repeated per object
+                                        Phase 2: Looping modules per object
                                         <button class="btn-black" id="chooseAllModules" @click="chooseAllModules('main')">Choose All</button>
                                         <button class="btn-black" id="show-modal" @click="showMainPresetModal = true">Presets</button>
                                         <presetModal :presets="presets" v-if="showMainPresetModal" @close="showMainPresetModal = false" @chooseModules="chooseModules('main', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'main')" ></presetModal>
@@ -63,7 +63,7 @@
                                 <br><hr>
                                 <div>
                                     <div class="mindChannels-head">
-                                        Choose non-repeating modules that are after the loop
+                                        Phase 3: Postmodules
                                         <button class="btn-black" id="chooseAllModules" @click="chooseAllModules('post')">Choose All</button>
                                         <button class="btn-black" id="show-modal" @click="showPostPresetModal = true">Presets</button>
                                         <presetModal :presets="presets" v-if="showPostPresetModal" @close="showPostPresetModal = false" @chooseModules="chooseModules('post', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'post')" ></presetModal>
