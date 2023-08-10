@@ -22,19 +22,29 @@ We are in the process of publishing a paper on our software that will also funct
 We hope that our software can help other researchers in similar situations.<br>
 <b>New features will be added if interest exists</b>. Just write us in the issue section of this repository.
 
+Installation (Users)
+---
+1. Under [Releases](https://github.com/eliot-org/eliot/releases), select the latest version
+2. Download the provided .exe setup file
+3. Execute the downloaded .exe setup file, which will start the installation process
+4. Upon completion of the installation, the program will automatically start
+
+Getting Started
+---
+In work
+
+Support
+---
+You can ask questions, receive support, and report bugs under the [Issues](https://github.com/eliot-org/eliot/issues) section in the git repository.
+
 Future Developments
 ---
-- Survey Builder - create surveys using a graphical interface rather than coding a JSON file
+- Survey Builder - create surveys using a graphical interface rather than writing a JSON file
 - Conditions/Loops - display pages conditionally or in loops
 - Page Customizability - dont like the default theme? Change pages to your liking with HTML and CSS
 - New Stimuli
 
-Versions
----
- - ``` 0.2 ``` - Walnut 
- - ``` 0.1 ``` - Blueberry 
-
-Development
+Installation (Development)
 ---
 #### Build Setup
 
@@ -49,8 +59,6 @@ npm run dev
 npm run build
 
 ```
-
-We recommend using [yarn](https://yarnpkg.com/). It has proven to be faster and more reliable.
 
 #### Requirements:
 - Python 2.7
