@@ -27,17 +27,49 @@ Installation (Users)
 1. Under [Releases](https://github.com/eliot-org/eliot/releases), select the latest version
 2. Download the provided .exe setup file
 3. Execute the downloaded .exe setup file, which will start the installation process
-4. Upon completion of the installation, the program will automatically start
+4. Upon completion of the installation, the program should automatically start
 
 Getting Started
 ---
-In work
+There are a couple of setup steps to undertake after the installation has finished in order to use the program fully.
+  - Go to the settings page
+    - Choose in which folder your hardware scripts, and assets(images) are located
+    - Then, import at least one survey json file. An example can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey.json)
+  - Go to the objects page
+    -  Create an object by setting a name and potentially properties that are needed by your survey
+  - Then, if your survey needs subject data, go to the subjects page
+    - Create a subject with accompanying properties
+  - If your survey needs hardware devices, connect them on the hardware page
+    
+You have now finished the basic setup and are ready to run your survey on the survey page
+
+### How to run a survey
+  - Choose a survey from the list
+  - Add desired objects, but at least one
+  - Choose which modules to run
+  - Set experiment settings
+  - Choose which display to show the survey window on
+  - Press start
+  
+### How to write survey files
+A survey file is a single file that describes an experiment, including all hardware interactions, as well as the use of the properties of objects and subjects. In order to be able to write survey files you should familiarize yourself with the json text format and [JSON Schema](https://json-schema.org/). Once youve done this you should take a look at the example survey file that can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey.json). To be able to write a correct survey file, follow the json schemata that can be found in the schemas folder in the repository. There, multiple files stack on top of each other, because json schema is still missing some features. The main `surveyfile.json` file in the schemas folder describes the main structure of survey files. The files in the subfolders describe parts of the survey file that are interchangable and depend on the value of the `pagetype` property you choose. Speaking in more detail, the value of the content property depends on which page type is chosen. The different value options are described in the files in the subfolders. The same goes for the value of the `options` property of the question pagetype, where you can find the different possibilities in the questiontypes subfolder.
+
+#### How to create and use a new survey file:
+  - Create a new file of the type .json
+  - Write your survey according to the schemata (use the example file as reference)
+  - Import the finished file on the settings page
+  - Use it
+
+### Regarding Hardware Scripts
+  - Example implementations can be found [here](https://github.com/eliot-org/eliot/tree/main/src/main/scripts)
+  - After importing scripts, go to the hardware page and connect to your devices (using port names, IP addresses, or whatever else is specified)
+  - Commands that can be used in survey files are listed on the hardware page (described by the value of the "name" property)
 
 Support
 ---
 You can ask questions, receive support, and report bugs under the [Issues](https://github.com/eliot-org/eliot/issues) section in the git repository.
 
-Future Developments
+Possible Future Developments
 ---
 - Survey Builder - create surveys using a graphical interface rather than writing a JSON file
 - Conditions/Loops - display pages conditionally or in loops
@@ -46,9 +78,13 @@ Future Developments
 
 Installation (Development)
 ---
+This section describes how to build the program from source. This is only needed if you are making changes to the source code. If you are a normal user, refer to the installation section for users. 
 #### Build Setup
 
 ``` bash
+# clone the repository
+gti clone git@github.com:eliot-org/eliot.git
+
 # install dependencies, currently with need for legacy packages
 npm install --legacy-peer-deps
 
@@ -58,8 +94,10 @@ npm run dev
 # build electron application for production
 npm run build
 
-```
+# in case of problems with serialport run this
+npm run rebuild
 
+```
 #### Requirements:
 - Python 2.7
 - Visual Studio C/C++ Build Tools
