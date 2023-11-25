@@ -13,7 +13,16 @@
         </div>
         
         <transition name="fade" mode="out-in" v-if="gotSurvey">
-            <router-view ref="mainChildComponent" :key="$route.fullPath + Math.random()" :content="(i>=survey.length) ? '': survey[i].content" :answers="answers"  v-on:subjectCode="setSubjectCode($event)" v-on:updateAnswers="updateAnswers($event)" v-on:nextPage="nextPage()" v-on:hardwareEvent="hardwareCommand($event)"></router-view>
+            <router-view 
+                ref="mainChildComponent" 
+                :key="$route.fullPath + Math.random()" 
+                :content="(i>=survey.length) ? '': survey[i].content" 
+                :answers="answers"  
+                v-on:subjectCode="setSubjectCode($event)" 
+                v-on:updateAnswers="updateAnswers($event)"
+                v-on:nextPage="nextPage()" 
+                v-on:hardwareEvent="hardwareCommand($event)">
+            </router-view>
         </transition>
 
         <div class="countup">
@@ -105,6 +114,7 @@ export default {
                 this.hardwareCommand("onPageEnd")
                 this.i++
                 this.sendSurveyDataToHW()
+                this.sendSurveyDataToAdmin()
                 this.progress = parseInt((this.i/(this.survey.length-1))*100)
                 if(this.i==(this.survey.length-1)){ //On end of survey
                     this.$electron.ipcRenderer.send("surveyOps","readyToEnd")
@@ -187,6 +197,12 @@ export default {
         },
         /**
          * 
+         */
+        sendSurveyDataToAdmin: function(){     
+            this.$electron.ipcRenderer.send("currentSurveyData", this.survey[this.i])
+        },
+        /**
+         * 
          */    
         hardwareCommand: function(type){
             if(Object.prototype.hasOwnProperty.call(this.survey[this.i], "hardware") && this.survey[this.i].hardware != undefined && this.survey[this.i].hardware != ""){
@@ -244,6 +260,9 @@ export default {
                 "name": this.survey[this.i].content.name,
                 "speed": (new Date() - this.questionTimerStart)/1000})
             }
+            
+            this.$electron.ipcRenderer.send("lastAnswer", this.answers.answers[this.answers.answers.length -1])
+
             //If the answer defines the subject then add its answer to the subjectdata
             if(Object.prototype.hasOwnProperty.call(this.survey[this.i].content, "definesSubject")){
                 if(this.survey[this.i].content.definesSubject.length > 0){

@@ -149,7 +149,7 @@ ipcMain.handle('hardwareSendSurveyData', (event, arg) => {
  */
 ipcMain.handle('hardwareCommand', (event, arg) => {
     for (let key of Object.keys(hwScripts)) {
-        hwScripts[key].command(arg.device, arg.command)
+      hwScripts[key].commands(arg.device, arg.command)
     }
 })
 
@@ -275,6 +275,18 @@ ipcMain.on("surveyChannel", (event,arg) => {
   if(event.sender.id == 1){
     surveyWindow.object.webContents.send("surveyChannel", arg)
   }
+})
+
+//Comm for lastAnswer
+ipcMain.on("lastAnswer", (event,arg) => {
+	console.log("received message")
+  adminWindow.object.webContents.send("lastAnswer", arg)
+})
+
+//Comm for currentSurveyData
+ipcMain.on("currentSurveyData", (event,arg) => {
+  	console.log("received message")
+    adminWindow.object.webContents.send("currentSurveyData", arg)
 })
 
 ipcMain.on("displays", (event,arg) => {

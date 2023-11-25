@@ -1,0 +1,70 @@
+{
+    "name": "JSON Test",
+    "modules": [
+        {"id": "Welcome", "label": "Welcome", "children": [
+            {"id": "Welcome Page", "label": "Welcome Page"},
+            {"id": "Welcome Text", "label": "Welcome Text"}
+        ]},
+        {"id": "Main Part", "label": "Main Part", "children":[
+            {"id": "expl", "label": "expl"},
+            {"id": "explPic", "label": "explPic"},
+            {"id": "manual", "label": "manual"},
+            {"id": "timer", "label": "timer"},
+            {"id": "checkbox", "label": "checkbox"},
+            {"id": "radio", "label": "radio"},
+            {"id": "input", "label": "input"},
+            {"id": "matrix", "label": "matrix"},
+            {"id": "matrixCirc", "label": "matrixCirc"},
+            {"id": "poly", "label": "poly"},
+            {"id": "select", "label": "select"},
+            {"id": "yes", "label": "yes"},
+            {"id": "slider", "label": "slider"}
+        ]},
+        {"id": "end", "label": "end", "children": [
+            {"id": "endtext", "label": "endText"},
+            {"id": "end Page", "label": "end Page"}
+        ]}
+    ],
+    "survey":[
+        {"module": "Welcome", "part": "Welcome Page", "type": "welcome", "content": {"text": "Welcome Tesasatstastiadkasf <br> umbruuuch"}},
+        {"module": "Welcome", "part": "Welcome Text", "type": "explanation", "content": {"text": "Mit Delay von 2 sekunden", "continueDelay": 2}},
+        
+        {"module": "Main Part", "part": "expl", "type": "explanation", "content": {"text": "Ohne delay"}},
+        {"module": "Main Part", "part": "explPic", "type": "explanationPic", "content": {"text": "Hello welt {{obj.img}}", "img": "{{obj.img}}", "imagePosition": "below"}},
+        {"module": "Main Part", "part": "manual", "type": "manual", "content": {"text": "Blaaa Channel ist test", "channel": "test", "img": "{{subj.img}}", "imagePosition": "above"}},
+        {"module": "Main Part", "part": "timer", "type": "timer", "content": {
+            "mainTimer": {"time": 10, "show": true},
+            "mainText": "Lelelelelele {{obj.name}}",
+            "mainImg": "eliot.png",
+            "preTimer": {"time": 10, "show": true},
+            "preText": "Lelelelelele {{obj.name}}",
+            "preImg": "eliot.png",
+            "postTimer": {"time": 10, "show": true},
+            "postText": "Lelelelelele {{obj.name}}",
+            "postImg": "eliot.png",
+            "startIndicatorSound": "maingong.wav",
+            "endIndicatorSound": "maingong.wav"
+        }}, 
+        {"module": "Main Part", "part": "checkbox", "type": "question", "content": {"definesSubject": ["checkbox"], "text": "Wieso lebst du ?", "name": "checkbox", "type": "checkbox", "options": ["1", "2", "3", "4", "5"]}},
+        {"module": "Main Part", "part": "radio", "type": "question", "content": {"definesSubject": ["radio"], "text": "Wieso lebst du ?", "name": "radio", "type": "radio", "options": ["1", "2", "3", "4", "5"]}},
+        {"module": "Main Part", "part": "input", "type": "question", "content": {"definesSubject": ["input"], "text": "Wieso lebst du ?", "name": "input", "type": "input", "options": {"type": "text"}}},
+        {"module": "Main Part", "part": "matrix", "type": "question", "content": {"definesSubject": ["matrix"], "text": "Wieso lebst du ?", "name": "matrix", "type": "matrix", "options": {"left": "links", "right": "rechts", "above": "oben", "below": "unten", "alignment": "vertical"}}},
+        {"module": "Main Part", "part": "matrixCirc", "type": "question", "content": {"definesSubject": ["matrixCirc"], "text": "Wieso lebst du ?", "name": "matrixCirc", "type": "matrix_circle", "options": {"left": "links", "right": "rechts", "above": "oben", "below": "unten", "alignment": "vertical", "thirdDimension": "drittedim"}}},
+        {"module": "Main Part", "part": "poly", "type": "question", "content": {"text": "Wieso lebst du ?", "name": "poly", "type": "polygonGraph", "options": {"graph": "show", "sliders": [
+            {"name": "poly1", "marks": {"10": "10", "80": "80"}, "sliderStyle": "simple", "text": "poly1", "defaultValue": 40, "definesSubject": ["poly1"]},
+            {"name": "poly2", "marks": {"5": "5", "80": "80"}, "sliderStyle": "simple", "text": "poly2", "defaultValue": 1, "definesSubject": ["poly2"]},
+            {"name": "poly3", "marks": {"77": "77", "80": "80"}, "sliderStyle": "simple", "text": "poly3", "defaultValue": 52, "definesSubject": ["poly3"]}
+        ]}}},
+        {"module": "Main Part", "part": "select", "type": "question", "content": {"definesSubject": ["select"], "text": "Wieso lebst du ?", "name": "select", "type": "select", "options": ["a", "b", "c", "d"]}},
+        {"module": "Main Part", "part": "yes", "type": "question", "content": {"definesSubject": ["yes"], "text": "Wieso lebst du ?", "name": "yes", "type": "yes-no", "options": {"top": "oben", "bottom": "unten"}}},
+        {"module": "Main Part", "part": "slider", "type": "question", "content": {"definesSubject": ["slider"], "text": "Wieso lebst du ?", "name": "slider", "type": "slider", "options": [
+            {"name": "slider1", "marks": {"10": "10", "80": "80"}, "sliderStyle": "simple", "text": "slider1", "defaultValue": 40, "definesSubject": ["slider1"], "min": 10},
+            {"name": "slider2", "marks": {"5": "5", "80": "80"}, "sliderStyle": "simple", "text": "slider2", "defaultValue": 1, "definesSubject": ["slider2"]},
+            {"name": "slider3", "marks": {"77": "77", "80": "80"}, "sliderStyle": "simple", "text": "slider3", "defaultValue": 52, "definesSubject": ["slider3"], "max": 110}
+        ]}},
+
+
+        {"module": "end", "part": "endtext", "type": "explanation", "content": {"text": "Mit Delay von 2 sekunden", "continueDelay": 2}},
+        {"module": "end", "part": "end Page", "type": "end", "content": {"text": "endeeee Tesasatstastiadkasf <br> umbruuuch"}}        
+    ]
+}

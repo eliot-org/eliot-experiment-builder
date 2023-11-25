@@ -20,6 +20,72 @@
                                 </div>
                             </div>
                             <div class="step-content">
+
+                                <div>
+                                    <div class="mindChannels-head" style="display: flex">
+                                        <span style="margin-top:16px;margin-right:5px">Modules:</span>
+                                        <treeselect v-model="modulesToAdd" :multiple="true" :options="modules" style="max-width: 60%; margin-top: 10px"/>
+                                        <button class="btn-black" style="max-width: 150px;" id="addModules" @click="addModules()">Add</button>
+                                        <button class="btn-black" id="chooseAllModules" @click="chooseAllModules()">Choose All</button>
+                                        <!--
+                                        <button class="btn-black" id="show-modal" @click="showPrePresetModal = true">Presets</button>
+                                        <presetModal :presets="presets" v-if="showPrePresetModal" @close="showPrePresetModal = false" @chooseModules="chooseModules('pre', $event)" @deletePreset="deletePreset($event)" @addPreset="addPreset($event, 'pre')" ></presetModal>
+                                        -->
+                                    </div>  
+                                    <div class="mindChannels-checkbox">
+                                        <div >
+                                            </div>
+                                        <draggable v-model="moduleList">
+                                            <v-card
+                                                style="margin-bottom:5px;"
+                                                :hover=true
+                                                outlined
+                                                v-for="(element, idx) in moduleList" 
+                                                :key="idx"
+                                            >
+                                                <v-card-title>
+                                                    {{element.name}}
+                                                </v-card-title>
+                                                <v-card-text>
+                                                    <div style="display: flex;">
+                                                        Repeats: 
+                                                        <input type="number" min="1" v-model="element.count">    
+                                                    </div>
+                                                    
+                                                    <div style="margin-bottom:10px; max-width: 100%; display: flex;">
+                                                        <div style="float:left; margin-top:10px; margin-right:5px">Objects:</div> 
+                                                        <treeselect
+                                                            style="float:left; max-width: 90%;"
+                                                            :options="objects"
+                                                            v-model="element.objects"
+                                                            :multiple="true"
+                                                            placeholder="Objects..."
+                                                            :normalizer="normalizeObjects"
+                                                        /> 
+                                                    </div>
+                                                    <div style="display: flex;">
+                                                        <label class="checkbox-label" style="float:left" v-if="element.objects.length > 0">
+                                                            <input id="randomizeObj" type="checkbox" v-on:click="element.randomizeObj = !element.randomizeObj">
+                                                            <span class="checkbox-custom rectangular"></span>
+                                                        </label>
+                                                        <div class="checkbox-text" style="float:left; margin-right:25px" v-if="element.objects.length > 0">Randomize Object Order</div>
+                                                        
+                                                        <label class="checkbox-label" style="float:left">
+                                                            <input id="randomizeParts" type="checkbox" v-on:click="element.randomizeParts = !element.randomizeParts">
+                                                            <span class="checkbox-custom rectangular"></span>
+                                                        </label>
+                                                        <div class="checkbox-text" style="float:left">Randomize Part Order</div>
+                                                    </div>
+                                                    
+                                                    <button class="btn-black" style="max-width: 150px" id="addModules" @click="moduleList.splice(idx, 1)">Remove</button>
+                                                </v-card-text>
+                                            </v-card>
+                                        </draggable>
+                                    </div>
+                                </div>
+
+                                <!--<br><hr><br>
+
                                 <div>
                                     <div>Objects:</div>
                                     <ul class="material-table">
@@ -73,6 +139,7 @@
                                         <treeselect v-model="postModules" :multiple="true" :options="modules" />
                                     </div>
                                 </div>
+                            -->
                             </div>
                         </div>
                     </div>
@@ -123,8 +190,20 @@
                    </div>
             <p>Press Ctrl+P to pause</p>
             <p>Press Ctrl+B to confirm a manual step</p>
+            <div>
+                <div v-if="currentSurveyData !== {} && !showingAnswers">
+                    <b>Current Surveypage Data:</b><br>
+                    <vue-json-pretty :path="'survey'" :data="currentSurveyData"></vue-json-pretty>
+                </div>
+                
+                <div v-if="lastAnswer !== {} && !showingAnswers">
+                    <b>Last Answer:</b><br>
+                    <vue-json-pretty :path="'answer'" :data="lastAnswer"></vue-json-pretty>
+                </div>
+            </div>
             <div v-if="showingAnswers" class="answers-div">
                 <br><hr style="width:100%"><br>
+                <b>Answers:</b><br>
                 <vue-json-pretty :path="'res'" :data="answers"> </vue-json-pretty>
                 <br><button class="btn-black" @click="saveAnswers()">Save Answers again</button><br>
                 Answers Saved
@@ -136,10 +215,12 @@
 <script>
     import materialModal from './AdminSurvey/objectModal'
     import presetModal from './AdminSurvey/presetModal'
+    import draggable from "vuedraggable";
     export default {
         components: { 
             "modal": materialModal,
             "presetModal": presetModal,
+            "draggable": draggable,
         },
         data: function( ){
             return{
@@ -154,14 +235,14 @@
 
                 manualChannel: null,
 
-                preModules: [],
-                mainModules:[],
-                postModules:[],
+                //preModules: [],
+                //mainModules:[],
+                //postModules:[],
                 modules: [],
 
-                objectsChosen: [],
-                objects: [],
-                showObjectModal: false,
+                //objectsChosen: [],
+                //objects: [],
+                //showObjectModal: false,
 
                 surveyOptions: [],
                 surveyChoice: null,
@@ -174,37 +255,59 @@
                 unprocessedDisplays: [],
                 externalDisplay: {},
 
-                surveyPresets: [],
+                //surveyPresets: [],
 
                 computedSurvey: [],
                 computeError: "",
                 
-                presets: [],
-                showPrePresetModal: false,
-                showMainPresetModal: false,
-                showPostPresetModal: false,
+                //presets: [],
+                //showPrePresetModal: false,
+                //showMainPresetModal: false,
+                //showPostPresetModal: false,
+
+                currentSurveyData: {},
+                lastAnswer: {},
+
+                moduleList: [],
+                modulesToAdd: [],
             }
         },
         methods:{
-            chooseAllModules: function(area){
-                if(area == "pre"){
-                    this.preModules = []
-                }else if(area == "main"){
-                    this.mainModules = []
-                }else if(area == "post"){
-                    this.postModules = []
+            normalizeObjects(node) {
+                return {
+                    id: node._id,
+                    label: node.name
                 }
+            }, 
+            chooseAllModules: function(){
+                this.moduleList = []
                 for(let i = 0; i < this.modules.length; i++){
-                    if(area == "pre"){
-                        this.preModules.push(this.modules[i].id)
-                    }else if(area == "main"){
-                        this.mainModules.push(this.modules[i].id)
-                    }else if(area == "post"){
-                        this.postModules.push(this.modules[i].id)
-                    }
+                    this.moduleList.push(
+                        {
+                            name: this.modules[i].id,
+                            count: 1,
+                            objects: [],
+                            randomizeObj: false,
+                            randomizeParts: false,
+                        }        
+                    )
                 }
             },
-            chooseModules: function(area, preset){
+            addModules: function(){
+                for(let i in this.modulesToAdd){
+                    this.moduleList.push(
+                        {
+                            name: this.modulesToAdd[i],
+                            count: 1,
+                            objects: [],
+                            randomizeObj: false,
+                            randomizeParts: false,
+                        }        
+                    )
+                }
+                this.modulesToAdd = []
+            },
+            /*chooseModules: function(area, preset){
                 for(let y = 0; y < preset.modules.length; y++){
                     for(let i = 0; i< this.modules.length;i++){
                         if(this.modules[i].id == preset.modules[y]){
@@ -230,17 +333,21 @@
                         }
                     }
                 }
-            },
+            },*/
             updateSurveyChoice: function(value){
                 //Setze Surveychoice
                 if(value == null){
                     this.surveyChoice = null
                     this.modules = []
-                    this.modulesChosen = []
+                    //this.modulesChosen = []
+                    this.moduleList = []
+                    this.modulesToAdd = []
                 }else{
                     this.surveyChoice = this.getSurveyPreset(value._id)
                     this.modules = this.surveyChoice.modules
-                    this.modulesChosen = []
+                    this.moduleList = []
+                    this.modulesToAdd = []
+                    //this.modulesChosen = []
                 }
             },
             getSurveyPreset: function(id){
@@ -289,15 +396,70 @@
                 return content
             },
             computeSurvey: function(){
-                if((this.preModules == null || this.preModules.length <= 0) && (this.mainModules == null || this.mainModules.length <= 0) && (this.postModules == null || this.postModules.length <= 0)){
+                if((this.moduleList == [] || this.moduleList.length <= 0)){
                     return "Not enough questions selected"
                 }
-                if(this.objectsChosen.length <= 0 || this.objectsChosen == null){
+                /*if(this.objectsChosen.length <= 0 || this.objectsChosen == null){
                     return "Atleast one object has to be selected"
-                }
+                }*/
                 this.computedSurvey = []
+                for(let i = 0; i < this.moduleList.length; i++){
+                    for(let r = 0; r < parseInt(this.moduleList[i].count); r++){
+                        let tmp = []
+                        if(this.moduleList[i].objects.length > 0){
+                            let tmpByObj = []
+                            for(let o = 0; o < this.moduleList[i].objects.length; o++){
+                                let fromSurvey = this.surveyChoice.survey.filter((el) => (el.module === this.moduleList[i].name || el.part === this.moduleList[i].name))
+                                let tmpThisObj = []
+                                for(let s = 0; s < fromSurvey.length; s++){
+                                    tmpThisObj.push({
+                                        "object": JSON.parse(JSON.stringify(this.moduleList[i].objects[o])), 
+                                        "nextObject": (o < this.moduleList[i].objects.length-1) ? JSON.parse(JSON.stringify(this.moduleList[i].objects[o+1])) : "",  
+                                        "hardware": Object.prototype.hasOwnProperty.call(fromSurvey[s], "hardware") ? JSON.parse(JSON.stringify(fromSurvey[s].hardware)) : {},
+                                        "module": fromSurvey[s].module, 
+                                        "part": fromSurvey[s].part,
+                                        "type": fromSurvey[s].type, 
+                                        "content": this.addObjectDataToContent(JSON.parse(JSON.stringify(fromSurvey[s].content)), this.moduleList[i].objects[o])
+                                    })
+                                }
+                                if(this.moduleList[i].randomizeParts){
+                                    //Get all unique parts in current module
+                                    let parts = tmpThisObj.map((el) => el.part).filter((value, index, array) => array.indexOf(value) === index)
+                                    this.shuffle(parts)
+                                    tmpThisObj = parts.map((el) => tmpThisObj.filter((tmpEl) => tmpEl.part === el)).flat()//Order tmp by parts
+                                }
+                                tmpByObj.push(tmpThisObj)
+                            }
+                            if(this.moduleList[i].randomizeObj){
+                                tmpByObj = this.shuffle(tmpByObj).flat()
+                            }
+                            tmp = tmpByObj
+                        }else{
+                            let fromSurvey = this.surveyChoice.survey.filter((el) => (el.module === this.moduleList[i].name || el.part === this.moduleList[i].name))
+                            for(let s = 0; s < fromSurvey.length; s++){
+                                tmp.push({
+                                    "object": "", 
+                                    "nextObject": "",  
+                                    "hardware": Object.prototype.hasOwnProperty.call(fromSurvey[s], "hardware") ? JSON.parse(JSON.stringify(fromSurvey[s].hardware)) : {},
+                                    "module": fromSurvey[s].module, 
+                                    "part": fromSurvey[s].part,
+                                    "type": fromSurvey[s].type, 
+                                    "content": fromSurvey[s].content
+                                })
+                            }
+                        }
+                        if(this.moduleList[i].randomizeParts){
+                            //Get all unique parts in current module
+                            let parts = tmp.map((el) => el.part).filter((value, index, array) => array.indexOf(value) === index)
+                            this.shuffle(parts)
+                            tmp = parts.map((el) => tmp.filter((tmpEl) => tmpEl.part === el)).flat()//Order tmp by parts
+                        }
+                        this.computedSurvey.push(...tmp)
+                    }
+                }
+
                 //Adds Pre Modules
-                for(let y = 0; y < this.surveyChoice.survey.length; y++){
+                /*for(let y = 0; y < this.surveyChoice.survey.length; y++){
                     if(this.preModules.includes(this.surveyChoice.survey[y].module) || this.preModules.includes(this.surveyChoice.survey[y].part)){
                         this.computedSurvey.push({
                             "object": "", 
@@ -343,17 +505,17 @@
                             "content": this.surveyChoice.survey[y].content
                         })
                     }
-                }
+                }*/
                 console.log(this.computedSurvey)
                 return "success"
             }, 
-            updateChecked: function(obj){
+            /*updateChecked: function(obj){
                 if(this.findInArray(obj, this.objectsChosen) != null){
                     this.objectsChosen = this.objectsChosen.filter(el => el != obj)
                 }else{
                     this.objectsChosen.push(obj)
                 }
-            },
+            },*/
             findInArray: function(obj, arr){
                 for(var i=0; i<arr.length; i++){
                     if(arr[i] == obj){
@@ -400,7 +562,7 @@
                     this.objects = []
                 }
             },
-            loadPresets: async function(){
+            /*loadPresets: async function(){
                 this.presets = await this.$electron.ipcRenderer.invoke("getStoreValue", "presets") 
                 if(this.presets === null || this.presets === undefined){
                     this.presets = []
@@ -426,7 +588,7 @@
                         this.$electron.ipcRenderer.invoke("setStoreValue", "presets", this.presets) 
                     }
                 }
-            },
+            },*/
             saveAnswers: function(){
                 if(this.answersSent == false){
                     this.answersSent = true
@@ -527,10 +689,20 @@
                 }
             })
 
+            
+            this.$electron.ipcRenderer.on("currentSurveyData", (event,arg) => {
+                console.log("Channel Message received. Will update currentSurveyData")
+                this.currentSurveyData = arg
+            })
+            this.$electron.ipcRenderer.on("lastAnswer", (event,arg) => {
+                console.log("Channel Message received. Will update lastAnswer")
+                this.lastAnswer = arg
+            })
+
             this.$electron.ipcRenderer.send("displays", {"arg": "getDisplays"})
             this.loadSurveys()
             this.loadObjects()
-            this.loadPresets()
+            //this.loadPresets()
         }
     }
 </script>
@@ -707,5 +879,29 @@
     
     .material-table-element{
         margin-left:20px;
+    }
+
+    .DraggableButton {
+        margin-top: 35px;
+    }
+    .DraggableHandle {
+        float: left;
+        padding-top: 8px;
+        padding-bottom: 8px;
+    }
+
+    .DraggableClose {
+    float: right;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    }
+
+    .DraggableText {
+        margin: 20px;
+    }
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button {  
+        opacity: 1;
     }
 </style>
