@@ -1,4 +1,4 @@
-# ELIOT
+# ELIOT Experiment Builder
 
 <p align="center"><img src="/src/renderer/assets/eliot.png" alt="ELIOT Brain" width="200"/></p>
 
@@ -11,7 +11,7 @@ Features
 - Hardware - integrate various external devices into an experiment. Synchronization between devices as well as conditional execution is possible
   - Our scripts provide functionality for EEG equipment, scales, lights, arduinos and robots
   - Write your own scripts using the full power of JavaScript and npm packages
-- OpenSource - released under [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/legalcode.de)
+- OpenSource - released under [CC-BY-NC-4.0](https://github.com/eliot-org/eliot-experiment-builder/blob/main/LICENSE.md)
 - JSON - create surveys using easy-to-understand JSON files
 - Offline - no need for an internet connection in your laboratory
 
@@ -34,7 +34,7 @@ Getting Started
 There are a couple of setup steps to undertake after the installation has finished in order to use the program fully.
   - Go to the settings page
     - Choose in which folder your hardware scripts, and assets(images) are located
-    - Then, import at least one survey json file. An example can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey.json)
+    - Then, import at least one survey json file. An example can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey_sample.json). A Stroop example is also available [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/stroop.json)
   - Go to the objects page
     -  Create an object by setting a name and potentially properties that are needed by your survey
   - Then, if your survey needs subject data, go to the subjects page
@@ -52,7 +52,7 @@ You have now finished the basic setup and are ready to run your survey on the su
   - Press start
   
 ### How to write survey files
-A survey file is a single file that describes an experiment, including all hardware interactions, as well as the use of the properties of objects and subjects. In order to be able to write survey files you should familiarize yourself with the json text format and [JSON Schema](https://json-schema.org/). Once youve done this you should take a look at the example survey file that can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey.json). To be able to write a correct survey file, follow the json schemata that can be found in the schemas folder in the repository. There, multiple files stack on top of each other, because json schema is still missing some features. The main `surveyfile.json` file in the schemas folder describes the main structure of survey files. The files in the subfolders describe parts of the survey file that are interchangable and depend on the value of the `pagetype` property you choose. Speaking in more detail, the value of the content property depends on which page type is chosen. The different value options are described in the files in the subfolders. The same goes for the value of the `options` property of the question pagetype, where you can find the different possibilities in the questiontypes subfolder.
+A survey file is a single file that describes an experiment, including all hardware interactions, as well as the use of the properties of objects and subjects. In order to be able to write survey files you should familiarize yourself with the json text format and [JSON Schema](https://json-schema.org/). Once youve done this you should take a look at the example survey file that can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey_sample.json). To be able to write a correct survey file, follow the json schemata that can be found in the schemas folder in the repository. There, multiple files stack on top of each other, because json schema is still missing some features. The main `surveyfile.json` file in the schemas folder describes the main structure of survey files. The files in the subfolders describe parts of the survey file that are interchangable and depend on the value of the `pagetype` property you choose. Speaking in more detail, the value of the content property depends on which page type is chosen. The different value options are described in the files in the subfolders. The same goes for the value of the `options` property of the question pagetype, where you can find the different possibilities in the questiontypes subfolder.
 
 #### How to create and use a new survey file:
   - Create a new file of the type .json
@@ -65,6 +65,18 @@ A survey file is a single file that describes an experiment, including all hardw
   - After importing scripts, go to the hardware page and connect to your devices (using port names, IP addresses, or whatever else is specified)
   - Commands that can be used in survey files are listed on the hardware page (described by the value of the "name" property)
 
+### How to export data
+  - Go to the Measurements page in the Main Window of the application
+  - If you have finished at least on experiment already, then their results will be visible here
+  - Press one of the Download Buttons to export the data either in their native JSON format or converted to CSV with additional data in an additional JSON file
+
+### Assets / Stimuli
+You can use images, videos and sounds in your experiments, for example as stimuli. To be able to use them you need to follow these steps:
+  - Put all of your assets in a single folder
+  - On the Settings page, select a location for the assets folder
+
+Now, if you want to use these in an experiment, then you need to add their filename as the value of a property to either a subject or an object. This can then be used in an experiment by adding ``{{obj.propertyName}}`` or ``{{subj.propertyName}}`` at the desired points in the survey. Our example json shows how this works.
+
 Support
 ---
 You can ask questions, receive support, and report bugs under the [Issues](https://github.com/eliot-org/eliot/issues) section in the git repository.
@@ -72,7 +84,7 @@ You can ask questions, receive support, and report bugs under the [Issues](https
 Possible Future Developments
 ---
 - Survey Builder - create surveys using a graphical interface rather than writing a JSON file
-- Conditions/Loops - display pages conditionally or in loops
+- Conditions - display pages conditionally
 - Page Customizability - dont like the default theme? Change pages to your liking with HTML and CSS
 - New Stimuli
 
