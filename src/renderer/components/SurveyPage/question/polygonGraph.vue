@@ -52,7 +52,8 @@
             //The options for this question
             options:{
                required:true
-           }
+           },
+           continueBtnText
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change
@@ -82,13 +83,6 @@
                     tmp = tmp/this.picked.length
                 }
                 return {label:{name:"", text:""}, value: (tmp.toString()).slice(0,4)}
-            } ,
-            continueBtnText: function(){
-                if(this.options !== undefined){
-                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
-                }else{
-                    return "Next"
-                }
             }
         },
         methods:{

@@ -41,6 +41,7 @@
             options:{
                required:true
            },
+           continueBtnText
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change
@@ -71,13 +72,6 @@
 			}
 		},
         computed: {
-            continueBtnText: function(){
-                if(this.options !== undefined){
-                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
-                }else{
-                    return "Next"
-                }
-            },
             bgColor: function(){
                 if(Object.prototype.hasOwnProperty.call(this.options,"alignment") && Object.prototype.hasOwnProperty.call(this.options,"colors")){
                     if(this.options.colors.length == 3){

@@ -28,6 +28,10 @@
         "definesSubject":{
             "description":"The Answer(or all of them for example in the slider) of this Question will be used to create a Subject. The specific property or properties(just do multiple entries in the array) that gets defined is specified by this property.",
             "type": "array"
+        },
+        "continueBtnText":{
+            "description": "The text to show inside the continue button",
+            "type":"string"
         }
     },
     "required": [

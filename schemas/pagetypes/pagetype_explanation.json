@@ -11,6 +11,10 @@
         "continueDelay":{
             "description": "The amount of seconds after which the Continue Button is shown. -1 for never(wait for Hardware). OR {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties. Can also be accessed by hardware, via the 'showContinueButton' event",
             "type": "number"
+        },
+        "continueBtnText":{
+            "description": "The text to show inside the continue button",
+            "type":"string"
         }
     },
     "required": [

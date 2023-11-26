@@ -21,9 +21,18 @@
             "type": "string"
         },
         "alignment":{
-            "description": "Choose one from ['horizontal', 'vertical', 'diagonal']. Sets the alignment of matrix. 'diagonal' is default if empty or missing. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
-            "type": "string",
-            "enum": ["horizontal", "vertical", "diagonal"]
+            "description": "For example '90deg'. Write how the matrix color gradient should be angled",
+            "type": "string"
+        },
+        "colors":{
+            "description": "The three colors from which the matrix background gradient will be made",
+            "type": "array",
+            "items":{
+                "description": "A hexcode like #FFFFFF",
+                "type": "string"
+            },
+            "minContains": 3,
+            "maxContains:": 3
         }
     },
     "required": ["left", "right", "above", "below"]

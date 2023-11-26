@@ -19,7 +19,8 @@
             //The options of this page as set by surveyfile
             options:{
                required:true
-           }
+           },
+           continueBtnText
         },
 		data: function(){	
 			return{
@@ -29,15 +30,6 @@
                 alreadyClicked: false,
 			}
 		},
-        computed: {
-            continueBtnText: function(){
-                if(this.options !== undefined){
-                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
-                }else{
-                    return "Next"
-                }
-            }
-        },
 		methods:{
             addAnswer: function(value){
                 this.picked.push(value)

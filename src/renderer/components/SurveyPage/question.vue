@@ -12,7 +12,7 @@
         </div>
         <div class="right-side">
             <transition name="fade" mode="out-in">
-                <router-view ref="questionChild" :options="content.options" v-on:updateAnswers="$emit('updateAnswers', $event)" v-on:nextPage="$emit('nextPage')"></router-view>//Prop options wird an Child Component übergeben
+                <router-view ref="questionChild" :continueBtnText="continueBtnText" :options="content.options" v-on:updateAnswers="$emit('updateAnswers', $event)" v-on:nextPage="$emit('nextPage')"></router-view>//Prop options wird an Child Component übergeben
             </transition>
         </div>
     </div>
@@ -27,6 +27,15 @@
             content:{               
                required: true
 			},
+        },
+        computed: {
+            continueBtnText: function(){
+                if(this.content !== undefined){
+                    return (this.content.continueBtnText !== undefined && this.content.continueBtnText !== "") ? this.content.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change

@@ -45,7 +45,8 @@
             //The options for this question
             options:{
                required:true
-           }
+           },
+           continueBtnText
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change
@@ -61,15 +62,6 @@
                 alreadyClicked: false,
                 assetLocation: "",
 			}
-        },
-        computed: {
-            continueBtnText: function(){
-                if(this.options !== undefined){
-                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
-                }else{
-                    return "Next"
-                }
-            }
         },
 		methods:{
             //Get the type of the image

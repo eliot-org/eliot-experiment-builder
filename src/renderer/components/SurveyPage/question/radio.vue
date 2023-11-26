@@ -25,7 +25,8 @@
             //The options of this page as set by surveyfile
             options:{
                required:true
-           }
+           },
+           continueBtnText
         },
         watch: {
             //When the options change(only on page change) then reinitialize page
@@ -36,15 +37,6 @@
         mounted(){
             //init page
             this.init()
-        },
-        computed: {
-            continueBtnText: function(){
-                if(this.options !== undefined){
-                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
-                }else{
-                    return "Next"
-                }
-            }
         },
 		data: function(){	
 			return{

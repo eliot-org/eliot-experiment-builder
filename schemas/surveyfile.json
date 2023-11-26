@@ -78,6 +78,29 @@
                         "description": "The content depends on the type you chose for this Page. For more details look at the corresponding schema",
                         "type": "object"
                     },
+                    "answerDelayToNextPage": {
+                        "description": "After an answer has been set, for example by keypresses, how many miliseconds should pass until the next page gets called",
+                        "type": "number"
+                    },
+                    "autoNext": {
+                        "description": "Automatically call the next page after the specified delay in miliseconds. Optionally, give a default answer",
+                        "type": "object",
+                        "properties": {
+                            "delay":{
+                                "description": "The miliseconds",
+                                "type": "number",
+                                "required": true
+                            },
+                            "answer":{
+                                "description": "The answer text",
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "keys":{
+                        "description": "Is an object whose properties are the specific keys that can be pressed. Their values are strings in arrays. The options available are setAnswer('Answer') and continue to get to the next page. For example, key r that sets the answer to red: {'r': ['setAnswer('red')'],}",
+                        "type":"object"
+                    },
                     "hardware":{
                         "description": "Send commands to the connected hardware by defining them here",
                         "type": "object",
