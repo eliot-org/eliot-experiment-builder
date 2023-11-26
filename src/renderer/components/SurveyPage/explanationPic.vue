@@ -9,7 +9,7 @@
                 <div class="explanationText-LR">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button>
                 </div>
             </div>
@@ -18,7 +18,7 @@
                 <div class="explanationText-LR">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button> 
                 </div>
                 <div class="logo-wrapper-LR">
@@ -35,7 +35,7 @@
                 <div class="explanationText">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button> 
                 </div>
             </div>
@@ -44,7 +44,7 @@
                 <div class="explanationText">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button> 
                 </div>
                 <div class="logo-wrapper">
@@ -61,7 +61,7 @@
                 <div class="explanationText-fullscreen">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button> 
                 </div>
             </div>
@@ -74,13 +74,13 @@
                 <div class="explanationText-behind">
                     <div v-html="content.text" class="explanationHTML"></div>
                     <button @click="nextPage()" type="button" class="btn-black" v-if="showBtn && delayOver">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button> 
                 </div>
             </div>
 
             <!--<button @click="nextPage()" type="button" class="btn-black" v-if="showBtn">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button> -->
         </div>
     </div>
@@ -115,6 +115,15 @@
                 assetLocation: ""
 			}
         },
+        computed: {
+            continueBtnText: function(){
+                if(this.content !== undefined){
+                    return (this.content.continueBtnText !== undefined && this.content.continueBtnText !== "") ? this.content.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
         mounted(){
             //Init after small timeout so that all data is really loaded
             setTimeout(()=>{this.getAssetDir()},10)
@@ -129,12 +138,11 @@
             },
             //Init data
             init(){
-                console.log("init")
                 this.img = this.getImg()
                 this.dataType = this.getDataType()
                 if(Object.prototype.hasOwnProperty.call(this.content, "continueDelay")){
                     if(this.content.continueDelay != "-1" && this.content.continueDelay != -1){
-                        setTimeout(() => {this.delayOver = true}, this.content.continueDelay * 1000)
+                        setTimeout(() => {this.delayOver = true}, this.content.continueDelay)
                     }
                 }else{
                     this.delayOver = true
@@ -207,7 +215,6 @@
 .explWrapper{
     width: 100vw;
 		position: absolute;
-		top:20px;
 		bottom:0px;
     overflow-y: auto;
     overflow-x: hidden;

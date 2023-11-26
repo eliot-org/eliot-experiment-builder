@@ -1,0 +1,439 @@
+{
+    "name": "Sample Survey",
+    "modules": [
+        {
+            "id": "Welcome",
+            "label": "Welcome",
+            "children": [
+                {
+                    "id": "Welcome Page",
+                    "label": "Welcome Page"
+                },
+                {
+                    "id": "Welcome Text",
+                    "label": "Welcome Text"
+                }
+            ]
+        },
+        {
+            "id": "Main Part",
+            "label": "Main Part",
+            "children": [
+                {
+                    "id": "expl",
+                    "label": "expl"
+                },
+                {
+                    "id": "explPic",
+                    "label": "explPic"
+                },
+                {
+                    "id": "manual",
+                    "label": "manual"
+                },
+                {
+                    "id": "timer",
+                    "label": "timer"
+                },
+                {
+                    "id": "checkbox",
+                    "label": "checkbox"
+                },
+                {
+                    "id": "radio",
+                    "label": "radio"
+                },
+                {
+                    "id": "input",
+                    "label": "input"
+                },
+                {
+                    "id": "matrix",
+                    "label": "matrix"
+                },
+                {
+                    "id": "matrixCirc",
+                    "label": "matrixCirc"
+                },
+                {
+                    "id": "poly",
+                    "label": "poly"
+                },
+                {
+                    "id": "select",
+                    "label": "select"
+                },
+                {
+                    "id": "yes",
+                    "label": "yes"
+                },
+                {
+                    "id": "slider",
+                    "label": "slider"
+                }
+            ]
+        },
+        {
+            "id": "end",
+            "label": "end",
+            "children": [
+                {
+                    "id": "endtext",
+                    "label": "endText"
+                },
+                {
+                    "id": "end Page",
+                    "label": "end Page"
+                }
+            ]
+        }
+    ],
+    "survey": [
+        {
+            "module": "Welcome",
+            "part": "Welcome Page",
+            "type": "welcome",
+            "content": {
+                "text": "Welcome to this sample survey. <br> You can often use html tags to achieve effects like <span style='color: blue'>this</span>"
+            }
+        },
+        {
+            "module": "Welcome",
+            "part": "Welcome Text",
+            "type": "explanation",
+            "content": {
+                "text": "This page will automatically continue to the next after 2000ms, or 2 seconds",
+                "continueDelay": 2000
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "expl",
+            "type": "explanation",
+            "content": {
+                "text": "This page can be used for explanations. It does not use its continueDelay option."
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "explPic",
+            "type": "explanationPic",
+            "keys": {
+                "space": "continue"
+            },
+            "content": {
+                "text": "This page can show an explanation and an image at the same time. In this case the image will be below this text. The shown image is based on the proporties of the current object and saved at: {{obj.img}}",
+                "img": "{{obj.img}}",
+                "imagePosition": "below"
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "manual",
+            "type": "manual",
+            "content": {
+                "text": "This page cannot be left by the subject. Instead a manual intervention of the experiment conductor is needed, by either clicking the continue button in his window or pressing Ctrl and B.<br> There is also an image, whose save location is specified by a property of the current subject.",
+                "channel": "test",
+                "img": "{{subj.img}}",
+                "imagePosition": "above"
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "timer",
+            "type": "timer",
+            "content": {
+                "mainTimer": {
+                    "time": 10,
+                    "show": true
+                },
+                "mainText": "This will be shown for 10 seconds. With an image.",
+                "mainImg": "eliot.png",
+                "preTimer": {
+                    "time": 10,
+                    "show": true
+                },
+                "preText": "This will be shown for 5 seconds. With an image and a sound",
+                "preImg": "eliot.png",
+                "postTimer": {
+                    "time": 5,
+                    "show": true
+                },
+                "postText": "Some text. With an image and a sound.",
+                "postImg": "eliot.png",
+                "startIndicatorSound": "maingong.wav",
+                "endIndicatorSound": "maingong.wav"
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "checkbox",
+            "type": "question",
+            "keys":{
+                "1": ["setAnswer('1')"],
+                "2": ["setAnswer('2')"],
+                "3": ["setAnswer('3')"],
+                "4": ["setAnswer('4')"],
+                "5": ["setAnswer('5')"]
+            },
+            "content": {
+                "definesSubject": [
+                    "checkbox"
+                ],
+                "text": "A question using checkboxes where multiple answers are allowed",
+                "name": "checkbox",
+                "type": "checkbox",
+                "options": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5"
+                ]
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "radio",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "radio"
+                ],
+                "text": "A question using radio buttons where only one answer is allowed",
+                "name": "radio",
+                "type": "radio",
+                "options": [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5"
+                ]
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "input",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "input"
+                ],
+                "text": "A question where the subject can give a freetext answer",
+                "name": "input",
+                "type": "input",
+                "options": {
+                    "type": "text"
+                }
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "matrix",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "matrix"
+                ],
+                "text": "A matrix characterization with custom colors",
+                "name": "matrix",
+                "type": "matrix",
+                "options": {
+                    "left": "Hot",
+                    "right": "Cold",
+                    "above": "Up",
+                    "below": "Down",
+                    "alignment": "180deg",
+                    "colors": ["#00B050", "#FFD966", "#FF0000"]
+                }
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "matrixCirc",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "matrixCirc"
+                ],
+                "text": "A matrix characterization with a third dimension in the form of an expandable circle",
+                "name": "matrixCirc",
+                "type": "matrix_circle",
+                "options": {
+                    "left": "Left",
+                    "right": "Right",
+                    "above": "Up",
+                    "below": "Down",
+                    "thirdDimension": "Name of the third dimension",
+                    "alignment": "90deg",
+                    "colors": ["#00B050", "#FFD966", "#FF0000"],
+                    "circleColors": ["#FF0000", "#FFD966", "#00B050"]
+                }
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "poly",
+            "type": "question",
+            "content": {
+                "text": "A question using sliders that are combined into a polygonal graph",
+                "name": "poly",
+                "type": "polygonGraph",
+                "options": {
+                    "graph": "show",
+                    "sliders": [
+                        {
+                            "name": "poly1",
+                            "marks": {
+                                "10": "10",
+                                "80": "80"
+                            },
+                            "sliderStyle": "simple",
+                            "text": "poly1",
+                            "defaultValue": 40,
+                            "definesSubject": [
+                                "poly1"
+                            ]
+                        },
+                        {
+                            "name": "poly2",
+                            "marks": {
+                                "5": "5",
+                                "80": "80"
+                            },
+                            "sliderStyle": "simple",
+                            "text": "poly2",
+                            "defaultValue": 1,
+                            "definesSubject": [
+                                "poly2"
+                            ]
+                        },
+                        {
+                            "name": "poly3",
+                            "marks": {
+                                "77": "77",
+                                "80": "80"
+                            },
+                            "sliderStyle": "simple",
+                            "text": "poly3",
+                            "defaultValue": 52,
+                            "definesSubject": [
+                                "poly3"
+                            ]
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "select",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "select"
+                ],
+                "text": "A dropdown selection",
+                "name": "select",
+                "type": "select",
+                "options": [
+                    "a",
+                    "b",
+                    "c",
+                    "d"
+                ]
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "yes",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "yes"
+                ],
+                "text": "A question with two buttons as possible answers",
+                "name": "yes",
+                "type": "yes-no",
+                "options": {
+                    "top": "Upper Answer",
+                    "bottom": "Lower Answer"
+                }
+            }
+        },
+        {
+            "module": "Main Part",
+            "part": "slider",
+            "type": "question",
+            "content": {
+                "definesSubject": [
+                    "slider"
+                ],
+                "text": "Sliders without the polygonal graph",
+                "name": "slider",
+                "type": "slider",
+                "options": [
+                    {
+                        "name": "slider1",
+                        "marks": {
+                            "10": "10",
+                            "80": "80"
+                        },
+                        "sliderStyle": "simple",
+                        "text": "slider1",
+                        "defaultValue": 40,
+                        "definesSubject": [
+                            "slider1"
+                        ],
+                        "min": 10
+                    },
+                    {
+                        "name": "slider2",
+                        "marks": {
+                            "5": "5",
+                            "80": "80"
+                        },
+                        "sliderStyle": "simple",
+                        "text": "slider2",
+                        "defaultValue": 1,
+                        "definesSubject": [
+                            "slider2"
+                        ]
+                    },
+                    {
+                        "name": "slider3",
+                        "marks": {
+                            "77": "77",
+                            "80": "80"
+                        },
+                        "sliderStyle": "simple",
+                        "text": "slider3",
+                        "defaultValue": 52,
+                        "definesSubject": [
+                            "slider3"
+                        ],
+                        "max": 110
+                    }
+                ]
+            }
+        },
+        {
+            "module": "end",
+            "part": "endtext",
+            "type": "explanation",
+            "content": {
+                "text": "This page will automatically continue to the next after 2000ms, or 2 seconds",
+                "continueDelay": 2000
+            }
+        },
+        {
+            "module": "end",
+            "part": "end Page",
+            "type": "end",
+            "content": {
+                "text": "This sample survey has now ended. Thanks for trying it out"
+            }
+        }
+    ]
+}

@@ -13,7 +13,7 @@
         </div>
         <div class="ok-btn" v-if="picked">
             <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -37,6 +37,15 @@
             //init page
             this.init()
         },
+        computed: {
+            continueBtnText: function(){
+                if(this.options !== undefined){
+                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
 		data: function(){	
 			return{
                 //The input of the user
@@ -51,6 +60,9 @@
              */
             init(){
                 setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+            },
+            addAnswer: function(value){
+                this.picked = value
             },
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){

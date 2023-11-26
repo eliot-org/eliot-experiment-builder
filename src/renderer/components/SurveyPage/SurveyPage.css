@@ -1,6 +1,5 @@
   	.wrapper{
 		position: absolute;
-		top:20px;
 		bottom:0px;
   		width: 100vw;
         justify-content: center;
@@ -78,7 +77,6 @@
     .explanationWrapper{
         width: 100vw;
 		position: absolute;
-		top:20px;
 		bottom:0px;
         justify-content: center;
         align-items: center;

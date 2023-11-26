@@ -1,6 +1,6 @@
 {
-  "name": "eliot",
-  "version": "0.2.3",
+  "name": "eliot-experiment-builder",
+  "version": "0.3.0",
   "author": {
     "name": "imat-uve gmbh",
     "email": "info@imat-uve.de",
@@ -16,7 +16,7 @@
       "email": "leander.schweiger@posteo.de"
     }
   ],
-  "description": "ELIOT Umfrage",
+  "description": "A graphical builder interface for your scientific expirements and surveys. Made with JavaScript, Vue & Electron and completely open-source. Compatible with a variety of external hardware.",
   "license": "CC-BY-NC-4.0",
   "main": "./dist/electron/main.js",
   "scripts": {
@@ -32,7 +32,7 @@
     "rebuild": "electron-rebuild -f -w serialport"
   },
   "build": {
-    "productName": "Eliot",
+    "productName": "Eliot Experiment Builder",
     "directories": {
       "output": "build"
     },
@@ -73,6 +73,7 @@
     "johnny-five": "^2.1.0",
     "json-2-csv": "^5.0.1",
     "live-plugin-manager": "^0.17.1",
+    "mousetrap": "^1.6.5",
     "serialport": "^9.2.7",
     "sound-play": "^1.1.0",
     "vue": "^2.6.14",

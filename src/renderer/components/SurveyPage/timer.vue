@@ -39,7 +39,7 @@
         <!-- Other -->
         <div class="ok-btn" v-if="showPost && postTimer == -1">
             <button @click="nextPage()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -74,6 +74,15 @@
                 assetLocation: ""
             }
 		},
+        computed: {
+            continueBtnText: function(){
+                if(this.content !== undefined){
+                    return (this.content.continueBtnText !== undefined && this.content.continueBtnText !== "") ? this.content.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
 		methods:{
             getAssetDir: async function(){
                 this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')

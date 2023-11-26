@@ -47,9 +47,9 @@
                                                     {{element.name}}
                                                 </v-card-title>
                                                 <v-card-text>
-                                                    <div style="display: flex;">
+                                                    <div style="display: flex; margin-bottom:10px">
                                                         Repeats: 
-                                                        <input type="number" min="1" v-model="element.count">    
+                                                        <input type="number" min="1" v-model="element.count" style="outline: 1px solid black">    
                                                     </div>
                                                     
                                                     <div style="margin-bottom:10px; max-width: 100%; display: flex;">
@@ -170,8 +170,22 @@
                             <div class="step-header">
                                 <div class="step-header-text">Miscellaneous Settings</div>
                             </div>
-                            <div class="step-content">
-                                <div>
+                            <div class="step-content" style="display: grid">
+                                <div style="height: 25px">
+                                    <label class="checkbox-label" style="float:left">
+                                        <input id="randomizeParts" type="checkbox" v-on:click="showElapsedTime = !showElapsedTime">
+                                        <span class="checkbox-custom rectangular"></span>
+                                    </label>
+                                    <div class="checkbox-text" style="float:left">Show elapsed time</div>
+                                </div>
+                                <div style="height: 25px">
+                                    <label class="checkbox-label" style="float:left">
+                                        <input id="randomizeParts" type="checkbox" v-on:click="showElapsedSurvey = !showElapsedSurvey">
+                                        <span class="checkbox-custom rectangular"></span>
+                                    </label>
+                                    <div class="checkbox-text" style="float:left">Show elapsed survey</div>
+                                </div>
+                                <div style="height: 40px">
                                     <div class="surveySettings-name">Choose Display:</div>
                                     <v-select label="name" :options="displays" v-model="externalDisplay" class="selector" @input="updateExternalDisplay" style="margin-left:25%"></v-select>
                                 </div>
@@ -270,6 +284,9 @@
 
                 moduleList: [],
                 modulesToAdd: [],
+
+                showElapsedSurvey: false,
+                showElapsedTime: false,
             }
         },
         methods:{
@@ -361,7 +378,7 @@
             startSurvey: function(){
                 var returnVal = this.computeSurvey()
                 if(returnVal == "success"){
-                    console.log(this.computedSurvey)
+                    //console.log(this.computedSurvey)
                     this.$electron.ipcRenderer.send("surveyOps", "start")
                 }else{
                     this.computeError = returnVal
@@ -412,15 +429,26 @@
                                 let fromSurvey = this.surveyChoice.survey.filter((el) => (el.module === this.moduleList[i].name || el.part === this.moduleList[i].name))
                                 let tmpThisObj = []
                                 for(let s = 0; s < fromSurvey.length; s++){
-                                    tmpThisObj.push({
-                                        "object": JSON.parse(JSON.stringify(this.moduleList[i].objects[o])), 
+                                    let tmpQuestion = {
+                                        "object": JSON.parse(JSON.stringify(this.objects.find((el) => el._id === this.moduleList[i].objects[o]))), 
                                         "nextObject": (o < this.moduleList[i].objects.length-1) ? JSON.parse(JSON.stringify(this.moduleList[i].objects[o+1])) : "",  
                                         "hardware": Object.prototype.hasOwnProperty.call(fromSurvey[s], "hardware") ? JSON.parse(JSON.stringify(fromSurvey[s].hardware)) : {},
                                         "module": fromSurvey[s].module, 
                                         "part": fromSurvey[s].part,
                                         "type": fromSurvey[s].type, 
-                                        "content": this.addObjectDataToContent(JSON.parse(JSON.stringify(fromSurvey[s].content)), this.moduleList[i].objects[o])
-                                    })
+                                        "content": this.addObjectDataToContent(JSON.parse(JSON.stringify(fromSurvey[s].content)), this.objects.find((el) => el._id === this.moduleList[i].objects[o]))
+                                    }
+                                    if(Object.prototype.hasOwnProperty.call(fromSurvey[s], "keys")){
+                                        tmpQuestion.keys = fromSurvey[s].keys
+                                    }
+                                    if(Object.prototype.hasOwnProperty.call(fromSurvey[s], "autoNext")){
+                                        tmpQuestion.autoNext = fromSurvey[s].autoNext
+                                    }
+                                    if(Object.prototype.hasOwnProperty.call(fromSurvey[s], "answerDelayToNextPage")){
+                                        tmpQuestion.answerDelayToNextPage = fromSurvey[s].answerDelayToNextPage
+                                    }
+                                    
+                                    tmpThisObj.push(tmpQuestion)
                                 }
                                 if(this.moduleList[i].randomizeParts){
                                     //Get all unique parts in current module
@@ -431,13 +459,13 @@
                                 tmpByObj.push(tmpThisObj)
                             }
                             if(this.moduleList[i].randomizeObj){
-                                tmpByObj = this.shuffle(tmpByObj).flat()
+                                tmpByObj = this.shuffle(tmpByObj)
                             }
-                            tmp = tmpByObj
+                            tmp = tmpByObj.flat()
                         }else{
                             let fromSurvey = this.surveyChoice.survey.filter((el) => (el.module === this.moduleList[i].name || el.part === this.moduleList[i].name))
                             for(let s = 0; s < fromSurvey.length; s++){
-                                tmp.push({
+                                let tmpQuestion = {
                                     "object": "", 
                                     "nextObject": "",  
                                     "hardware": Object.prototype.hasOwnProperty.call(fromSurvey[s], "hardware") ? JSON.parse(JSON.stringify(fromSurvey[s].hardware)) : {},
@@ -445,7 +473,17 @@
                                     "part": fromSurvey[s].part,
                                     "type": fromSurvey[s].type, 
                                     "content": fromSurvey[s].content
-                                })
+                                }
+                                if(Object.prototype.hasOwnProperty.call(fromSurvey[s], "keys")){
+                                    tmpQuestion.keys = fromSurvey[s].keys
+                                }
+                                if(Object.prototype.hasOwnProperty.call(fromSurvey[s], "autoNext")){
+                                    tmpQuestion.autoNext = fromSurvey[s].autoNext
+                                }
+                                if(Object.prototype.hasOwnProperty.call(fromSurvey[s], "answerDelayToNextPage")){
+                                    tmpQuestion.answerDelayToNextPage = fromSurvey[s].answerDelayToNextPage
+                                }
+                                tmp.push(tmpQuestion)
                             }
                         }
                         if(this.moduleList[i].randomizeParts){
@@ -506,7 +544,11 @@
                         })
                     }
                 }*/
-                console.log(this.computedSurvey)
+                //console.log(this.computedSurvey)
+                for(let i = 0; i < this.moduleList.length; i++){
+                    this.moduleList[i].randomizeObj = false
+                    this.moduleList[i].randomizeParts = false
+                }
                 return "success"
             }, 
             /*updateChecked: function(obj){
@@ -603,6 +645,8 @@
                         this.answers.studyname = this.studyname
                     }
                     this.answers._id = crypto.randomUUID()
+                    this.answers.showElapsedSurvey = this.showElapsedSurvey
+                    this.answers.showElapsedTime = this.showElapsedTime
                     
                     this.$electron.ipcRenderer.invoke("pushToStoredArray", "measurements", this.answers) 
                 }
@@ -630,16 +674,16 @@
         mounted: function(){
             this.$electron.ipcRenderer.on("surveyOps", (event,arg) => {//Wenn eine Meldung vom Host kommt was mit der Survey passiert
                 if(arg == "opened"){//wenn die Umfrage geöffnet wurde
-                    console.log("Survey geöffnet")
+                    //console.log("Survey geöffnet")
                     this.surveyRunning = true
                 }else if(arg == "pause"){//Wenn pausiert wurde
-                    console.log("Survey pausiert")
+                    //console.log("Survey pausiert")
                     this.surveyPaused = true
                 }else if(arg == "unpause"){//Wenn unpaused wurde
-                    console.log("Survey resumed")
+                    //console.log("Survey resumed")
                     this.surveyPaused = false
                 }else if(arg == "aborted"){//Wenn abgebrochen oder beendet wurde dann alles zurücksetzen
-                    console.log("Survey arborted")
+                    //console.log("Survey arborted")
                     this.surveyPaused = false
                     this.surveyRunning = false
                     this.answers = {}
@@ -648,13 +692,18 @@
                     this.autosave = false
                     this.answersSent = false
                 }else if(arg == "getSurveyData"){//Wenn die Umfrage angefragt wird. Dann wirds an Umfragefenster geschickt
-                    console.log("Sending SurveyData now")
-                    this.$electron.ipcRenderer.send("surveyOps", {"arg": "sendSurveyData", "survey": this.computedSurvey, "port": this.port})
+                    //console.log("Sending SurveyData now")
+                    this.$electron.ipcRenderer.send("surveyOps", {
+                        "arg": "sendSurveyData", 
+                        "survey": this.computedSurvey, 
+                        "showElapsedSurvey": this.showElapsedSurvey,
+                        "showElapsedTime": this.showElapsedTime,
+                    })
                 }else if(arg == "readyToEnd"){//User hat Umfrageende erreicht. Umfrage kann jetzt beendet werden. Zeige Button dafür
-                    console.log("Ready to End")
+                    //console.log("Ready to End")
                     this.manualChannel = "Beenden"
                 }else if(arg.arg == "sendAnswers"){//Antworten werden erhalten und lokal gespeichert. Dann Übersicht anzeigen
-                    console.log("Got Answers")
+                    //console.log("Got Answers")
                     this.answers = arg.answers
                     this.showingAnswers = true
                     if(this.autosave == false){
@@ -662,7 +711,7 @@
                         this.saveAnswers()
                     }
                 }else if(arg == "ended"){
-                    console.log("Survey ended gracefully")
+                    //console.log("Survey ended gracefully")
                     this.surveyPaused = false
                     this.surveyRunning = false
                     this.autosave = false
@@ -672,7 +721,7 @@
             })
 
             this.$electron.ipcRenderer.on("surveyChannel", (event,arg) => {
-                console.log("Channel Message received. Will show button now")
+                //console.log("Channel Message received. Will show button now")
                 this.manualChannel = arg
             })
 
@@ -685,17 +734,17 @@
                     this.unprocessedDisplays = JSON.parse(JSON.stringify(arg.displays))
                 }else if(Object.prototype.hasOwnProperty.call(arg,"externalDisplay")){
                     //this.externalDisplay = arg.externalDisplay
-                    console.log(arg.externalDisplay)
+                    //console.log(arg.externalDisplay)
                 }
             })
 
             
             this.$electron.ipcRenderer.on("currentSurveyData", (event,arg) => {
-                console.log("Channel Message received. Will update currentSurveyData")
+                //console.log("Channel Message received. Will update currentSurveyData")
                 this.currentSurveyData = arg
             })
             this.$electron.ipcRenderer.on("lastAnswer", (event,arg) => {
-                console.log("Channel Message received. Will update lastAnswer")
+                //console.log("Channel Message received. Will update lastAnswer")
                 this.lastAnswer = arg
             })
 

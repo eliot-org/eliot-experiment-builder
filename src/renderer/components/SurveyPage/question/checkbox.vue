@@ -13,7 +13,7 @@
         </div>
         <div class="ok-btn">
             <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -33,6 +33,15 @@
                 this.init()
             }
         },
+        computed: {
+            continueBtnText: function(){
+                if(this.options !== undefined){
+                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
         mounted(){
             //inititialize page
             this.init()
@@ -46,6 +55,9 @@
 			}
 		},
 		methods:{
+            addAnswer: function(value){
+                this.checked.push(value)
+            },
             /**
              * Reset the scroll of the page
              */

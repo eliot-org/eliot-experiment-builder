@@ -33,7 +33,6 @@ export default {
     },
     watch: {
         src: function() { // watch it
-            console.log(this.src)
             this.$refs.video.load()
             this.video()
             if(this.fullscreen == true){

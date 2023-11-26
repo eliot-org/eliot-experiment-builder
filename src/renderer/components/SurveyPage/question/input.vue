@@ -8,7 +8,7 @@
         </div>
         <div class="ok-btn" v-if="picked">
             <button @click="sendData()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -32,6 +32,15 @@
                 type: "num"
 			}
 		},
+        computed: {
+            continueBtnText: function(){
+                if(this.options !== undefined){
+                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
         watch: {
             //When the options change(only on page change) then reinitialize page
             options: function() { // watch it
@@ -39,6 +48,9 @@
             }
         },
 		methods:{
+            addAnswer: function(value){
+                this.picked = value
+            },
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
                     this.alreadyClicked = true
@@ -94,6 +106,7 @@
         height: 35px;
         font-size: larger;
         padding-left:10px;
+        outline:1px solid black;
     }
 
     input::-webkit-outer-spin-button,

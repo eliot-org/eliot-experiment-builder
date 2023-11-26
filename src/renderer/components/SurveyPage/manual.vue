@@ -129,13 +129,11 @@
                 
                 //Tell admin there is a page waiting for approval on channel x
                 this.$electron.ipcRenderer.send("surveyChannel",this.content.channel)
-                console.log("Page loaded, sent message")
 
                 //when receiving data from adminpage continue to next page
                 this.$electron.ipcRenderer.on("surveyChannel", (event,arg) => {
                     if(arg == this.content.channel && this.alreadyReceived == false){
                         this.alreadyReceived = true
-                        console.log("received answer, will load next page")
                         this.$emit("nextPage")
                     }
                 })
@@ -167,7 +165,6 @@
 .explWrapper{
     width: 100vw;
 		position: absolute;
-		top:20px;
 		bottom:0px;
     overflow-y: auto;
     overflow-x: hidden;

@@ -8,7 +8,7 @@
         <br>
         <div class="start-wrapper">
             <button @click="nextPage()" class="btn-black" type="button">
-                <span class="btn-text">Start</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -35,6 +35,15 @@
                 error: ""
             }
         },
+        computed: {
+            continueBtnText: function(){
+                if(this.content !== undefined){
+                    return (this.content.continueBtnText !== undefined && this.content.continueBtnText !== "") ? this.content.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
         methods:{
             nextPage: function(){
                 if(this.subjectCode != ""){
@@ -53,7 +62,6 @@
     }
     .wrapper{
 		position: absolute;
-		top:20px;
 		bottom:0px;
         width: 100vw;
         justify-content: center;

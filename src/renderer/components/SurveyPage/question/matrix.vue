@@ -6,12 +6,8 @@
                 <div class="answer-row">
                     <div class="option-x">{{options.left}}</div>
                     <div class="matrix" @touchmove="moveDot()" @mousemove="moveDot()" @touchstart="captureOn()" @mousedown="captureOn()" @touchend="captureOff()" @touchcancel="captureOff()" @mouseup="captureOff()">
-                        <div class="" id="matrix" ref="matrix" v-bind:class="getMatrixClass()">
-
-                        </div>
-                        <div class="dot" id="dot" ref="dot" v-bind:style="{top: dotTop+'px', left: dotLeft+'px'}">
-                            
-                        </div>
+                        <div class="matrix-background" id="matrix" ref="matrix" :style="bgColor"/>
+                        <div class="dot" id="dot" ref="dot" v-bind:style="{top: dotTop+'px', left: dotLeft+'px'}"/>
                     </div>
                     <div class="option-x">{{options.right}}</div>
                 </div>
@@ -20,7 +16,7 @@
         </div>
         <div class="ok-btn">
             <button @click="sendData()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -56,6 +52,23 @@
                 alreadyClicked: false,
 			}
 		},
+        computed: {
+            continueBtnText: function(){
+                if(this.options !== undefined){
+                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            },
+            bgColor: function(){
+                if(Object.prototype.hasOwnProperty.call(this.options,"alignment") && Object.prototype.hasOwnProperty.call(this.options,"colors")){
+                    if(this.options.colors.length == 3){
+                        return reactive({background: 'linear-gradient('+this.options.alignment+', '+this.options.colors[0]+','+this.options.colors[1]+', '+this.options.color3+')'})
+                    }
+                }
+                return reactive({background: 'linear-gradient(180deg, #00B050, #FFD966, #FF0000)'})
+            }
+        },
 		methods:{
             //Which type of matrix to show
             getMatrixClass: function(){
@@ -119,13 +132,11 @@
             captureOn: function(){
                 this.captureToggle = true
                 this.moveDot()
-                console.log("on")
             },
             //on second click stop following mouse
             captureOff: function(){
                 this.moveDot()
                 this.captureToggle = false
-                console.log("off")
             },
             //init data
             init(){
@@ -174,19 +185,8 @@
 		justify-content:center;
     }
 
-    .matrix-background-diagonal{
+    .matrix-background{
         padding-top:100%;
-        background: linear-gradient(225deg, #00B050,#FFD966, #FF0000);
-    }
-
-    .matrix-background-horizontal{
-        padding-top:100%;
-        background: linear-gradient(180deg, #00B050,#FFD966, #FF0000);
-    }
-
-    .matrix-background-vertikal{
-        padding-top:100%;
-        background: linear-gradient(270deg, #00B050,#FFD966, #FF0000);
     }
 
     .option-y{

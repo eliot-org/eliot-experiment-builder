@@ -7,7 +7,7 @@
         </div>
         <div class="ok-btn" v-if="picked">
             <button @click="sendData()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -24,12 +24,24 @@
 		data: function(){	
 			return{
                 //The input of the user
-                picked: "",                
+                picked: [],                
                 //Did the user already click on the continue button? To prevent skipping a page
                 alreadyClicked: false,
 			}
 		},
+        computed: {
+            continueBtnText: function(){
+                if(this.options !== undefined){
+                    return (this.options.continueBtnText !== undefined && this.options.continueBtnText !== "") ? this.options.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
 		methods:{
+            addAnswer: function(value){
+                this.picked.push(value)
+            },
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
                     this.alreadyClicked = true

@@ -12,7 +12,7 @@
         </div>
         <div class="right-side">
             <transition name="fade" mode="out-in">
-                <router-view :options="content.options" v-on:updateAnswers="$emit('updateAnswers', $event)" v-on:nextPage="$emit('nextPage')"></router-view>//Prop options wird an Child Component übergeben
+                <router-view ref="questionChild" :options="content.options" v-on:updateAnswers="$emit('updateAnswers', $event)" v-on:nextPage="$emit('nextPage')"></router-view>//Prop options wird an Child Component übergeben
             </transition>
         </div>
     </div>
@@ -44,6 +44,9 @@
 			}
         },
 		methods:{
+            addAnswer: function(value){
+                if(this.$refs.questionChild.addAnswer !== null)this.$refs.questionChild.addAnswer(value)
+            },
             getAssetDir: async function(){
                 this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
                 this.init()
@@ -61,7 +64,6 @@
 			getDataType: function(){
 				if(this.content.img != null){
                     var tmp = this.content.img.split(".").pop().toLowerCase()
-                    console.log(tmp)
                     if(tmp == "mp4"){
                         return "video"
                     }else if((tmp == "png") || (tmp =="jpg") || (tmp == "jpeg") || (tmp == "gif")){

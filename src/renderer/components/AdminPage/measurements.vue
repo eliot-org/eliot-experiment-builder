@@ -61,7 +61,6 @@
                 let answers = toExport.answers
                 delete toExport.answers
                 const csv = json2csv(answers, this.csvOptions);
-                console.log(csv)
 
                 var dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
                 var dlAnchorElem = document.getElementById('downloadAnchorElem');
@@ -92,7 +91,6 @@
             },
             loadData: async function(){
                 this.measurements = await this.$electron.ipcRenderer.invoke("getStoreValue", "measurements") 
-                console.log(this.measurements)
             },
             getAnswerData: function(answerRaw){
                 if(answerRaw.questionType ==  "polygonGraph" || answerRaw.questionType == "slider"){
@@ -113,6 +111,8 @@
 
 <style scoped>
 .deleteButton{
+        color: black;
+        height:30px;
         float:right;
         margin-right:10px;
         padding: 0.2rem 1rem;

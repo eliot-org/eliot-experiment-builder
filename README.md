@@ -18,6 +18,7 @@ Features
 
 Versions
 ---
+ - ``` 0.3 ``` - Cherry 
  - ``` 0.2 ``` - Walnut 
  - ``` 0.1 ``` - Blueberry 
 

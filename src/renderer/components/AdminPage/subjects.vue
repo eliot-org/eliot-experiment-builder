@@ -94,7 +94,6 @@
             //loads all subjects
             loadData: async function(){
                 this.subjects = await this.$electron.ipcRenderer.invoke("getStoreValue", "subjects") 
-                console.log(this.subjects)
             },
             //deletes a subject
             deleteSubject: function(id){
@@ -135,6 +134,8 @@
 
 <style scoped>
     .deleteButton{
+        color: black;
+        height:30px;
         float:right;
         margin-right:10px;
         padding: 0.2rem 1rem;
