@@ -46,8 +46,9 @@ You have now finished the basic setup and are ready to run your survey on the su
 
 ### How to run a survey
   - Choose a survey from the list
-  - Add desired objects, but at least one
-  - Choose which modules to run
+  - Add the desired modules
+  - Set their objects, if neeeded
+  - Choose if you want to randomize some parts of a module
   - Set experiment settings
   - Choose which display to show the survey window on
   - Press start
