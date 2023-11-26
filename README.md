@@ -13,6 +13,7 @@ Features
   - Write your own scripts using the full power of JavaScript and npm packages
 - OpenSource - released under [CC-BY-NC-4.0](https://github.com/eliot-org/eliot-experiment-builder/blob/main/LICENSE.md)
 - JSON - create surveys using easy-to-understand JSON files
+- HTML/CSS - Use HTML and CSS to customize the look of an experiment according to your specific needs
 - Offline - no need for an internet connection in your laboratory
 
 About
