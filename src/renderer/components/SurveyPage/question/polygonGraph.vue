@@ -53,7 +53,9 @@
             options:{
                required:true
            },
-           continueBtnText
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change

@@ -15,7 +15,7 @@
                     <div class="matrix" @touchmove="moveDot()" @mousemove="moveDot()" @touchstart="captureOn()" @mousedown="captureOn()" @touchend="captureOff()" @touchcancel="captureOff()" @mouseup="captureOff()">
                         <div class="matrix-background" id="matrix" ref="matrix" :style="bgColor"/>
                         <div class="dot" id="dot" ref="dot" v-bind:style="{top: dotTop+'px', left: dotLeft+'px', width: radius+'px', height: radius+'px', 
-                        marginTop: -(radius/2)+'px', marginLeft: -(radius/2)+'px', borderRadius: (radius/2)+'px', 'background': getColor()}">
+                        marginTop: -(radius/2)+'px', marginLeft: -(radius/2)+'px', borderRadius: (radius/2)+'px', 'background': bgColor}">
                             
                         </div>
                     </div>
@@ -41,7 +41,9 @@
             options:{
                required:true
            },
-           continueBtnText
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change
@@ -75,10 +77,10 @@
             bgColor: function(){
                 if(Object.prototype.hasOwnProperty.call(this.options,"alignment") && Object.prototype.hasOwnProperty.call(this.options,"colors")){
                     if(this.options.colors.length == 3){
-                        return reactive({background: 'linear-gradient('+this.options.alignment+', '+this.options.colors[0]+','+this.options.colors[1]+', '+this.options.color3+')'})
+                        return {background: 'linear-gradient('+this.options.alignment+', '+this.options.colors[0]+','+this.options.colors[1]+', '+this.options.colors[2]+')'}
                     }
                 }
-                return reactive({background: 'linear-gradient(180deg, #00B050, #FFD966, #FF0000)'})
+                return {background: 'linear-gradient(180deg, #00B050, #FFD966, #FF0000)'}
             }
         },
 		methods:{
@@ -278,6 +280,7 @@
         width: 180px;
         height: 90px; /* Half circle (overflow) */
         margin-bottom: -28px; /* bring the numbers up */
+        margin-top: 14px;
     }
 
     .bar{

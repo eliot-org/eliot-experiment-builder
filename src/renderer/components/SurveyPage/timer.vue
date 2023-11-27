@@ -90,6 +90,7 @@
             },
             //Reset all data
             init(){
+                console.log(this.content)
                 this.preImg = (Object.prototype.hasOwnProperty.call(this.content, "preImg")) ? this.assetLocation+"/"+this.content.preImg : ""
                 this.mainImg = (Object.prototype.hasOwnProperty.call(this.content, "mainImg")) ? this.assetLocation+"/"+this.content.mainImg : ""
                 this.postImg = (Object.prototype.hasOwnProperty.call(this.content, "postImg")) ? this.assetLocation+"/"+this.content.postImg : ""

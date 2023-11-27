@@ -29,7 +29,9 @@
             options:{
                required:true
            },
-           continueBtnText
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change
@@ -57,10 +59,10 @@
             bgColor: function(){
                 if(Object.prototype.hasOwnProperty.call(this.options,"alignment") && Object.prototype.hasOwnProperty.call(this.options,"colors")){
                     if(this.options.colors.length == 3){
-                        return reactive({background: 'linear-gradient('+this.options.alignment+', '+this.options.colors[0]+','+this.options.colors[1]+', '+this.options.color3+')'})
+                        return {background: 'linear-gradient('+this.options.alignment+', '+this.options.colors[0]+','+this.options.colors[1]+', '+this.options.colors[2]+')'}
                     }
                 }
-                return reactive({background: 'linear-gradient(180deg, #00B050, #FFD966, #FF0000)'})
+                return {background: 'linear-gradient(180deg, #00B050, #FFD966, #FF0000)'}
             }
         },
 		methods:{

@@ -13,7 +13,7 @@
         </div>
         <div class="ok-btn">
             <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">{{continueBtnText}}</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -26,7 +26,9 @@
             options:{
                required:true
            },
-           continueBtnText,
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //When the options change(only on page change) then reinitialize page

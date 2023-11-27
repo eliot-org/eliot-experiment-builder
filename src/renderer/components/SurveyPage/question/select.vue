@@ -20,7 +20,9 @@
             options:{
                required:true
            },
-           continueBtnText
+           continueBtnText:{
+               required:true
+           },
         },
 		data: function(){	
 			return{

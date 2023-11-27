@@ -33,6 +33,7 @@
   },
   "build": {
     "productName": "Eliot Experiment Builder",
+    "artifactName": "eliot-${version}.${ext}",
     "directories": {
       "output": "build"
     },

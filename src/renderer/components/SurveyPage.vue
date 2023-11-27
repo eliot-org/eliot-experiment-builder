@@ -143,7 +143,6 @@ export default {
                     this.addSubjectDataToContent()
                     //Load next Page
                     if (this.$router.currentRoute.name != this.getNextPage()) {
-                        console.log("push")
                         setTimeout(() => {this.$router.push({ name: this.getNextPage(), params: { index: this.i}})},10)
                     }
                     window.scrollTo(0,0);

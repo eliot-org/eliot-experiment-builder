@@ -26,7 +26,9 @@
             options:{
                required:true
            },
-           continueBtnText
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //When the options change(only on page change) then reinitialize page
