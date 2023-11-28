@@ -183,7 +183,7 @@
                         "sliderText": Object.prototype.hasOwnProperty.call(this.options.sliders[i],"sliderText") ? this.options.sliders[i].sliderText : this.options.sliders[i].text
                     }, value:Object.prototype.hasOwnProperty.call(this.options.sliders[i], "defaultValue") ? this.options.sliders[i].defaultValue :50})//Für Skala von 0-100   
                 }
-                setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+                //setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
             sendData: function(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){

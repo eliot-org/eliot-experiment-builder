@@ -56,7 +56,7 @@
              * Reset the scroll of the page
              */
             init(){
-                setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+                //setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){

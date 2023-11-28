@@ -1,38 +1,38 @@
 <template>
     <div class="explanationWrapper">
         <!-- Pre -->
-        <div v-if="showPre && preTimer >= 0">
+        <div v-if="showPre && preTimer >= 0" style="display:grid">
             <div class="explanationText" v-html="content.preText"></div>
+            <div class="explanationText" v-if="content.preTimer.show">
+                {{preTimer}}
+            </div>
             <div id="before" class="logo-wrapper">
                 <img class="logo" v-bind:src="preImg" alt="" v-if="preImgType=='img'">
                 <vid :src="preImg" v-if="preImgType=='video'"></vid>
             </div>
-            <div class="explanationText" v-if="content.preTimer.show">
-                {{preTimer}}
-            </div>
         </div>
 
         <!-- Main -->
-        <div v-if="showMain && mainTimer >= 0">
+        <div v-if="showMain && mainTimer >= 0" style="display:grid">
             <div class="explanationText" v-html="content.mainText"></div>
+            <div class="explanationText" v-if="content.mainTimer.show">
+                {{mainTimer}}
+            </div>
             <div id="after" class="logo-wrapper">
                 <img class="logo" v-bind:src="mainImg" alt="" v-if="mainImgType=='img'">
                 <vid :src="mainImg" v-if="mainImgType=='video'"></vid>
             </div>
-            <div class="explanationText" v-if="content.mainTimer.show">
-                {{mainTimer}}
-            </div>
         </div>
         
         <!-- Post -->
-        <div v-if="showPost">
+        <div v-if="showPost" style="display:grid">
             <div class="explanationText" v-html="content.postText"></div>
+            <div class="explanationText" v-if="content.postTimer.show">
+                {{postTimer}}
+            </div>
             <div id="after" class="logo-wrapper">
                 <img class="logo" v-bind:src="postImg" alt="" v-if="postImgType=='img'">
                 <vid :src="postImg" v-if="postImgType=='video'"></vid>
-            </div>
-            <div class="explanationText" v-if="content.postTimer.show">
-                {{postTimer}}
             </div>
         </div>
 

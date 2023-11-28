@@ -229,7 +229,7 @@
                         }
                     } 
                 }
-                setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+                //setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
             //Send answers
             sendData: function(){//Sends data to parent, resets local data, calls next page

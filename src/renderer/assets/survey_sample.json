@@ -102,7 +102,7 @@
             "part": "Welcome Text",
             "type": "explanation",
             "content": {
-                "text": "This page will automatically continue to the next after 2000ms, or 2 seconds",
+                "text": "This page will show the continue button after 2000ms, or 2 seconds",
                 "continueDelay": 2000
             }
         },
@@ -147,7 +147,7 @@
                     "time": 10,
                     "show": true
                 },
-                "mainText": "This will be shown for 10 seconds. With an image.",
+                "mainText": "This will be shown for 10 seconds. With an image and a sound.",
                 "mainImg": "eliot.png",
                 "preTimer": {
                     "time": 10,
@@ -159,7 +159,7 @@
                     "time": 5,
                     "show": true
                 },
-                "postText": "Some text. With an image and a sound.",
+                "postText": "Some text. With an image.",
                 "postImg": "eliot.png",
                 "startIndicatorSound": "maingong.wav",
                 "endIndicatorSound": "maingong.wav"

@@ -280,7 +280,7 @@
         width: 180px;
         height: 90px; /* Half circle (overflow) */
         margin-bottom: -28px; /* bring the numbers up */
-        margin-top: 14px;
+        margin-left: 14px;
     }
 
     .bar{

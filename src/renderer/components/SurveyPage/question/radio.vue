@@ -53,7 +53,7 @@
              * Reset the scroll of the page
              */
             init(){
-                setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+                //setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
             addAnswer: function(value){
                 this.picked = value
