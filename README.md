@@ -97,7 +97,7 @@ This section describes how to build the program from source. This is only needed
 
 ``` bash
 # clone the repository
-gti clone git@github.com:eliot-org/eliot.git
+git clone git@github.com:eliot-org/eliot.git
 
 # install dependencies, currently with need for legacy packages
 npm install
