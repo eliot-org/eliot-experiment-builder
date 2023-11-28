@@ -3,8 +3,8 @@
         <div class="explanationText">
             <div v-html="content.text"></div>
             <div @click="copyCodeToClipboard()" class="tooltip">
-                <span class="tooltiptext" id="myTooltip">Kopieren</span>
-                {{code}}
+                <span class="tooltiptext" id="myTooltip">Copy</span>
+                Your code is: {{code}}
             </div>
         </div>
     </div>
@@ -38,7 +38,6 @@
             init(){   
                 this.code = this.$parent.receivedCode
                 this.$electron.ipcRenderer.send("surveyOps","readyToEnd")
-                console.log("Page loaded, sent message")
             },
             /**
              * Copies the code to the clipboard

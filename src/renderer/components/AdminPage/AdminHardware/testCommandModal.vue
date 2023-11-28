@@ -4,28 +4,53 @@
             <div class="modal-wrapper">
                 <div class="modal-container">
                     <div class="modal-header">
-                        <h3>Preset Options</h3>
+                        <h3>Send a command</h3>
                     </div>
                     <div class="modal-body">
-                        <div class="mindChannels-head">
-                            <div v-for="(preset,i) in presets" v-bind:key="i" >
-                                - {{preset.name}}:
-                                <button class="btn-black-small btn-black" id="chooseAllModules" @click="$emit('chooseModules', preset)">Wählen</button>
-                                <button class="btn-black-small btn-black" id="chooseAllModules" @click="$emit('deletePreset', preset)">Löschen</button>
-                            </div>
-                        </div>
-                        <br><hr><br>
                         <div>
-                            <div>Add current module choices as a new Template</div>
-                            <div class="surveySettings-name">Name:</div>
-                            <input class="surveySettings-input" type="text" name="newPresetName" v-model="newPresetName">
-                            <button class="btn-black " id="chooseAllModules" @click="$emit('addPreset', newPresetName)">Speichern</button>
+                            <b>Target device:</b> {{ device.name }}
                         </div>
+                        <br>
+
+                        <div>
+                            <b>Command:</b>
+                            <v-select 
+                                label="name" 
+                                :options="script.commands" 
+                                v-model="selectedCommand" 
+                                @input="selectACommand($event)"
+                            />
+                        </div>
+                        <br>
+
+                        <div v-if="selectedCommand !== null && selectedCommand.properties.length > 0">
+                            <b>Parameters (name - type):</b>
+                            <div v-for="(prop, x) in selectedCommand.properties" :key="x">
+                                {{ prop.name }} -  {{ prop.type }}: 
+                                <input :type="prop.type" v-model="sendingCommand[prop.name]">
+                            </div>
+                            <br>
+                        </div>
+
+                        <div v-for="(param, x) in script.parameters" v-bind:key="x" style="margin-bottom:22px;margin-top:22px;height:25px">
+                            <label class="checkbox-label" style="float:left">
+                                <input v-bind:id="param.name" type="checkbox" v-bind:value="param">
+                                <span class="checkbox-custom rectangular"></span>
+                            </label>
+                            <div class="checkbox-text" style="float:left">{{param.name}}</div>
+                            <br><br><hr>
+                        </div>
+                        <br>
+
+                        Responses can be seen in the console area on the main Hardware page.
                     </div>
                     <div class="modal-footer">
                         <slot name="footer">
+                            <button v-if="selectedCommand !== null && sendingCommand !== {}" class="modal-default-button btn-black btn" @click="sendCommand();$emit('close')">
+                                Send
+                            </button>
                             <button class="modal-default-button btn-black btn" @click="$emit('close')">
-                                OK
+                                Cancel
                             </button>
                         </slot>
                     </div>
@@ -38,21 +63,46 @@
 <script>
     export default {
         props:{
-            presets:{//The survey presets that exist
+            device:{
                required:true
             },
+            script:{
+                required:true
+            },
         },
-        data: function( ){
+        data: function(){
             return{
-                //For creating new presets
-                newPresetName: "",
+                selectedCommand: null,
+                sendingCommand: {},
+            }
+        },
+        methods:{
+            sendCommand: function(){
+                if(this.selectedCommand !== null && this.sendingCommand !== {}){
+                    this.$electron.ipcRenderer.invoke("hardwareCommand", {device: this.device.name, command: this.sendingCommand}) 
+                }
+            },
+            selectACommand: function(event){
+                if(event !== null){
+                    this.selectedCommand = event; 
+                    this.sendingCommand.name = event.name
+                }else{
+                    this.selectedCommand = null
+                    this.sendingCommand = {}
+                }
             }
         },
     }
 </script>
 
 <style scoped>
-.checkbox-wrapper{
+    table, th, td{
+        width: 100%;
+        border: 1px solid black;
+        border-collapse: collapse;
+    }
+
+    .checkbox-wrapper{
         display:flex;
         margin-bottom: 15px;
         position: relative;
@@ -73,6 +123,7 @@
         height: 20px;
         width: 20px;
         clear: both;
+        margin: auto;
     }
 
     .checkbox-label input {
@@ -138,14 +189,6 @@
         color:#ffffff;
         margin:10px;
     }
-.btn-black-small{
-        padding: 0rem 0rem;
-        font-size:0.8rem;
-        width:100px;
-        height:25px;
-        color:#ffffff;
-        margin:10px;
-    }
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -202,15 +245,5 @@
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-
-
-.surveySettings-name{
-    width: 25%;
-    float: left;
-}
-
-.surveySettings-input{
-    width:75%;
-} 
 
 </style>

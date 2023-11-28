@@ -37,7 +37,7 @@
             
                 <div class="ok-btn">
                     <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
                     </button>
                 </div>
             </div>
@@ -52,7 +52,10 @@
             //The options for this question
             options:{
                required:true
-           }
+           },
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //To reinit the page once the data changes, which it does on question change
@@ -82,7 +85,7 @@
                     tmp = tmp/this.picked.length
                 }
                 return {label:{name:"", text:""}, value: (tmp.toString()).slice(0,4)}
-            } 
+            }
         },
         methods:{
             //get images datatype for slider i
@@ -90,7 +93,6 @@
                 let tmp = this.getImg(i,pos)
                 if(tmp != null){
                     tmp = tmp.split(".").pop().toLowerCase()
-                    console.log(tmp)
                     if(tmp == "mp4"){
                         return "video"
                     }else if((tmp == "png") || (tmp =="jpg") || (tmp == "jpeg") || (tmp == "gif")){
@@ -181,11 +183,10 @@
                         "sliderText": Object.prototype.hasOwnProperty.call(this.options.sliders[i],"sliderText") ? this.options.sliders[i].sliderText : this.options.sliders[i].text
                     }, value:Object.prototype.hasOwnProperty.call(this.options.sliders[i], "defaultValue") ? this.options.sliders[i].defaultValue :50})//Für Skala von 0-100   
                 }
-                setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+                //setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
             },
             sendData: function(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
-                    console.log(this.picked)
                     this.alreadyClicked = true
                     this.$emit("updateAnswers", this.picked)
                     this.picked = []

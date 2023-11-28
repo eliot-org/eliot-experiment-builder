@@ -1,0 +1,23 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "title": "Pagetype freestyle content",
+    "description": "Description of the content of the Pagetype 'freestyle'",
+    "type": "object",
+    "properties": {
+        "name":{
+            "description": "The unique name of this question. This is the identifier in the saved Data",
+            "type": "string"
+        },
+        "style":{
+            "description": "The css styles of the wrapping element of the page, which fills the whole screen. Example: 'background: black; display: flex;'",
+            "type": "string"
+        },
+        "html":{
+            "description": "The inner html to be added to the wrapping element. Can be any html and css styles. ",
+            "type": "string"
+        }    
+    },
+    "required": [
+        "name"
+    ]
+}

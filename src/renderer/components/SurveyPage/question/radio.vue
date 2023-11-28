@@ -13,7 +13,7 @@
         </div>
         <div class="ok-btn" v-if="picked">
             <button @click="sendData()" class="btn-black" type="button">
-                        <span class="btn-text">Next</span>
+                        <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -25,7 +25,10 @@
             //The options of this page as set by surveyfile
             options:{
                required:true
-           }
+           },
+           continueBtnText:{
+               required:true
+           },
         },
         watch: {
             //When the options change(only on page change) then reinitialize page
@@ -50,7 +53,10 @@
              * Reset the scroll of the page
              */
             init(){
-                setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+                //setTimeout(() => {this.$refs.answers.scroll(0,0)}, 50)
+            },
+            addAnswer: function(value){
+                this.picked = value
             },
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){

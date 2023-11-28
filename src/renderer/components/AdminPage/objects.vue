@@ -146,6 +146,8 @@
     }
 
     .deleteButton{
+        color: black;
+        height:30px;
         float:right;
         margin-right:10px;
         padding: 0.2rem 1rem;

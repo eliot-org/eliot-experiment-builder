@@ -2,10 +2,10 @@
     <div class="loading-wrapper">  
         <div class="centerarea">
             <img class="logo" src="~@/assets/eliot.png" alt="ELIOT"> 
-            <h1 style="font-size:3rem; margin-bottom:10px">ELIOT</h1>
+            <h1 style="font-size:3rem; margin-bottom:10px">ELIOT Experiment Builder</h1>
             <p style="font-size: 0.9rem">
-                Version 0.2<br>
-                Walnut<br>
+                Version 0.3<br>
+                Cherry<br>
             </p>
         </div>
 
@@ -22,7 +22,6 @@ export default {
     methods: {
         openLink: function(event){
             event.preventDefault()
-            console.log(event.srcElement.href)
             shell.openExternal(event.srcElement.href)
         }
     },
@@ -31,7 +30,6 @@ export default {
          * Called when the Main process sends on the surveyOps channel. arg includes the data to which page this instance should go to. So if it is a admin or surveypage
          */
         this.$electron.ipcRenderer.on("WindowManagement", (event,arg) => {
-            console.log(arg)
             if(arg == "SurveyPage"){
                 if (this.$router.currentRoute.name != "SurveyPage") {
                     this.$router.push({ name: "SurveyPage", params: { index: 0}})

@@ -8,7 +8,7 @@
         </div>
         <div class="ok-btn" v-if="picked">
             <button @click="sendData()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -20,7 +20,10 @@
             //The options of this page as set by surveyfile
             options:{
                required:true
-           }
+           },
+           continueBtnText:{
+               required:true
+           },
         },
 		data: function(){	
 			return{
@@ -39,6 +42,9 @@
             }
         },
 		methods:{
+            addAnswer: function(value){
+                this.picked = value
+            },
             sendData(){//Sends data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
                     this.alreadyClicked = true
@@ -94,6 +100,7 @@
         height: 35px;
         font-size: larger;
         padding-left:10px;
+        outline:1px solid black;
     }
 
     input::-webkit-outer-spin-button,

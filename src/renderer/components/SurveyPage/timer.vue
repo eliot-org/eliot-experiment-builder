@@ -1,45 +1,45 @@
 <template>
     <div class="explanationWrapper">
         <!-- Pre -->
-        <div v-if="showPre && preTimer >= 0">
+        <div v-if="showPre && preTimer >= 0" style="display:grid">
             <div class="explanationText" v-html="content.preText"></div>
+            <div class="explanationText" v-if="content.preTimer.show">
+                {{preTimer}}
+            </div>
             <div id="before" class="logo-wrapper">
                 <img class="logo" v-bind:src="preImg" alt="" v-if="preImgType=='img'">
                 <vid :src="preImg" v-if="preImgType=='video'"></vid>
             </div>
-            <div class="explanationText" v-if="content.preTimer.show">
-                {{preTimer}}
-            </div>
         </div>
 
         <!-- Main -->
-        <div v-if="showMain && mainTimer >= 0">
+        <div v-if="showMain && mainTimer >= 0" style="display:grid">
             <div class="explanationText" v-html="content.mainText"></div>
+            <div class="explanationText" v-if="content.mainTimer.show">
+                {{mainTimer}}
+            </div>
             <div id="after" class="logo-wrapper">
                 <img class="logo" v-bind:src="mainImg" alt="" v-if="mainImgType=='img'">
                 <vid :src="mainImg" v-if="mainImgType=='video'"></vid>
             </div>
-            <div class="explanationText" v-if="content.mainTimer.show">
-                {{mainTimer}}
-            </div>
         </div>
         
         <!-- Post -->
-        <div v-if="showPost">
+        <div v-if="showPost" style="display:grid">
             <div class="explanationText" v-html="content.postText"></div>
+            <div class="explanationText" v-if="content.postTimer.show">
+                {{postTimer}}
+            </div>
             <div id="after" class="logo-wrapper">
                 <img class="logo" v-bind:src="postImg" alt="" v-if="postImgType=='img'">
                 <vid :src="postImg" v-if="postImgType=='video'"></vid>
-            </div>
-            <div class="explanationText" v-if="content.postTimer.show">
-                {{postTimer}}
             </div>
         </div>
 
         <!-- Other -->
         <div class="ok-btn" v-if="showPost && postTimer == -1">
             <button @click="nextPage()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -74,6 +74,15 @@
                 assetLocation: ""
             }
 		},
+        computed: {
+            continueBtnText: function(){
+                if(this.content !== undefined){
+                    return (this.content.continueBtnText !== undefined && this.content.continueBtnText !== "") ? this.content.continueBtnText : 'Next'
+                }else{
+                    return "Next"
+                }
+            }
+        },
 		methods:{
             getAssetDir: async function(){
                 this.assetLocation = await this.$electron.ipcRenderer.invoke('getStoreValue', 'assetLocation')
@@ -81,6 +90,7 @@
             },
             //Reset all data
             init(){
+                console.log(this.content)
                 this.preImg = (Object.prototype.hasOwnProperty.call(this.content, "preImg")) ? this.assetLocation+"/"+this.content.preImg : ""
                 this.mainImg = (Object.prototype.hasOwnProperty.call(this.content, "mainImg")) ? this.assetLocation+"/"+this.content.mainImg : ""
                 this.postImg = (Object.prototype.hasOwnProperty.call(this.content, "postImg")) ? this.assetLocation+"/"+this.content.postImg : ""

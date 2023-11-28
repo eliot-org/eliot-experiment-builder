@@ -7,6 +7,10 @@
         "text":{
             "description": "The text shown on the Page. Include {{obj.propertyname}} or {{subj.propertyname}} to access the current subject or objects properties",
             "type": "string"
+        },
+        "continueBtnText":{
+            "description": "The text to show inside the continue button",
+            "type":"string"
         }
     },
     "required": [

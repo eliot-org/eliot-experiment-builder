@@ -12,7 +12,10 @@
                             Delete
                         </button>
                         <button @click="download(meas)" class="deleteButton">
-                            Download
+                            Download JSON
+                        </button>
+                        <button @click="downloadCSV(meas)" class="deleteButton">
+                            Download CSV
                         </button>
                     </div>
                 </div>
@@ -25,11 +28,18 @@
 </template>
 
 <script>
+    import { json2csv } from 'json-2-csv';
     export default {
         data: function( ){
             return{
                 measurements: [],
                 showMeasurement:[],
+                csvOptions: {
+                    emptyFieldValue: "",
+                    expandNestedObjects: true,
+                    expandArrayObjects: true,
+                    prependHeader: true,
+                }
             }
         },
         methods:{
@@ -45,6 +55,23 @@
                 var dlAnchorElem = document.getElementById('downloadAnchorElem');
                 dlAnchorElem.setAttribute("href",     dataStr     );
                 dlAnchorElem.setAttribute("download", "measurement_"+ toExport._id +".json");
+                dlAnchorElem.click();
+            },
+            downloadCSV: function(toExport){
+                let answers = toExport.answers
+                delete toExport.answers
+                const csv = json2csv(answers, this.csvOptions);
+
+                var dataStr = "data:text/csv;charset=utf-8," + encodeURIComponent(csv);
+                var dlAnchorElem = document.getElementById('downloadAnchorElem');
+                dlAnchorElem.setAttribute("href",     dataStr     );
+                dlAnchorElem.setAttribute("download", "measurement_answers_"+ toExport._id +".csv");
+                dlAnchorElem.click();
+
+                var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(toExport);
+                var dlAnchorElem = document.getElementById('downloadAnchorElem');
+                dlAnchorElem.setAttribute("href",     dataStr     );
+                dlAnchorElem.setAttribute("download", "measurement_data_"+ toExport._id +".json");
                 dlAnchorElem.click();
             },
             downloadAll: function(){
@@ -64,7 +91,6 @@
             },
             loadData: async function(){
                 this.measurements = await this.$electron.ipcRenderer.invoke("getStoreValue", "measurements") 
-                console.log(this.measurements)
             },
             getAnswerData: function(answerRaw){
                 if(answerRaw.questionType ==  "polygonGraph" || answerRaw.questionType == "slider"){
@@ -85,6 +111,8 @@
 
 <style scoped>
 .deleteButton{
+        color: black;
+        height:30px;
         float:right;
         margin-right:10px;
         padding: 0.2rem 1rem;

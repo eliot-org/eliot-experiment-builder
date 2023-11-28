@@ -24,6 +24,9 @@
 			}
 		},
 		methods:{
+            addAnswer: function(value){
+                this.sendData(value)
+            },
             sendData(chosen){//Sends Data to parent, resets local data, calls next page
                 if(!this.alreadyClicked){
 					this.alreadyClicked = true

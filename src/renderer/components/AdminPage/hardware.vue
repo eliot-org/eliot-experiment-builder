@@ -46,11 +46,17 @@
                     <hr>
 
                     <div>
-                        <div><h4>Devices</h4></div>
+                        <div><h4>Devices</h4></div>                                  
+
                         <div style="margin-left:20px" v-for="(device, f) in devices" v-bind:key="f">
                             <div v-if="device.script == script.scriptName">
                                 {{device.name}}
                                 <button class="button" @click="removeDevice(device.script, device.name)">Remove</button>
+                                <div>
+                                    <button class="button" v-if="script.commands.length > 0" @click="commandModal.show = true; commandModal.script = script; commandModal.device = device">
+                                        Send a command
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -60,7 +66,8 @@
                     <div>
                         <div><h4>New Device</h4></div>
                         <div style="margin-left:20px" v-for="(parameter, e) in script.deviceParameters" v-bind:key="e">
-                            {{parameter.name.toUpperCase()}}: <input :type="parameter.type" v-model="parameter.input">
+                            {{parameter.name.toUpperCase()}}: 
+                            <input :type="parameter.type" v-model="parameter.input">
                         </div>
                         <button class="button" @click="createDevice(script)">Create</button>
                     </div> 
@@ -68,17 +75,32 @@
                 </div>
             </div>
         </div>
+        <testCommandModal 
+            :device="{name:'asd'}"
+            :script="commandModal.script"
+            v-if="commandModal.show" 
+            @close="commandModal.show = false"
+        />
     </div>
 </template>
 
 <script>
+import testCommandModal from './AdminHardware/testCommandModal'
 export default {
+    components: { 
+        "testCommandModal": testCommandModal,
+    },
     data: function(){
         return{
             scripts: [],
             console: "",
             devices: [],
             gotScripts: false,
+            commandModal: {
+                show: false,
+                script: null,
+                device: null
+            },
         }
     },
     methods:{
@@ -99,7 +121,7 @@ export default {
         },
         reloadDevices: function(){ 
             this.$electron.ipcRenderer.invoke("hardwareGetDevices") 
-        }
+        },
     },
     destroyed(){    
         this.$electron.ipcRenderer.removeAllListeners()
@@ -184,6 +206,8 @@ export default {
     }
 
      .deleteButton{
+        color: black;
+        height:30px;
         float:right;
         margin-right:10px;
         padding: 0.2rem 1rem;

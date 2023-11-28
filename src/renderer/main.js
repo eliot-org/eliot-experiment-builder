@@ -21,6 +21,16 @@ import VueJsonPretty from 'vue-json-pretty';
 Vue.component('VueJsonPretty', VueJsonPretty)
 import 'vue-json-pretty/lib/styles.css';
 
+import '@mdi/font/css/materialdesignicons.css' 
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+Vue.use(Vuetify)
+let vuetify = new Vuetify({
+  icons: {
+    iconfont: 'mdi', // default - only for display purposes
+  },
+})
+
 if (!process.env.IS_WEB) Vue.use(require('vue-electron'))
 //Vue.config.productionTip = false
 
@@ -29,5 +39,6 @@ new Vue({
   components: { App },
   router,
   store,
+  vuetify,
   template: '<App/>'
 }).$mount('#app')

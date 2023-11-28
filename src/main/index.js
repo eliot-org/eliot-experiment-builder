@@ -82,7 +82,7 @@ function installHWScripts(){
             hwScripts[file] = manager.require(file)
             hwScripts[file].constr(parentGlue)
             hwScriptsDefinitions.push(hwScripts[file].definitions)
-            console.log("Loaded Hardware Script "+ hwScripts[file].definitions.scriptName)
+            //console.log("Loaded Hardware Script "+ hwScripts[file].definitions.scriptName)
         })
     } catch (error) {
         console.log(error)
@@ -149,7 +149,7 @@ ipcMain.handle('hardwareSendSurveyData', (event, arg) => {
  */
 ipcMain.handle('hardwareCommand', (event, arg) => {
     for (let key of Object.keys(hwScripts)) {
-        hwScripts[key].command(arg.device, arg.command)
+      hwScripts[key].commands(arg.device, arg.command)
     }
 })
 
@@ -268,7 +268,7 @@ ipcMain.on("WindowManagement", (event,arg) => {
 
 //Comm for manual channels
 ipcMain.on("surveyChannel", (event,arg) => {
-  console.log("received message")
+  //console.log("received message")
   if(event.sender.id != 1){
     adminWindow.object.webContents.send("surveyChannel", arg)
   }
@@ -277,22 +277,34 @@ ipcMain.on("surveyChannel", (event,arg) => {
   }
 })
 
+//Comm for lastAnswer
+ipcMain.on("lastAnswer", (event,arg) => {
+	//console.log("received message")
+  adminWindow.object.webContents.send("lastAnswer", arg)
+})
+
+//Comm for currentSurveyData
+ipcMain.on("currentSurveyData", (event,arg) => {
+  	//console.log("received message")
+    adminWindow.object.webContents.send("currentSurveyData", arg)
+})
+
 ipcMain.on("displays", (event,arg) => {
-  console.log("received displays message")
+  //console.log("received displays message")
   if(arg.arg == "getDisplays"){
     event.sender.send("displays",{"displays":displays})
-    console.log("sent displays")
+    //console.log("sent displays")
   }else if(arg.arg == "setExternalDisplay"){
     externalDisplay = arg.externalDisplay
     event.sender.send("displays",{"externalDisplay":externalDisplay})
-    console.log("sent externaldisplay")
+    //console.log("sent externaldisplay")
   }
 })
 
 //Survey+Answer data handler for communication between windows
 ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the survey. Will be sent by AdminWindow
   if(arg == "start"){//Start the Survey
-    console.log("Opening Survey")
+    //console.log("Opening Survey")
     surveyWindow = windowManager.createNew("surveyWindow", "Survey", surveyURL, "survey", {
         webPreferences: {
             nodeIntegration: true,
@@ -307,9 +319,9 @@ ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the su
     surveyWindow.object.setFullScreen(true) 
 
     surveyWindow.object.on('closed', () => {//Adds Listener so that if the Survey is closed, the AdminWindow will know
-     // event.sender.send("surveyOps", "aborted")
+		adminWindow.object.webContents.send("surveyOps", "aborted")
       //paused = false
-      console.log("Survey closed")
+      //console.log("Survey closed")
     })
     event.sender.send("surveyOps", "opened")
 
@@ -317,7 +329,7 @@ ipcMain.on("surveyOps", (event,arg) =>{ //All things that could happen to the su
     adminWindow.object.webContents.send("surveyOps", "getSurveyData")
 
   }else if(arg.arg == "sendSurveyData"){
-    surveyWindow.object.webContents.send("surveyOps", {"arg": "sendSurveyData","survey": arg.survey, "port":arg.port})
+    surveyWindow.object.webContents.send("surveyOps", arg)
   }else if(arg.arg == "sendAnswers"){
     adminWindow.object.webContents.send("surveyOps", {"arg": "sendAnswers","answers": arg.answers})
   }else if(arg == "readyToEnd"){

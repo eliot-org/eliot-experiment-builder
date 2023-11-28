@@ -2,7 +2,7 @@
     <div class="right-side-parent">
         <div class="answer-matrix-wrapper">
             <div class="answer-column" >
-                <div class="progress" v-if="get3D() !=''">
+                <div class="progress" v-if="get3D() != null">
                     <div style="margin-bottom:6px">{{get3D()}}</div>
                     <div class="barOverflow">
                         <div class="bar" v-bind:style="{transform:'rotate('+(45+(radiusCalc*(1.8)))+'deg)'}"></div>
@@ -13,11 +13,9 @@
                 <div class="answer-row">
                     <div class="option-x">{{options.left}}</div>
                     <div class="matrix" @touchmove="moveDot()" @mousemove="moveDot()" @touchstart="captureOn()" @mousedown="captureOn()" @touchend="captureOff()" @touchcancel="captureOff()" @mouseup="captureOff()">
-                        <div class="" id="matrix" ref="matrix" v-bind:class="getMatrixClass()">
-
-                        </div>
+                        <div class="matrix-background" id="matrix" ref="matrix" :style="bgColor"/>
                         <div class="dot" id="dot" ref="dot" v-bind:style="{top: dotTop+'px', left: dotLeft+'px', width: radius+'px', height: radius+'px', 
-                        marginTop: -(radius/2)+'px', marginLeft: -(radius/2)+'px', borderRadius: (radius/2)+'px', 'background': getColor()}">
+                        marginTop: -(radius/2)+'px', marginLeft: -(radius/2)+'px', borderRadius: (radius/2)+'px', 'background': bgColor}">
                             
                         </div>
                     </div>
@@ -28,7 +26,7 @@
         </div>
         <div class="ok-btn">
             <button @click="sendData()" class="btn-black" type="button">
-                <span class="btn-text">Next</span>
+                <span class="btn-text">{{continueBtnText}}</span>
             </button>
         </div>
     </div>
@@ -37,15 +35,13 @@
 <script>
     import Gradient from "javascript-color-gradient"
     const colorGradient = new Gradient()
-    const c1 = "#FF0000"
-    const c2 = "#FFD966"
-    const c3 = "#00B050"
-    colorGradient.setMidpoint(100)
-    colorGradient.setGradient(c1,c2,c3)
     export default {
         props:{
             //The options for this question
             options:{
+               required:true
+           },
+           continueBtnText:{
                required:true
            },
         },
@@ -77,32 +73,27 @@
                 maxRadius: 40
 			}
 		},
+        computed: {
+            bgColor: function(){
+                if(Object.prototype.hasOwnProperty.call(this.options,"alignment") && Object.prototype.hasOwnProperty.call(this.options,"colors")){
+                    if(this.options.colors.length == 3){
+                        return {background: 'linear-gradient('+this.options.alignment+', '+this.options.colors[0]+','+this.options.colors[1]+', '+this.options.colors[2]+')'}
+                    }
+                }
+                return {background: 'linear-gradient(180deg, #00B050, #FFD966, #FF0000)'}
+            }
+        },
 		methods:{
             //Find out what color the dot should be, depending on percentage 
             getColor: function(){
-                console.log(this.radiusCalc)
                 return colorGradient.getColor(Math.round(this.radiusCalc)+1)
-            },
-            //Which type of matrix to show
-            getMatrixClass: function(){
-                if(Object.prototype.hasOwnProperty.call(this.options,"alignment")){
-                    if(this.options.alignment == "horizontal"){ //Wenn explizit horizontal gefordert ist
-                        return "matrix-background-horizontal"
-                    }else if(this.options.alignment == "vertical"){
-                        return "matrix-background-vertikal"
-                    }else{ //Ansonsten automatisch
-                        return "matrix-background-diagonal"
-                    }
-                }else{ //Ansonsten automatisch
-                    return "matrix-background-diagonal"
-                }
             },
             //Should the third dimension data be shown
             get3D: function(){
                 if(Object.prototype.hasOwnProperty.call(this.options,"thirdDimension")){
                     return this.options.thirdDimension
                 }else{
-                    return ""
+                    return null
                 }
             },
             sendData(){//Sends data to parent, resets local data, calls next page
@@ -151,7 +142,6 @@
                     if(resp.dotTop != this.dotTop || resp.dotLeft != this.dotLeft){
                         let a = 0
                         let b = 0
-                        console.log(event)
                         if(event.type == "touchstart" ||event.type == "touchmove" || event.type == "touchend"){
                             a = Math.abs(this.dotTop+this.$refs["matrix"].getBoundingClientRect().top - parseInt(event.touches[0].clientY))//Damit das auch außerhalb der Matrix berechnet wird
                             b = Math.abs(this.dotLeft+this.$refs["matrix"].getBoundingClientRect().left - parseInt(event.touches[0].clientX))
@@ -161,9 +151,6 @@
                         }
                         let c = Math.sqrt((a*a)+(b*b))//Radius vom Kreis a^2+b^2=c^2
                         c = (c > this.maxRadius) ? this.maxRadius : c  //Max von c ist maxRadius
-                        console.log("a "+a)
-                        console.log("b "+b)
-                        console.log("c "+c)
                         this.radius = c
                         this.radiusCalc = Math.round(Number(((c * (100/this.maxRadius)).toString()).slice(0,5))) //Max radius ist 40, wollen aber 0-100 Punkte 
                     }
@@ -178,16 +165,24 @@
                 this.dotTop = resp.dotTop
                 this.dotLeft = resp.dotLeft
                 this.moveDot()
-                console.log("on")
             },
             //on second click stop following mouse
             captureOff: function(){
                 this.moveDot()
                 this.captureToggle = false
-                console.log("off")
             },
             //init data
             init(){
+                colorGradient.setMidpoint(100)
+                if(Object.prototype.hasOwnProperty.call(this.options,"circleColors")){
+                    if(this.options.circleColors.length == 3){
+                        colorGradient.setGradient(this.options.circleColors[0],this.options.circleColors[1],this.options.circleColors[2])
+                    }else{
+                        colorGradient.setGradient("#FF0000","#FFD966","#00B050")
+                    }
+                }else{
+                    colorGradient.setGradient("#FF0000","#FFD966","#00B050")
+                }
                 this.dotLeft = (this.$refs["matrix"].clientWidth/2)
                 this.dotTop = (this.$refs["matrix"].clientHeight/2)
                 this.x = 50
@@ -234,19 +229,8 @@
 		justify-content:center;
     }
 
-    .matrix-background-diagonal{
+    .matrix-background{
         padding-top:100%;
-        background: linear-gradient(225deg, #00B050,#FFD966, #FF0000);
-    }
-
-    .matrix-background-horizontal{
-        padding-top:100%;
-        background: linear-gradient(180deg, #00B050,#FFD966, #FF0000);
-    }
-
-    .matrix-background-vertikal{
-        padding-top:100%;
-        background: linear-gradient(270deg, #00B050,#FFD966, #FF0000);
     }
 
     .option-y{
@@ -296,6 +280,7 @@
         width: 180px;
         height: 90px; /* Half circle (overflow) */
         margin-bottom: -28px; /* bring the numbers up */
+        margin-left: 14px;
     }
 
     .bar{

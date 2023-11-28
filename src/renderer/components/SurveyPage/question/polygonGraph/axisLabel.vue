@@ -25,14 +25,6 @@ export default {
             },
     computed: {
         point: function() {
-            console.log(valueToPoint(
-                +this.stat.value + 10,
-                this.index,
-                this.total
-            ))
-            console.log(this.index)
-            console.log(this.total)
-            console.log(this.stat.value)
             return valueToPoint(
                 +this.stat.value + 10,
                 this.index,
