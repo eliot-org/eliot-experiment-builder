@@ -38,6 +38,7 @@ There are a couple of setup steps to undertake after the installation has finish
     - Then, import at least one survey json file. An example can be found [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/survey_sample.json). A Stroop example is also available [here](https://github.com/eliot-org/eliot/blob/main/src/renderer/assets/stroop.json)
   - Go to the objects page
     -  Create an object by setting a name and potentially properties that are needed by your survey
+    -  In the case of the Stroop example, create objects with a property called "color", for the text color and another property called "text" that is then shown as the text itself
   - Then, if your survey needs subject data, go to the subjects page
     - Create a subject with accompanying properties
   - If your survey needs hardware devices, connect them on the hardware page
@@ -47,7 +48,7 @@ You have now finished the basic setup and are ready to run your survey on the su
 ### How to run a survey
   - Choose a survey from the list
   - Add the desired modules
-  - Set their objects, if needed by the selected survey
+  - Set their objects, if needed by the selected survey.
   - Choose if you want to randomize some parts of a module
   - Set experiment settings
   - Choose which display to show the survey window on
