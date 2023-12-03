@@ -124,5 +124,11 @@ TBD - A paper is currently being worked on.
 
 License
 ---
-This project is distributed under the terms of [CC-BY-NC-4.0](https://creativecommons.org/licenses/by-nc/4.0/legalcode.de). <br>
+This work is licensed under a
+[Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License][cc-by-nc-sa].
+
+[![CC BY-NC-SA 4.0][cc-by-nc-sa-image]][cc-by-nc-sa]
+
+[cc-by-nc-sa]: http://creativecommons.org/licenses/by-nc-sa/4.0/
+[cc-by-nc-sa-image]: https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png
 The license holder is [imat-uve gmbh](https://imat-uve.de). Thanks to them we are able to continue our work that has started while we were employed there. 
