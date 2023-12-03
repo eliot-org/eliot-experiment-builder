@@ -10,18 +10,18 @@
                 <div class="objects-collapse">
                     <div style="margin-top: 12px; margin-bottom: 12px; margin-left: 10px">
                         Name:
-                        <input type="text" v-model="newObject.name">
+                        <input style="border-style:solid;" type="text" v-model="newObject.name">
                     </div>
                     <div v-for="(property, index) in objectProperties" v-bind:key="index" style="margin-left: 10px">
                         {{property}}:
-                        <input type="text" v-model="newObject[property]">
+                        <input style="border-style:solid;" type="text" v-model="newObject[property]">
                         <button class="saveButton" @click="delete newObject[property]; objectProperties.splice(objectProperties.indexOf(property),1)">-</button>
                     </div>
                     <hr>
                     <div style="margin-left: 10px">
                         New Property: 
-                        <input type="text" v-model="newProperty"> 
-                        <button class="saveButton" @click="objectProperties.push(newProperty)">+</button>
+                        <input style="border-style:solid;" type="text" v-model="newProperty"> 
+                        <button class="saveButton" @click="addProperty(newProperty)">+</button>
                     </div>
                     <hr>
                     <div>
@@ -52,7 +52,7 @@
                     <div v-for="(key, index2) in Object.keys(object)" v-bind:key="index2">
                         <div class="object-element" v-if="key !== '_id'">
                             <div class="leftsidetext">{{key}}: </div>
-                            <input type="text" v-model="object[key]" @change="updateObject()">
+                            <input style="border-style:solid;" type="text" v-model="object[key]" @change="updateObject()">
                         </div>
                     </div>
                 </div>
@@ -89,6 +89,11 @@
             loadData: async function(){
                 this.objects = await this.$electron.ipcRenderer.invoke("getStoreValue", "objects") 
             },
+            addProperty: function(newProperty){
+                if(newProperty.length > 0 && !this.objectProperties.includes(newProperty)){
+                    this.objectProperties.push(newProperty)
+                }
+            }, 
             //deletes an object
             deleteObject: function(id){
                 for(let i = 0; i < this.objects.length; i++){
@@ -100,7 +105,7 @@
             },
             //Create a new object
             addObject: function(){
-                if(this.newObject.name !== ""){
+                if(this.newObject.name !== "" && this.newObject.name.length > 0){
                     this.newObject._id = crypto.randomUUID()
                     this.objects.push(this.newObject)
                     this.newObject = {}

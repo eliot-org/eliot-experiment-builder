@@ -49,7 +49,7 @@
                                                 <v-card-text>
                                                     <div style="display: flex; margin-bottom:10px">
                                                         Repeats: 
-                                                        <input type="number" min="1" v-model="element.count" style="outline: 1px solid black">    
+                                                        <input style="border-style:solid;" type="number" min="1" v-model="element.count">    
                                                     </div>
                                                     
                                                     <div style="margin-bottom:10px; max-width: 100%; display: flex;">
@@ -153,15 +153,15 @@
                             <div class="step-content">
                                 <div>
                                     <div class="surveySettings-name">Experimenter:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="experimenter" v-model="experimenter">
+                                    <input style="border-style:solid;" class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="experimenter" v-model="experimenter">
                                 </div>
                                 <div>
                                     <div class="surveySettings-name">Assistant:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="assistant" v-model="assistant">
+                                    <input style="border-style:solid;" class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="assistant" v-model="assistant">
                                 </div>
                                 <div>
                                     <div class="surveySettings-name">Studyname:</div>
-                                    <input class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="studyname" v-model="studyname">
+                                    <input style="border-style:solid;" class="surveySettings-input" v-bind:disabled="surveyChoice==null" type="text" name="studyname" v-model="studyname">
                                 </div>
                             </div>
                         </div>

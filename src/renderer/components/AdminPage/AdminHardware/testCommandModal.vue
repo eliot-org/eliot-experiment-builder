@@ -27,7 +27,7 @@
                             <b>Parameters (name - type):</b>
                             <div v-for="(prop, x) in selectedCommand.properties" :key="x">
                                 {{ prop.name }} -  {{ prop.type }}: 
-                                <input :type="prop.type" v-model="sendingCommand[prop.name]">
+                                <input style="border-style:solid;" :type="prop.type" v-model="sendingCommand[prop.name]">
                             </div>
                             <br>
                         </div>

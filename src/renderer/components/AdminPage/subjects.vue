@@ -12,13 +12,13 @@
                 <div class="subjects-collapse">
                     <div v-for="(property, index) in subjectProperties" v-bind:key="index" style="margin-left: 10px">
                         {{property}}:
-                        <input type="text" v-model="newSubject[property]">
+                        <input style="border-style:solid;" type="text" v-model="newSubject[property]">
                         <button class="saveButton" @click="delete newSubject[property]; subjectProperties.splice(subjectProperties.indexOf(property),1)">-</button>
                     </div>
                     <hr>
                     <div style="margin-left: 10px">
                         New Property: 
-                        <input type="text" v-model="newProperty"> 
+                        <input style="border-style:solid;" type="text" v-model="newProperty"> 
                         <button class="saveButton" @click="subjectProperties.push(newProperty)">+</button>
                     </div>
                     <hr>
@@ -50,7 +50,7 @@
                     <div v-for="(key, index2) in Object.keys(subject)" v-bind:key="index2">
                         <div class="subject-element" v-if="key !== '_id'">
                             <div class="leftsidetext">{{key}}: </div>
-                            <input type="text" v-model="subject[key]" @change="updateSubject()">
+                            <input style="border-style:solid;" type="text" v-model="subject[key]" @change="updateSubject()">
                         </div>
                     </div>
                 </div>

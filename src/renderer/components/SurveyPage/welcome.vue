@@ -3,7 +3,7 @@
         <title>ELIOT Survey</title>
         <div class="welcome-wrapper">
             <div v-html="content.text"></div>
-            <input type="text" min="0" v-model="subjectCode" class="input">
+            <input style="border-style:solid;" type="text" min="0" v-model="subjectCode" class="input">
         </div>
         <br>
         <div class="start-wrapper">

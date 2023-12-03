@@ -2,8 +2,8 @@
     <div class="right-side-parent">
         <div class="answer-input-wrapper">
             <div class="answers">
-                <input type="number" min="0"  v-model="picked" class="input" v-if="type=='num'">
-                <input type="text" v-model="picked" class="input" v-if="type=='text'">
+                <input style="border-style:solid;" type="number" min="0"  v-model="picked" class="input" v-if="type=='num'">
+                <input style="border-style:solid;" type="text" v-model="picked" class="input" v-if="type=='text'">
             </div>
         </div>
         <div class="ok-btn" v-if="picked">

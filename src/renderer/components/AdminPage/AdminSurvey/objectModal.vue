@@ -9,7 +9,7 @@
                     <div class="modal-body">
                         <div v-for="(obj, x) in objects" v-bind:key="x" style="margin-bottom:22px;margin-top:22px;height:25px">
                             <label class="checkbox-label" style="float:left">
-                                <input v-bind:id="obj.name" type="checkbox" v-bind:value="obj" v-on:click="$emit('updateChecked', obj)">
+                                <input style="border-style:solid;" v-bind:id="obj.name" type="checkbox" v-bind:value="obj" v-on:click="$emit('updateChecked', obj)">
                                 <span class="checkbox-custom rectangular"></span>
                             </label>
                             <div class="checkbox-text" style="float:left">{{obj.name}}</div>

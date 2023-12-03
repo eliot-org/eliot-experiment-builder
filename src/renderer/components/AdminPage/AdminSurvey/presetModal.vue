@@ -18,7 +18,7 @@
                         <div>
                             <div>Add current module choices as a new Template</div>
                             <div class="surveySettings-name">Name:</div>
-                            <input class="surveySettings-input" type="text" name="newPresetName" v-model="newPresetName">
+                            <input style="border-style:solid;" class="surveySettings-input" type="text" name="newPresetName" v-model="newPresetName">
                             <button class="btn-black " id="chooseAllModules" @click="$emit('addPreset', newPresetName)">Speichern</button>
                         </div>
                     </div>

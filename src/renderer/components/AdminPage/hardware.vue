@@ -67,7 +67,7 @@
                         <div><h4>New Device</h4></div>
                         <div style="margin-left:20px" v-for="(parameter, e) in script.deviceParameters" v-bind:key="e">
                             {{parameter.name.toUpperCase()}}: 
-                            <input :type="parameter.type" v-model="parameter.input">
+                            <input style="border-style:solid;" :type="parameter.type" v-model="parameter.input">
                         </div>
                         <button class="button" @click="createDevice(script)">Create</button>
                     </div> 
