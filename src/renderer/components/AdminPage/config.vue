@@ -12,7 +12,7 @@
                         Current Location: {{scriptLocation}}
                         <br>
                         Select new Location: 
-                        <input type="file" style="border-style:solid;" id="hwScriptDir" @click="chooseDir()" @click.prevent=""/>
+                        <input type="file" id="hwScriptDir" @click="chooseDir()" @click.prevent=""/>
                     </div>
                 </div>
             </div>
@@ -25,7 +25,7 @@
                 <div class="box-body">
                     <div style="margin-left: 10px">
                         Import File: 
-                        <input type="file" style="border-style:solid;" id="surveyJSONDir" @click="addSurvey()" @click.prevent=""/>
+                        <input type="file" id="surveyJSONDir" @click="addSurvey()" @click.prevent=""/>
                     </div>
                     <hr>
                     <div v-for="(survey, index) in surveys" v-bind:key="index">
@@ -50,7 +50,7 @@
                         Current Location: {{assetLocation}}
                         <br>
                         Select new Location: 
-                        <input type="file" style="border-style:solid;" id="picDir" @click="chooseAssetDir()" @click.prevent=""/>
+                        <input type="file" id="picDir" @click="chooseAssetDir()" @click.prevent=""/>
                     </div>
                 </div>
             </div>

@@ -61,7 +61,7 @@
         {
             "module": "Stroop",
             "part": "StroopPre",
-            "type": "freestyle",
+            "type": "canvas",
             "autoNext": {
                 "delay": 500
             },
@@ -73,7 +73,7 @@
         {
             "module": "Stroop",
             "part": "StroopInput",
-            "type": "freestyle",
+            "type": "canvas",
             "answerDelayToNextPage": 500,
             "autoNext": {
                 "delay": 5000,

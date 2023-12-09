@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "title": "Pagetype freestyle content",
-    "description": "Description of the content of the Pagetype 'freestyle'",
+    "title": "Pagetype canvas content",
+    "description": "Description of the content of the Pagetype 'canvas'",
     "type": "object",
     "properties": {
         "name":{

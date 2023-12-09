@@ -71,7 +71,7 @@ const router =  new Router({
           ]
         },
         {
-          path:"/freestyle", name:"freestyle", component: require("@/components/SurveyPage/freestyle").default
+          path:"/canvas", name:"canvas", component: require("@/components/SurveyPage/canvas").default
         },
         {
           path:"/explanation", name:"explanation", component: require("@/components/SurveyPage/explanation").default
