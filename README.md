@@ -120,7 +120,9 @@ npm run rebuild
 
 Citation
 ---
-TBD - A paper is currently being worked on.
+We kindly request that you cite ELIOT if you use it in your research. Here's how to cite the current preprint:
+
+> Hilgers, T., Schweiger, L., Müller, S., & Heim, H. (2024, April 19). ELIOT: A Hardware Focused Experiment Builder. [https://doi.org/10.31234/osf.io/xnzkt](https://doi.org/10.31234/osf.io/xnzkt)
 
 License
 ---
